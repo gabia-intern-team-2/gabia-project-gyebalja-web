@@ -21,7 +21,7 @@ export default {
 
     try {
       await postBoardItem(board)
-      vm.$router.push('/table-list')
+      vm.$router.push({ name: 'Board LIst' })
     } catch (error) {
       console.log(error)
     }
@@ -48,10 +48,10 @@ export default {
   async updateBoard (vm, board) {
     try {
       await putBoardItem(vm.responseBoard.id, board)
-      vm.$router.push(`/table-list/${vm.responseBoard.id}`)
+      vm.$router.push({ name: 'Board Detail', params: { boardId: vm.responseBoard.id } })
     } catch (error) {
       console.log(error)
-      vm.$router.push(`/table-list`)
+      vm.$router.push({ name: 'Board LIst' })
     }
   },
 
@@ -60,9 +60,9 @@ export default {
       await deleteBoardItem(vm.boardId)
     } catch (error) {
       // Error Page
-      vm.$router.push('/table-list')
+      vm.$router.push({ name: 'Board LIst' })
     }
-    vm.$router.push('/table-list')
+    vm.$router.push({ name: 'Board LIst' })
   },
 
   async deleteBoardWithConfirm (vm, message) {
