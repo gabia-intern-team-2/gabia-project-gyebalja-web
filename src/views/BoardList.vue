@@ -40,7 +40,7 @@
             >
               <td>{{ item.id }}</td>
               <router-link
-                :to="{name:'BoardDetail', params:{boardId:item.id}}">
+                :to="{name:'Board Detail', params:{boardId:item.id}}">
                 <td>{{ item.title }}</td>
               </router-link>
               <td>{{ item.views }}</td>
@@ -55,7 +55,7 @@
           >
             <router-link
               v-ripple
-              :to="{name:'BoardRegister'}"
+              :to="{name:'Board Register'}"
               class="toolbar-items">
               <v-btn
                 class="mx-0 font-weight-light"
