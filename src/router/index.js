@@ -30,9 +30,8 @@ function route (path, view, name) {
         bus.$emit('start:spinner')
         store.dispatch('FETCH_BOARDS')
           .then(() => {
-            bus.$emit('end:spinner')
             next()
-            console.log('BeforeEnter : ' + store.state.boards.response.content[0].title)
+            bus.$emit('end:spinner')
           })
       } else {
         next()
