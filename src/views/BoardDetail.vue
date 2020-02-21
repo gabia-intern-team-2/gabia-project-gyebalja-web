@@ -173,9 +173,9 @@
 
 <script>
 import bus from '../utils/bus.js'
-import boardApi from '../api/board/boardApi.js'
-import commentApi from '../api/comment/commentApi.js'
-import likesApi from '../api/likes/likesApi.js'
+import boardEvent from '../api/board/boardEvent.js'
+import commentEvent from '../api/comment/commentEvent.js'
+import likesEvent from '../api/likes/likesEvent.js'
 
 export default {
   data: () => ({
@@ -211,38 +211,38 @@ export default {
     /** Api CRUD */
     // Board
     readBoardOne () {
-      boardApi.readBoardOne(this)
+      boardEvent.readBoardOne(this)
     },
 
     deleteBoard () {
-      boardApi.deleteBoardWithConfirm(this, 'board')
+      boardEvent.deleteBoardWithConfirm(this, 'board')
     },
 
     // Comment
     createComment () {
-      commentApi.createComment(this)
+      commentEvent.createComment(this)
     },
 
     updateComment (commentId) {
-      commentApi.updateComment(this, commentId)
+      commentEvent.updateComment(this, commentId)
     },
 
     deleteComment (commentId) {
-      commentApi.deleteCommentWithConfirm(this, commentId, 'comment')
+      commentEvent.deleteCommentWithConfirm(this, commentId, 'comment')
     },
 
     // Likes
     createLikes () {
-      likesApi.createLikes(this)
+      likesEvent.createLikes(this)
     },
 
     checkLikes () {
-      likesApi.checkLikes(this)
+      likesEvent.checkLikes(this)
     },
 
     /** Event */
     changeComment (comment, flag) {
-      commentApi.changeComment(this, comment, flag)
+      commentEvent.changeComment(this, comment, flag)
     }
   }
 }

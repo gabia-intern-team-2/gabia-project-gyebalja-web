@@ -92,7 +92,7 @@
 <script>
 import bus from '../utils/bus.js'
 import { store } from '../store/index.js'
-import boardApi from '../api/board/boardApi.js'
+import boardEvent from '../api/board/boardEvent.js'
 
 export default {
   data: () => ({
@@ -123,7 +123,7 @@ export default {
     /** Apis */
     async fetchData () {
       const vm = this
-      await boardApi.readBoardOne(vm)
+      await boardEvent.readBoardOne(vm)
       await store.dispatch('FETCH_EDUCATIONS', vm.userId)
       for (var i in vm.$store.state.educations.response) {
         vm.educationList.push({ id: vm.$store.state.educations.response[i].id, title: vm.$store.state.educations.response[i].title })
@@ -147,7 +147,7 @@ export default {
       }
 
       // Logic
-      await boardApi.updateBoard(this, board)
+      await boardEvent.updateBoard(this, board)
     }
   }
 }

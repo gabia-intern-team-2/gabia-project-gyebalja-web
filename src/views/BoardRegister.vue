@@ -89,7 +89,7 @@
 <script>
 import { store } from '../store/index.js'
 import bus from '../utils/bus.js'
-import boardApi from '../api/board/boardApi.js'
+import boardEvent from '../api/board/boardEvent.js'
 
 export default {
   data: () => ({
@@ -130,7 +130,7 @@ export default {
 
     /** Methods */
     createBoard () {
-      boardApi.createBoard(this)
+      boardEvent.createBoard(this)
     }
   }
 }
