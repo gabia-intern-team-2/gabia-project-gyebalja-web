@@ -4,6 +4,24 @@
  * official documentation https://router.vuejs.org/en/
  */
 export default [
+  /** 사용자 정의 Path */
+  {
+    path: '/boardList',
+    name: 'Board List',
+    view: 'BoardList'
+  },
+  {
+    path: '/boardList/register',
+    name: 'Board Register',
+    view: 'BoardRegister'
+  },
+  {
+    path: '/boardList/:boardId',
+    name: 'Board Detail',
+    view: 'BoardDetail'
+  },
+
+  /** 기존 정의 Path */
   {
     path: '',
     // Relative to /src/views
