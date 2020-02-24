@@ -15,13 +15,13 @@ export default {
       title: vm.title,
       content: vm.content,
       educationId: vm.educationId,
-      userId: 1860,
+      userId: 866,
       boardImg: vm.boardImg
     }
 
     try {
       await postBoardItem(board)
-      vm.$router.push({ name: 'Board LIst' })
+      vm.$router.push({ name: 'Board List' })
     } catch (error) {
       console.log(error)
     }
@@ -51,7 +51,7 @@ export default {
       vm.$router.push({ name: 'Board Detail', params: { boardId: vm.responseBoard.id } })
     } catch (error) {
       console.log(error)
-      vm.$router.push({ name: 'Board LIst' })
+      vm.$router.push({ name: 'Board List' })
     }
   },
 
@@ -60,9 +60,9 @@ export default {
       await deleteBoardItem(vm.boardId)
     } catch (error) {
       // Error Page
-      vm.$router.push({ name: 'Board LIst' })
+      vm.$router.push({ name: 'Board List' })
     }
-    vm.$router.push({ name: 'Board LIst' })
+    vm.$router.push({ name: 'Board List' })
   },
 
   async deleteBoardWithConfirm (vm, message) {

@@ -12,6 +12,9 @@ import VueAnalytics from 'vue-analytics'
 import Router from 'vue-router'
 import Meta from 'vue-meta'
 
+import bus from '../utils/bus.js'
+import { store } from '../store/index.js'
+
 // Routes
 import paths from './paths'
 
@@ -21,7 +24,19 @@ function route (path, view, name) {
     path,
     component: (resolve) => import(
       `@/views/${view}.vue`
-    ).then(resolve)
+    ).then(resolve),
+    beforeEnter: (to, from, next) => {
+      if (to.name === 'Board List') {
+        bus.$emit('start:spinner')
+        store.dispatch('FETCH_BOARDS')
+          .then(() => {
+            next()
+            bus.$emit('end:spinner')
+          })
+      } else {
+        next()
+      }
+    }
   }
 }
 

@@ -8,11 +8,11 @@
       <v-flex
         md12
         sm12
-        lg4
+        lg6
       >
         <material-chart-card
-          :data="dailySalesChart.data"
-          :options="dailySalesChart.options"
+          :data="yearlyData.data"
+          :options="yearlyData.options"
           color="info"
           type="Line"
         >
@@ -42,12 +42,45 @@
       <v-flex
         md12
         sm12
-        lg4
+        lg6
       >
         <material-chart-card
-          :data="emailsSubscriptionChart.data"
-          :options="emailsSubscriptionChart.options"
-          :responsive-options="emailsSubscriptionChart.responsiveOptions"
+          :data="monthlyData.data"
+          :options="monthlyData.options"
+          color="info"
+          type="Line"
+        >
+          <h4 class="title font-weight-light">Daily Sales</h4>
+          <p class="category d-inline-flex font-weight-light">
+            <v-icon
+              color="green"
+              small
+            >
+              mdi-arrow-up
+            </v-icon>
+            <span class="green--text">55%</span>&nbsp;
+            increase in today's sales
+          </p>
+
+          <template slot="actions">
+            <v-icon
+              class="mr-2"
+              small
+            >
+              mdi-clock-outline
+            </v-icon>
+            <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
+          </template>
+        </material-chart-card>
+      </v-flex>
+      <v-flex
+        md12
+        sm12
+        lg6
+      >
+        <material-chart-card
+          :data="categoryData.data"
+          :options="categoryData.options"
           color="red"
           type="Bar"
         >
@@ -68,16 +101,16 @@
       <v-flex
         md12
         sm12
-        lg4
+        lg6
       >
         <material-chart-card
-          :data="dataCompletedTasksChart.data"
-          :options="dataCompletedTasksChart.options"
-          color="green"
-          type="Line"
+          :data="tagData.data"
+          :options="tagData.options"
+          color="red"
+          type="Bar"
         >
-          <h3 class="title font-weight-light">Completed Tasks</h3>
-          <p class="category d-inline-flex font-weight-light">Last Last Campaign Performance</p>
+          <h4 class="title font-weight-light">Email Subscription</h4>
+          <p class="category d-inline-flex font-weight-light">Last Campaign Performance</p>
 
           <template slot="actions">
             <v-icon
@@ -86,7 +119,7 @@
             >
               mdi-clock-outline
             </v-icon>
-            <span class="caption grey--text font-weight-light">campaign sent 26 minutes ago</span>
+            <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
           </template>
         </material-chart-card>
       </v-flex>
@@ -360,9 +393,94 @@
 </template>
 
 <script>
+import bus from '../utils/bus.js'
+import statisticsEvent from '../api/statistics/statisticsEvent.js'
 export default {
   data () {
     return {
+      yearlyData: {
+        data: {
+          labels: [],
+          series: []
+        },
+        options: {
+          lineSmooth: this.$chartist.Interpolation.cardinal({
+            tension: 0
+          }),
+          low: 0,
+          high: 100, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
+          chartPadding: {
+            top: 0,
+            right: 0,
+            bottom: 0,
+            left: 0
+          }
+        }
+      },
+      monthlyData: {
+        data: {
+          labels: [],
+          series: []
+        }
+      },
+      categoryData: {
+        data: {
+          labels: [],
+          series: []
+        },
+        options: {
+          axisX: {
+            showGrid: false
+          },
+          low: 0,
+          high: 20,
+          chartPadding: {
+            top: 0,
+            right: 5,
+            bottom: 0,
+            left: 0
+          }
+        },
+        responsiveOptions: [
+          ['screen and (max-width: 640px)', {
+            seriesBarDistance: 5,
+            axisX: {
+              labelInterpolationFnc: function (value) {
+                return value[0]
+              }
+            }
+          }]
+        ]
+      },
+      tagData: {
+        data: {
+          labels: [],
+          series: []
+        },
+        options: {
+          axisX: {
+            showGrid: false
+          },
+          low: 0,
+          high: 5,
+          chartPadding: {
+            top: 0,
+            right: 5,
+            bottom: 0,
+            left: 0
+          }
+        },
+        responsiveOptions: [
+          ['screen and (max-width: 640px)', {
+            seriesBarDistance: 5,
+            axisX: {
+              labelInterpolationFnc: function (value) {
+                return value[0]
+              }
+            }
+          }]
+        ]
+      },
       dailySalesChart: {
         data: {
           labels: ['M', 'T', 'W', 'T', 'F', 'S', 'S'],
@@ -503,6 +621,11 @@ export default {
         2: false
       }
     }
+  },
+  created () {
+    const vm = this
+    bus.$emit('start:spinner')
+    statisticsEvent.readStatisticsMain(vm)
   },
   methods: {
     complete (index) {

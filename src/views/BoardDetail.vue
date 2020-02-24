@@ -60,7 +60,7 @@
                     </v-btn>
                     <v-btn
                       v-if="userId === responseBoard.userId"
-                      :to="`${boardId}/edit`"
+                      :to="{name:'Board Edit', params:{boardId:responseBoard.id}}"
                       small
                       color="success"
                       round
@@ -199,7 +199,7 @@ export default {
   created () {
     // Data
     const vm = this
-    vm.userId = 1860
+    vm.userId = 866
     vm.boardId = vm.$route.params.boardId
 
     // Logic
