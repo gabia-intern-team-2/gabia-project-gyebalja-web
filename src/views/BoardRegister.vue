@@ -112,23 +112,21 @@ export default {
 
     // Logic
     bus.$emit('start:spinner')
-    this.fetchData()
+    this.initialize()
   },
   methods: {
-    /** Apis */
-    async fetchData () {
+    async initialize () {
       const vm = this
       await store.dispatch('FETCH_EDUCATIONS', vm.userId)
+
       for (let i in this.$store.state.educations.response) {
-        vm.educationList.push({
-          id: this.$store.state.educations.response[i].id,
-          title: this.$store.state.educations.response[i].title })
+        vm.educationList.push({ id: this.$store.state.educations.response[i].id, title: this.$store.state.educations.response[i].title })
       }
+
       vm.isGetData = true
       bus.$emit('end:spinner')
     },
 
-    /** Methods */
     createBoard () {
       boardEvent.createBoard(this)
     }

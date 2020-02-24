@@ -74,7 +74,7 @@
                     <v-btn
                       class="mx-0 font-weight-light"
                       color="success"
-                      @click="submit"
+                      @click="updateBoard"
                     >
                       수정하기
                     </v-btn>
@@ -117,26 +117,26 @@ export default {
 
     // Logic
     bus.$emit('start:spinner')
-    this.fetchData()
+    this.initialize()
   },
   methods: {
-    /** Apis */
-    async fetchData () {
+    async initialize () {
       const vm = this
       await boardEvent.readBoardOne(vm)
       await store.dispatch('FETCH_EDUCATIONS', vm.userId)
-      for (var i in vm.$store.state.educations.response) {
+
+      for (let i in vm.$store.state.educations.response) {
         vm.educationList.push({ id: vm.$store.state.educations.response[i].id, title: vm.$store.state.educations.response[i].title })
       }
       vm.title = vm.responseBoard.title
       vm.content = vm.responseBoard.content
       vm.educationId = vm.responseBoard.educationId
+
       vm.isGetData = true
       bus.$emit('end:spinner')
     },
 
-    /** Methods */
-    async submit () {
+    async updateBoard () {
       // Data
       const board = {
         title: this.title,
