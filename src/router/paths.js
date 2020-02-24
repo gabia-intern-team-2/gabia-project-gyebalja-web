@@ -20,7 +20,27 @@ export default [
     name: 'Board Detail',
     view: 'BoardDetail'
   },
-
+  {
+    path: '/myEducation',
+    name: 'My Education',
+    view: 'MyEducation'
+  },
+  {
+    path: '/myEducation/register',
+    name: 'Education Register',
+    view: 'EducationForm'
+  },
+  {
+    path: '/myEducation/:educationId/edit',
+    name: 'Education Edit',
+    view: 'EducationForm'
+  },
+  {
+    path: '/myEducation/:educationId',
+    name: 'Education Detail',
+    view: 'EducationDetail'
+  },
+  
   /** 기존 정의 Path */
   {
     path: '',
