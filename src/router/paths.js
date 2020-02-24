@@ -20,6 +20,16 @@ export default [
     name: 'Board Detail',
     view: 'BoardDetail'
   },
+  {
+    path: '/userProfile',
+    name: 'User Profile',
+    view: 'UserProfile'
+  },
+  {
+    path: '/userProfile/edit',
+    name: 'Profile Edit',
+    view: 'ProfileForm'
+  },
 
   /** 기존 정의 Path */
   {
