@@ -60,7 +60,7 @@
                     </v-btn>
                     <v-btn
                       v-if="userId === responseBoard.userId"
-                      :to="`${boardId}/edit`"
+                      :to="{name:'Board Edit', params:{boardId:responseBoard.id}}"
                       small
                       color="success"
                       round
