@@ -11,14 +11,19 @@ export default [
     view: 'BoardList'
   },
   {
+    path: '/boardList/:boardId',
+    name: 'Board Detail',
+    view: 'BoardDetail'
+  },
+  {
     path: '/boardList/register',
     name: 'Board Register',
     view: 'BoardRegister'
   },
   {
-    path: '/boardList/:boardId',
-    name: 'Board Detail',
-    view: 'BoardDetail'
+    path: '/boardList/:boardId/edit',
+    name: 'Board Edit',
+    view: 'BoardEdit'
   },
   {
     path: '/userProfile',
@@ -50,7 +55,7 @@ export default [
     name: 'Education Detail',
     view: 'EducationDetail'
   },
-  
+
   /** 기존 정의 Path */
   {
     path: '',
