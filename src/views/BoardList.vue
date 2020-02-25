@@ -75,7 +75,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { getBoardList } from '../api/board/board'
 import bus from '../utils/bus'
 export default {
   data: () => ({

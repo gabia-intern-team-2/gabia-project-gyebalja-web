@@ -1,5 +1,4 @@
 import { getStatisticsMain } from './statistics.js'
-import bus from '../../utils/bus.js'
 
 export default {
   /** Api CRUD */
@@ -25,8 +24,6 @@ export default {
       console.log(vm.monthlyData)
       console.log(vm.categoryData)
       console.log(vm.tagData)
-
-      bus.$emit('end:spinner')
     } catch (error) {
       // Error Page
       vm.$router.go()
