@@ -113,7 +113,7 @@ export default {
   }),
   created () {
     // Data
-    this.userId = 1860
+    this.userId = 866
 
     // Logic
     bus.$emit('start:spinner')
@@ -142,7 +142,7 @@ export default {
         title: this.title,
         content: this.content,
         educationId: this.educationId,
-        userId: 1860,
+        userId: 866,
         boardImg: this.boardImg
       }
 

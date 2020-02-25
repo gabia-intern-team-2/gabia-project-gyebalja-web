@@ -15,7 +15,7 @@ export default {
       title: vm.title,
       content: vm.content,
       educationId: vm.educationId,
-      userId: 1860,
+      userId: 866,
       boardImg: vm.boardImg
     }
 

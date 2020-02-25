@@ -26,7 +26,7 @@ function route (path, view, name) {
       `@/views/${view}.vue`
     ).then(resolve),
     beforeEnter: (to, from, next) => {
-      if (to.name === 'Board List') {
+      if (to.name === 'Board List' || '/') {
         bus.$emit('start:spinner')
         store.dispatch('FETCH_BOARDS')
           .then(() => {
