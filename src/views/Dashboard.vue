@@ -143,7 +143,7 @@
         >
           <v-data-table
             :headers="headers"
-            :items="items"
+            :items="this.$store.state.boards.response.content"
             hide-actions
           >
             <template
@@ -157,13 +157,15 @@
             </template>
             <template
               slot="items"
-              slot-scope="{ index, item }"
+              slot-scope="{ item }"
             >
-              <td>{{ index + 1 }}</td>
-              <td>{{ item.name }}</td>
-              <td class="text-xs-right">{{ item.salary }}</td>
-              <td class="text-xs-right">{{ item.country }}</td>
-              <td class="text-xs-right">{{ item.city }}</td>
+              <td>{{ item.id }}</td>
+              <router-link
+                :to="{name:'Board Detail', params:{boardId:item.id}}">
+                <td>{{ item.title }}</td>
+              </router-link>
+              <td>{{ item.views }}</td>
+              <td>{{ item.modifiedDate }}</td>
             </template>
           </v-data-table>
         </material-card>
@@ -175,6 +177,7 @@
 <script>
 import bus from '../utils/bus.js'
 import statisticsEvent from '../api/statistics/statisticsEvent.js'
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -251,79 +254,45 @@ export default {
       headers: [
         {
           sortable: false,
-          text: 'ID',
-          value: 'id'
+          text: 'No',
+          value: Number
         },
         {
           sortable: false,
-          text: 'Name',
-          value: 'name'
+          text: '제목',
+          value: 'country'
         },
         {
           sortable: false,
-          text: 'Salary',
-          value: 'salary',
-          align: 'right'
+          text: '조회수',
+          value: 'views'
         },
         {
           sortable: false,
-          text: 'Country',
-          value: 'country',
-          align: 'right'
-        },
-        {
-          sortable: false,
-          text: 'City',
-          value: 'city',
-          align: 'right'
+          text: '수정일',
+          value: 'modifiedDate'
         }
-      ],
-      items: [
-        {
-          name: 'Dakota Rice',
-          country: 'Niger',
-          city: 'Oud-Tunrhout',
-          salary: '$35,738'
-        },
-        {
-          name: 'Minerva Hooper',
-          country: 'Curaçao',
-          city: 'Sinaai-Waas',
-          salary: '$23,738'
-        }, {
-          name: 'Sage Rodriguez',
-          country: 'Netherlands',
-          city: 'Overland Park',
-          salary: '$56,142'
-        }, {
-          name: 'Philip Chanley',
-          country: 'Korea, South',
-          city: 'Gloucester',
-          salary: '$38,735'
-        }, {
-          name: 'Doris Greene',
-          country: 'Malawi',
-          city: 'Feldkirchen in Kārnten',
-          salary: '$63,542'
-        }
-      ],
-      tabs: 0,
-      list: {
-        0: false,
-        1: false,
-        2: false
-      }
+      ]
     }
+  },
+  computed: {
+    ...mapGetters({
+      boards: 'fetchedBoards'
+    })
   },
   created () {
     const vm = this
     bus.$emit('start:spinner')
     statisticsEvent.readStatisticsMain(vm)
+    this.$store.dispatch('FETCH_BOARDS')
   },
   methods: {
-    complete (index) {
-      this.list[index] = !this.list[index]
-    }
   }
 }
 </script>
+
+<style scoped>
+  a {
+    color: black;
+  }
+</style>
