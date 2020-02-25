@@ -12,7 +12,6 @@
 
 // * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
@@ -28,6 +27,11 @@ import { sync } from 'vuex-router-sync'
 import App from './App'
 import router from '@/router'
 import store from '@/store'
+
+import svgSpriteLoader from './components/helper/svg-sprite-loader.js'
+const __svg__ = { path: './assets/images/icons/*.svg', name: 'assets/images/[hash].sprite.svg' }
+
+svgSpriteLoader(__svg__.filename)
 
 // Sync store with router
 sync(store, router)
