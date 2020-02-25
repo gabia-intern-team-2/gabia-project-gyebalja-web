@@ -2,7 +2,7 @@
 
 export default {
   fetchedBoards (state) {
-    return state.boards.response
+    return state.boards
   },
   fetchedEducations (state) {
     return state.educations.response
