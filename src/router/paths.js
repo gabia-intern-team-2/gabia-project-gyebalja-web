@@ -30,6 +30,7 @@ export default [
     name: 'Profile Edit',
     view: 'ProfileForm'
   },
+  {
     path: '/myEducation',
     name: 'My Education',
     view: 'MyEducation'
