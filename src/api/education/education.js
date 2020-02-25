@@ -22,10 +22,18 @@ function putMyEducationItem (educationId, editedEducation) {
   return axios.put(`${config.baseUrl}educations/${educationId}`, editedEducation)
 }
 
+// 조회 - 교육 (전체)
+function getEducationList (userId) {
+  return axios.get(`${config.baseUrl}users/${userId}/educations`)
+}
+
 export {
+  // TG
   postEducation,
   getMyEducationList,
   getMyEducationItem,
   deleteMyEducationItem,
-  putMyEducationItem
+  putMyEducationItem,
+  // HJ
+  getEducationList
 }
