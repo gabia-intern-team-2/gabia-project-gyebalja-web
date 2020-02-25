@@ -2,7 +2,6 @@
 
 export default {
   fetchedBoards (state) {
-    console.log(state.boards.response)
     return state.boards.response
   },
   fetchedEducations (state) {
