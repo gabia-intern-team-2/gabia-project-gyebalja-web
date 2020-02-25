@@ -313,7 +313,7 @@ export default {
           userId: '1952'
         }
         putMyEducationItem(this.$route.params.educationId, editedEducation)
-          .then(response => this.$router.push({ name: 'Education Detail', params: { educationId: this.$route.params.educationId }}))
+          .then(response => this.$router.push({ name: 'Education Detail', params: { educationId: this.$route.params.educationId } }))
           .catch(error => {
             console.log(error)
             alert('값을 정확히 입력해주세요.')

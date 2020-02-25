@@ -488,7 +488,7 @@ export default {
   },
   created () {
     getMyEducationList(1952)
-      .then(response => this.items = response.data.response)
+      .then((response) => { this.items = response.data.response })
       .catch(error => console.log(error))
   },
   methods: {
@@ -504,7 +504,7 @@ export default {
     },
     editEducation (item) {
       getCategoryList()
-        .then(response => this.categoryList = response.data.response)
+        .then((response) => { this.categoryList = response.data.response })
         .catch(error => console.log(error))
       this.editedIndex = this.items.indexOf(item)
       this.editedItem = Object.assign({}, item)
