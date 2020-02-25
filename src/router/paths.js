@@ -21,6 +21,15 @@ export default [
     view: 'BoardDetail'
   },
   {
+    path: '/userProfile',
+    name: 'User Profile',
+    view: 'UserProfile'
+  },
+  {
+    path: '/userProfile/edit',
+    name: 'Profile Edit',
+    view: 'ProfileForm'
+  },
     path: '/myEducation',
     name: 'My Education',
     view: 'MyEducation'
