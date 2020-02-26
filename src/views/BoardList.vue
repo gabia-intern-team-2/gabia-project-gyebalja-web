@@ -20,7 +20,7 @@
           >
             <v-data-table
               :headers="headers"
-              :items="boards"
+              :items="this.$store.state.boards"
             >
               <!-- 테이블 -->
               <!-- 테이블 헤더 -->
