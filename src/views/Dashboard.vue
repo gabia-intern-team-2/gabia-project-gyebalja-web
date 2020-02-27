@@ -281,9 +281,8 @@ export default {
     })
   },
   created () {
-    const vm = this
-    bus.$emit('start:spinner')
-    statisticsEvent.readStatisticsMain(vm)
+    // const vm = this
+    // statisticsEvent.readStatisticsMain(vm)
     this.$store.dispatch('FETCH_BOARDS')
   },
   methods: {

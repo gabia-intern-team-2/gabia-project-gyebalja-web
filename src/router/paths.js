@@ -55,6 +55,11 @@ export default [
     name: 'Education Detail',
     view: 'EducationDetail'
   },
+  {
+    path: '/auth/callback',
+    name: 'Oauth',
+    view: 'Oauth'
+  },
 
   /** 기존 정의 Path */
   {
