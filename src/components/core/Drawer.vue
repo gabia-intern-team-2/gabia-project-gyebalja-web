@@ -85,17 +85,22 @@ export default {
       {
         to: '/',
         icon: 'mdi-view-dashboard',
-        text: 'Dashboard'
-      },
-      {
-        to: '/user-profile',
-        icon: 'mdi-account',
-        text: 'User Profile'
+        text: '메인'
       },
       {
         to: '/boardList',
         icon: 'mdi-clipboard-outline',
         text: '게시판'
+      },
+      {
+        to: '/myEducation',
+        icon: 'mdi-clipboard-outline',
+        text: '나의 교육관리'
+      },
+      {
+        to: '/userProfile',
+        icon: 'mdi-account',
+        text: '내 정보 관리'
       },
       {
         to: '/typography',

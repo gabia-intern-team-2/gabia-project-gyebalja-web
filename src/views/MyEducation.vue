@@ -55,6 +55,8 @@
             </template>
           </material-chart-card>
         </v-flex>
+
+        <!-- 문제 부분 -->
         <v-flex
           xs2
         >
@@ -63,7 +65,7 @@
             :options="emailsSubscriptionChart.options"
             :responsive-options="emailsSubscriptionChart.responsiveOptions"
             color="green"
-            type="Pie"
+            type="Bar"
           >
             <h4 class="title font-weight-light">나의 관심분야</h4>
             <p class="category d-inline-flex font-weight-light"> <span class="green--text">최고 관심 : Spring</span>&nbsp;</p>
@@ -79,6 +81,7 @@
             </template>
           </material-chart-card>
         </v-flex>
+
         <v-flex
           md12
           sm12
@@ -487,8 +490,8 @@ export default {
     }
   },
   created () {
-    getMyEducationList(1952)
-      .then(response => this.items = response.data.response)
+    getMyEducationList(866)
+      .then((response) => { this.items = response.data.response })
       .catch(error => console.log(error))
   },
   methods: {
@@ -504,7 +507,7 @@ export default {
     },
     editEducation (item) {
       getCategoryList()
-        .then(response => this.categoryList = response.data.response)
+        .then((response) => { this.categoryList = response.data.response })
         .catch(error => console.log(error))
       this.editedIndex = this.items.indexOf(item)
       this.editedItem = Object.assign({}, item)
@@ -542,7 +545,7 @@ export default {
               type: vm.editedItem.type,
               place: vm.editedItem.place,
               hashTag: vm.hashTagString,
-              userId: 1783,
+              userId: 866,
               categoryId: vm.editedItem.category.id
             }
             putMyEducationItem(response.data.response.id, editedEducation)
