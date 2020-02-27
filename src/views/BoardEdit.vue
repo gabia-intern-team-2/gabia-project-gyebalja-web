@@ -117,15 +117,15 @@ export default {
 
     // Logic
     bus.$emit('start:spinner')
-    this.fetchData()
+    this.initialize()
   },
   methods: {
     /** Apis */
-    async fetchData () {
+    async initialize () {
       const vm = this
       await boardEvent.readBoardOne(vm)
       await store.dispatch('FETCH_EDUCATIONS', vm.userId)
-      for (var i in vm.$store.state.educations.response) {
+      for (let i in vm.$store.state.educations.response) {
         vm.educationList.push({ id: vm.$store.state.educations.response[i].id, title: vm.$store.state.educations.response[i].title })
       }
       vm.title = vm.responseBoard.title

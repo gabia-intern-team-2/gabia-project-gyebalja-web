@@ -1,177 +1,179 @@
 <template>
-  <v-container
-    fill-height
-    fluid
-    grid-list-xl
-  >
-    <v-layout wrap>
-      <!-- 통계 1 - 연간 교육 건수, 시간 -->
-      <v-flex
-        md12
-        sm12
-        lg6
-      >
-        <material-chart-card
-          :data="yearlyData.data"
-          :options="yearlyData.options"
-          color="info"
-          type="Line"
+  <div v-if="isGetData">
+    <v-container
+      fill-height
+      fluid
+      grid-list-xl
+    >
+      <v-layout wrap>
+        <!-- 통계 1 - 연간 교육 건수, 시간 -->
+        <v-flex
+          md12
+          sm12
+          lg6
         >
-          <h4 class="title font-weight-light">Daily Sales</h4>
-          <p class="category d-inline-flex font-weight-light">
-            <v-icon
-              color="green"
-              small
-            >
-              mdi-arrow-up
-            </v-icon>
-            <span class="green--text">55%</span>&nbsp;
-            increase in today's sales
-          </p>
-
-          <template slot="actions">
-            <v-icon
-              class="mr-2"
-              small
-            >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
-          </template>
-        </material-chart-card>
-      </v-flex>
-
-      <!-- 통계 2 - 월간 교육 건수, 시간 -->
-      <v-flex
-        md12
-        sm12
-        lg6
-      >
-        <material-chart-card
-          :data="monthlyData.data"
-          :options="monthlyData.options"
-          color="info"
-          type="Line"
-        >
-          <h4 class="title font-weight-light">Daily Sales</h4>
-          <p class="category d-inline-flex font-weight-light">
-            <v-icon
-              color="green"
-              small
-            >
-              mdi-arrow-up
-            </v-icon>
-            <span class="green--text">55%</span>&nbsp;
-            increase in today's sales
-          </p>
-
-          <template slot="actions">
-            <v-icon
-              class="mr-2"
-              small
-            >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
-          </template>
-        </material-chart-card>
-      </v-flex>
-
-      <!-- 통계 3 - 카테고리 -->
-      <v-flex
-        md12
-        sm12
-        lg6
-      >
-        <material-chart-card
-          :data="categoryData.data"
-          :options="categoryData.options"
-          color="red"
-          type="Bar"
-        >
-          <h4 class="title font-weight-light">Email Subscription</h4>
-          <p class="category d-inline-flex font-weight-light">Last Campaign Performance</p>
-
-          <template slot="actions">
-            <v-icon
-              class="mr-2"
-              small
-            >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
-          </template>
-        </material-chart-card>
-      </v-flex>
-
-      <!-- 통계 4 - 태그 -->
-      <v-flex
-        md12
-        sm12
-        lg6
-      >
-        <material-chart-card
-          :data="tagData.data"
-          :options="tagData.options"
-          color="red"
-          type="Bar"
-        >
-          <h4 class="title font-weight-light">Email Subscription</h4>
-          <p class="category d-inline-flex font-weight-light">Last Campaign Performance</p>
-
-          <template slot="actions">
-            <v-icon
-              class="mr-2"
-              small
-            >
-              mdi-clock-outline
-            </v-icon>
-            <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
-          </template>
-        </material-chart-card>
-      </v-flex>
-
-      <!-- 게시판 -->
-      <v-flex
-        md12
-        lg12
-      >
-        <material-card
-          color="orange"
-          title="Employee Stats"
-          text="New employees on 15th September, 2016"
-        >
-          <v-data-table
-            :headers="headers"
-            :items="this.$store.state.boards.response.content"
-            hide-actions
+          <material-chart-card
+            :data="yearlyData.data"
+            :options="yearlyData.options"
+            color="info"
+            type="Line"
           >
-            <template
-              slot="headerCell"
-              slot-scope="{ header }"
-            >
-              <span
-                class="font-weight-light text-warning text--darken-3"
-                v-text="header.text"
-              />
+            <h4 class="title font-weight-light">Daily Sales</h4>
+            <p class="category d-inline-flex font-weight-light">
+              <v-icon
+                color="green"
+                small
+              >
+                mdi-arrow-up
+              </v-icon>
+              <span class="green--text">55%</span>&nbsp;
+              increase in today's sales
+            </p>
+
+            <template slot="actions">
+              <v-icon
+                class="mr-2"
+                small
+              >
+                mdi-clock-outline
+              </v-icon>
+              <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
             </template>
-            <template
-              slot="items"
-              slot-scope="{ item }"
-            >
-              <td>{{ item.id }}</td>
-              <router-link
-                :to="{name:'Board Detail', params:{boardId:item.id}}">
-                <td>{{ item.title }}</td>
-              </router-link>
-              <td>{{ item.views }}</td>
-              <td>{{ item.modifiedDate }}</td>
+          </material-chart-card>
+        </v-flex>
+
+        <!-- 통계 2 - 월간 교육 건수, 시간 -->
+        <v-flex
+          md12
+          sm12
+          lg6
+        >
+          <material-chart-card
+            :data="monthlyData.data"
+            :options="monthlyData.options"
+            color="info"
+            type="Line"
+          >
+            <h4 class="title font-weight-light">Daily Sales</h4>
+            <p class="category d-inline-flex font-weight-light">
+              <v-icon
+                color="green"
+                small
+              >
+                mdi-arrow-up
+              </v-icon>
+              <span class="green--text">55%</span>&nbsp;
+              increase in today's sales
+            </p>
+
+            <template slot="actions">
+              <v-icon
+                class="mr-2"
+                small
+              >
+                mdi-clock-outline
+              </v-icon>
+              <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
             </template>
-          </v-data-table>
-        </material-card>
-      </v-flex>
-    </v-layout>
-  </v-container>
+          </material-chart-card>
+        </v-flex>
+
+        <!-- 통계 3 - 카테고리 -->
+        <v-flex
+          md12
+          sm12
+          lg6
+        >
+          <material-chart-card
+            :data="categoryData.data"
+            :options="categoryData.options"
+            color="red"
+            type="Bar"
+          >
+            <h4 class="title font-weight-light">Email Subscription</h4>
+            <p class="category d-inline-flex font-weight-light">Last Campaign Performance</p>
+
+            <template slot="actions">
+              <v-icon
+                class="mr-2"
+                small
+              >
+                mdi-clock-outline
+              </v-icon>
+              <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
+            </template>
+          </material-chart-card>
+        </v-flex>
+
+        <!-- 통계 4 - 태그 -->
+        <v-flex
+          md12
+          sm12
+          lg6
+        >
+          <material-chart-card
+            :data="tagData.data"
+            :options="tagData.options"
+            color="red"
+            type="Bar"
+          >
+            <h4 class="title font-weight-light">Email Subscription</h4>
+            <p class="category d-inline-flex font-weight-light">Last Campaign Performance</p>
+
+            <template slot="actions">
+              <v-icon
+                class="mr-2"
+                small
+              >
+                mdi-clock-outline
+              </v-icon>
+              <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
+            </template>
+          </material-chart-card>
+        </v-flex>
+
+        <!-- 게시판 -->
+        <v-flex
+          md12
+          lg12
+        >
+          <material-card
+            color="orange"
+            title="Employee Stats"
+            text="New employees on 15th September, 2016"
+          >
+            <v-data-table
+              :headers="headers"
+              :items="this.$store.state.boards"
+              hide-actions
+            >
+              <template
+                slot="headerCell"
+                slot-scope="{ header }"
+              >
+                <span
+                  class="font-weight-light text-warning text--darken-3"
+                  v-text="header.text"
+                />
+              </template>
+              <template
+                slot="items"
+                slot-scope="{ item }"
+              >
+                <td>{{ item.id }}</td>
+                <router-link
+                  :to="{name:'Board Detail', params:{boardId:item.id}}">
+                  <td>{{ item.title }}</td>
+                </router-link>
+                <td>{{ item.views }}</td>
+                <td>{{ item.modifiedDate }}</td>
+              </template>
+            </v-data-table>
+          </material-card>
+        </v-flex>
+      </v-layout>
+    </v-container>
+  </div>
 </template>
 
 <script>
@@ -181,6 +183,7 @@ import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
+      userId: {},
       yearlyData: {
         data: {
           labels: [],
@@ -272,7 +275,9 @@ export default {
           text: '수정일',
           value: 'modifiedDate'
         }
-      ]
+      ],
+      // Flag
+      isGetData: false
     }
   },
   computed: {
@@ -280,11 +285,20 @@ export default {
       boards: 'fetchedBoards'
     })
   },
-  created () {
+  async created () {
     const vm = this
+    vm.userId = 866
     bus.$emit('start:spinner')
-    statisticsEvent.readStatisticsMain(vm)
-    this.$store.dispatch('FETCH_BOARDS')
+    try {
+      await statisticsEvent.readStatisticsMain(vm)
+      await vm.$store.dispatch('FETCH_BOARDS')
+      await vm.$store.dispatch('FETCH_EDUCATIONS', vm.userId)
+      vm.isGetData = true
+    } catch (error) {
+      // Error Page
+      console.log(error)
+    }
+    bus.$emit('end:spinner')
   },
   methods: {
   }

@@ -1,9 +1,7 @@
 // https://vuex.vuejs.org/en/getters.html
-
 export default {
   fetchedBoards (state) {
-    console.log(state.boards.response)
-    return state.boards.response
+    return state.boards
   },
   fetchedEducations (state) {
     return state.educations.response
