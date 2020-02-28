@@ -5,7 +5,7 @@ import { getEducationList } from '../api/education/education.js'
 export default {
   async FETCH_BOARDS (context) {
     const response = await getBoardList()
-    context.commit('SET_BOARDS', response.data.response.content)
+    context.commit('SET_BOARDS', response.data.response)
   },
   FETCH_EDUCATIONS (context, userId) {
     return getEducationList(userId)

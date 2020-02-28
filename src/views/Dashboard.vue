@@ -144,7 +144,7 @@
           >
             <v-data-table
               :headers="headers"
-              :items="this.$store.state.boards"
+              :items="this.$store.state.boards.content"
               hide-actions
             >
               <template
