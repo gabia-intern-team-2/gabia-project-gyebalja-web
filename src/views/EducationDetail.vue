@@ -249,6 +249,7 @@
 
 <script>
 import { getMyEducationItem, deleteMyEducationItem } from '../api/education/education.js'
+import bus from '../utils/bus'
 
 export default {
   data () {
@@ -267,6 +268,7 @@ export default {
   },
   // 최초 실행 라이프사이클 훅
   async created () {
+    bus.$emit('start:spinner')
     try {
       let response = await getMyEducationItem(this.$route.params.educationId)
       this.id = response.data.response.id
@@ -284,6 +286,7 @@ export default {
     } catch (error) {
       console.log(error)
     }
+    bus.$emit('end:spinner')
   },
 
   methods: {

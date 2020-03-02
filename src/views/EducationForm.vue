@@ -235,6 +235,8 @@
 <script>
 import { postEducation, getMyEducationItem, putMyEducationItem } from '../api/education/education.js'
 import { getCategoryList } from '../api/category/category.js'
+import bus from '../utils/bus'
+
 export default {
   data () {
     return {
@@ -269,6 +271,7 @@ export default {
   },
   // 최초 실행 라이프사이클 훅
   async created () {
+    bus.$emit('start:spinner')
     try {
       let categoryRes = await getCategoryList()
       this.categoryList = categoryRes.data.response
@@ -290,6 +293,7 @@ export default {
     } catch (error) {
       console.log(error)
     }
+    bus.$emit('end:spinner')
   },
 
   methods: {
