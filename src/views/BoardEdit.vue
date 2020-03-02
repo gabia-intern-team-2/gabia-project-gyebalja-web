@@ -115,33 +115,31 @@ export default {
     // Flag
     isGetData: false
   }),
-  created () {
+
+  async created () {
     // Data
-    this.userId = 866
+    const vm = this
+    vm.userId = 866
 
     // Logic
     bus.$emit('start:spinner')
-    this.initialize()
+    await boardEvent.readBoardOne(vm)
+    await store.dispatch('FETCH_EDUCATIONS', vm.userId)
+    for (let i in vm.$store.state.educations.response) {
+      vm.educationList.push({
+        id: vm.$store.state.educations.response[i].id,
+        title: vm.$store.state.educations.response[i].title })
+    }
+    vm.title = vm.responseBoard.title
+    vm.content = vm.responseBoard.content
+    vm.educationId = vm.responseBoard.educationId
+    vm.isGetData = true
+    bus.$emit('end:spinner')
   },
-  methods: {
-    /** Apis */
-    async initialize () {
-      const vm = this
-      await boardEvent.readBoardOne(vm)
-      await store.dispatch('FETCH_EDUCATIONS', vm.userId)
-      for (let i in vm.$store.state.educations.response) {
-        vm.educationList.push({ id: vm.$store.state.educations.response[i].id, title: vm.$store.state.educations.response[i].title })
-      }
-      vm.title = vm.responseBoard.title
-      vm.content = vm.responseBoard.content
-      vm.educationId = vm.responseBoard.educationId
-      vm.isGetData = true
-      bus.$emit('end:spinner')
-    },
 
-    /** Methods */
+  methods: {
+    /** Event */
     async updateBoard () {
-      // Data
       const board = {
         title: this.title,
         content: this.content,
@@ -150,7 +148,6 @@ export default {
         boardImg: this.boardImg
       }
 
-      // Logic
       await boardEvent.updateBoard(this, board)
     },
 

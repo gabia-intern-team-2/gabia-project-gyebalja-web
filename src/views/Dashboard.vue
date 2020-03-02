@@ -170,6 +170,7 @@
             </v-data-table>
           </material-card>
         </v-flex>
+
         <!-- 요약 게시판 2 - 개인 교육 내역 -->
         <v-flex
           md12
@@ -357,11 +358,13 @@ export default {
       isGetData: false
     }
   },
+
   computed: {
     ...mapGetters({
       boards: 'fetchedBoards'
     })
   },
+
   async created () {
     const vm = this
     vm.userId = 866
@@ -376,8 +379,6 @@ export default {
       console.log(error)
     }
     bus.$emit('end:spinner')
-  },
-  methods: {
   }
 }
 </script>
