@@ -5,8 +5,6 @@ import {
 
 export default {
 
-  /** Api CRUD  */
-
   async createLikes (vm) {
     const likes = {
       userId: vm.userId,
@@ -23,8 +21,6 @@ export default {
       await deleteLikesItem(vm.userId, vm.boardId)
     }
   },
-
-  /** Api etc  */
 
   async checkLikes (vm) {
     try {

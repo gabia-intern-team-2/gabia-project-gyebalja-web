@@ -196,7 +196,8 @@ export default {
     isChangeComment: false,
     isChangeCommentId: null
   }),
-  created () {
+
+  async created () {
     // Data
     const vm = this
     vm.userId = 866
@@ -207,8 +208,8 @@ export default {
     this.checkLikes()
     this.readBoardOne()
   },
+
   methods: {
-    /** Api CRUD */
     // Board
     readBoardOne () {
       boardEvent.readBoardOne(this)

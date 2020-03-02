@@ -110,32 +110,28 @@ export default {
     // Flag
     isGetData: false
   }),
-  created () {
+
+  async created () {
     // Data
-    this.userId = 866
+    const vm = this
+    vm.userId = 866
 
     // Logic
     bus.$emit('start:spinner')
-    this.initialize()
+    await store.dispatch('FETCH_EDUCATIONS', vm.userId)
+    for (let i in this.$store.state.educations.response) {
+      vm.educationList.push({
+        id: this.$store.state.educations.response[i].id,
+        title: this.$store.state.educations.response[i].title })
+    }
+    vm.isGetData = true
+    bus.$emit('end:spinner')
   },
-  methods: {
-    /** Apis */
-    async initialize () {
-      const vm = this
-      await store.dispatch('FETCH_EDUCATIONS', vm.userId)
-      for (let i in this.$store.state.educations.response) {
-        vm.educationList.push({
-          id: this.$store.state.educations.response[i].id,
-          title: this.$store.state.educations.response[i].title })
-      }
-      vm.isGetData = true
-      bus.$emit('end:spinner')
-    },
 
-    /** Methods */
+  methods: {
+    /** Event */
     createBoard () {
       boardEvent.createBoard(this)
-      console.log('createBoard')
     },
     checkValidate () {
       if (this.$refs.form.validate()) {
