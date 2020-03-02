@@ -1,16 +1,24 @@
 <template>
   <v-app>
-    <!-- HEADER -->
-    <core-toolbar />
+    <!-- 인증 후 -->
+    <div v-if="isAuthenticationUser">
+      <!-- HEADER -->
+      <core-toolbar />
 
-    <!-- RIGHT -->
-    <core-filter />
+      <!-- RIGHT -->
+      <core-filter />
 
-    <!-- LEFT -->
-    <core-drawer />
+      <!-- LEFT -->
+      <core-drawer />
 
-    <!-- CONTENTS -->
-    <core-view />
+      <!-- CONTENTS -->
+      <core-view />
+    </div>
+
+    <!-- 인증 전 -->
+    <div v-if="!isAuthenticationUser">
+      <core-login/>
+    </div>
     <spinner :loading="loadingStatus"/>
   </v-app>
 </template>
@@ -26,7 +34,8 @@ export default {
 
   data () {
     return {
-      loadingStatus: false
+      loadingStatus: false,
+      isAuthenticationUser: false
     }
   },
 
