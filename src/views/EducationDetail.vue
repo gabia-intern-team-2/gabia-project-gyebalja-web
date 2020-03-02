@@ -11,6 +11,7 @@
         xs12
         md10
       >
+        <!-- 카드 -->
         <material-card
           color="orange"
           title="교육 상세 페이지"
@@ -19,6 +20,7 @@
           <v-form>
             <v-container py-0>
               <v-layout wrap>
+                <!-- 교육 명 -->
                 <v-flex
                   xs12
                   md7
@@ -34,6 +36,7 @@
                     </v-card-text>
                   </v-card>
                 </v-flex>
+                <!-- 카테고리 -->
                 <v-flex
                   xs12
                   md3
@@ -49,6 +52,7 @@
                     </v-card-text>
                   </v-card>
                 </v-flex>
+                <!-- 등록번호 -->
                 <v-flex
                   xs12
                   md2
@@ -65,6 +69,7 @@
                     </v-card-text>
                   </v-card>
                 </v-flex>
+                <!-- 내용 -->
                 <v-flex
                   xs12
                   md12
@@ -85,6 +90,7 @@
                     </v-card-text>
                   </v-card>
                 </v-flex>
+                <!-- 해시태그 -->
                 <v-flex
                   xs12
                   md6
@@ -102,6 +108,7 @@
                     </v-card-text>
                   </v-card>
                 </v-flex>
+                <!-- 교육장소 -->
                 <v-flex
                   xs12
                   md3
@@ -119,6 +126,7 @@
                     </v-card-text>
                   </v-card>
                 </v-flex>
+                <!-- 교육유형 -->
                 <v-flex
                   xs12
                   md3
@@ -136,6 +144,7 @@
                     </v-card-text>
                   </v-card>
                 </v-flex>
+                <!-- 시작날짜 -->
                 <v-flex
                   xs12
                   md5
@@ -153,6 +162,7 @@
                     </v-card-text>
                   </v-card>
                 </v-flex>
+                <!-- 종료날짜 -->
                 <v-flex
                   xs12
                   md5
@@ -170,6 +180,7 @@
                     </v-card-text>
                   </v-card>
                 </v-flex>
+                <!-- 교육시간 -->
                 <v-flex
                   xs12
                   md2
@@ -187,10 +198,12 @@
                     </v-card-text>
                   </v-card>
                 </v-flex>
+                <!-- 버튼 -->
                 <v-flex
                   xs6
                   text-xs-left
                 >
+                  <!-- 목록으로 버튼 -->
                   <v-btn
                     class="mx-1 font-weight-light"
                     color="info"
@@ -204,6 +217,7 @@
                   xs6
                   text-xs-right
                 >
+                  <!-- 수정 버튼 -->
                   <router-link
                     :to="{name: 'Education Edit', params: {educationId: id}}">
                     <v-btn
@@ -214,6 +228,7 @@
                       수정
                     </v-btn>
                   </router-link>
+                  <!-- 삭제 버튼 -->
                   <v-btn
                     class="mx-1 font-weight-light"
                     color="error"
@@ -234,6 +249,7 @@
 
 <script>
 import { getMyEducationItem, deleteMyEducationItem } from '../api/education/education.js'
+import bus from '../utils/bus'
 
 export default {
   data () {
@@ -250,30 +266,37 @@ export default {
       endDate: ''
     }
   },
-  created () {
-    getMyEducationItem(this.$route.params.educationId)
-      .then(response => {
-        this.id = response.data.response.id
-        this.title = response.data.response.title
-        this.content = response.data.response.content
-        this.startDate = response.data.response.startDate
-        this.endDate = response.data.response.endDate
-        this.totalHours = response.data.response.totalHours
-        this.place = response.data.response.place
-        this.type = response.data.response.type
-        this.category = response.data.response.category
-        for (var i = 0; i < response.data.response.eduTags.length; i++) {
-          this.hashTags += response.data.response.eduTags[i].tagName + ' '
-        }
-      })
-      .catch(error => console.log(error))
+  // 최초 실행 라이프사이클 훅
+  async created () {
+    bus.$emit('start:spinner')
+    try {
+      let response = await getMyEducationItem(this.$route.params.educationId)
+      this.id = response.data.response.id
+      this.title = response.data.response.title
+      this.content = response.data.response.content
+      this.startDate = response.data.response.startDate
+      this.endDate = response.data.response.endDate
+      this.totalHours = response.data.response.totalHours
+      this.place = response.data.response.place
+      this.type = response.data.response.type
+      this.category = response.data.response.category
+      for (let i = 0; i < response.data.response.eduTags.length; i++) {
+        this.hashTags += response.data.response.eduTags[i].tagName + ' '
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    bus.$emit('end:spinner')
   },
+
   methods: {
+    // 삭제 메서드
     removeEducation () {
       confirm('정말 삭제하시겠습니까?') && deleteMyEducationItem(this.$route.params.educationId)
         .then(this.$router.push('/myEducation'))
         .catch(error => console.log(error))
     },
+    // 목록으로 메서드
     back () {
       this.$router.push('/myEducation')
     }
