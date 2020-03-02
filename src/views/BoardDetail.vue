@@ -36,6 +36,7 @@
                   <h6 class="category text-gray font-weight-thin mb-3">교육명 - {{ responseBoard.educationTitle }}</h6><br>
                   <h3 class="card-title font-weight-light">{{ responseBoard.title }}</h3>
                   <p
+                    id="my-v-html"
                     class="font-weight-light"
                     v-html="responseBoard.content"/>
                   <v-flex>
@@ -276,8 +277,16 @@ export default {
   padding-bottom:1%;
 }
 
+#my-v-html
+  /deep/ pre {
+  background-color: black !important;
+  color: #f8f8f2 !important;
+  overflow: visible;
+}
+
 .v-card {
   padding-bottom: 1%;
   margin-bottom: 3%;
 }
+
 </style>
