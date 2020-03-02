@@ -20,7 +20,9 @@
             text="게시글을 작성해주세요."
           >
             <!-- 입력 폼 -->
-            <v-form>
+            <v-form
+              ref="form"
+            >
               <v-container py-0>
                 <v-layout column>
                   <v-flex
@@ -29,6 +31,7 @@
                   >
                     <v-text-field
                       v-model="title"
+                      :rules="[v => !!v || '제목명은 필수 입력사항입니다.']"
                       label="제목"
                       class="green-input"
                       hint="제목을 입력해주세요"
@@ -47,6 +50,7 @@
                     <v-select
                       :items="educationList"
                       :reduce="title => title.id"
+                      :rules="[v => !!v || '교육명은 필수 입력사항입니다.']"
                       v-model="educationId"
                       item-text="title"
                       item-value="id"
@@ -71,7 +75,7 @@
                     <v-btn
                       class="mx-0 font-weight-light"
                       color="success"
-                      @click="createBoard"
+                      @click="checkValidate"
                     >
                       등록하기
                     </v-btn>
@@ -131,6 +135,12 @@ export default {
     /** Methods */
     createBoard () {
       boardEvent.createBoard(this)
+      console.log('createBoard')
+    },
+    checkValidate () {
+      if (this.$refs.form.validate()) {
+        this.createBoard()
+      }
     }
   }
 }
