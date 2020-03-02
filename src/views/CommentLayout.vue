@@ -152,11 +152,15 @@ export default {
       }
     },
 
-    deleteComment (commentId) {
+    async deleteComment (commentId) {
       const vm = this
-      confirm('정말 삭제하시겠습니까?') && deleteCommentItem(commentId)
-        .then(response => vm.$router.go())
-        .catch(error => console.log(error))
+      try {
+        confirm('정말 삭제하시겠습니까?') && await deleteCommentItem(commentId)
+        vm.$router.go()
+      } catch (error) {
+        console.log(error)
+        vm.$router.push({ name: 'Board List' })
+      }
     },
 
     changeComment (comment, flag) {

@@ -38,9 +38,6 @@
                       required/>
                   </v-flex>
                   <v-flex xs12>
-                    <!-- <vue-editor
-                      v-model="content"
-                      placeholder="내용을 입력해주세요"/> -->
                     <vue-editor
                       id="editor"
                       v-model="content"
@@ -93,11 +90,11 @@
 </template>
 
 <script>
-import { store } from '../store/index.js'
-import bus from '../utils/bus.js'
-import boardEvent from '../api/board/boardEvent.js'
-import { VueEditor } from 'vue2-editor'
 import axios from 'axios'
+import bus from '../utils/bus.js'
+import { store } from '../store/index.js'
+import { postBoardItem } from '../api/board/board.js'
+import { VueEditor } from 'vue2-editor'
 
 export default {
   components: {
@@ -121,25 +118,43 @@ export default {
 
   async created () {
     // Data
-    const vm = this
-    vm.userId = 2
+    this.userId = 2
 
     // Logic
     bus.$emit('start:spinner')
-    await store.dispatch('FETCH_EDUCATIONS', vm.userId)
-    for (let i in this.$store.state.educations.response) {
-      vm.educationList.push({
-        id: this.$store.state.educations.response[i].id,
-        title: this.$store.state.educations.response[i].title })
-    }
-    vm.isGetData = true
+    this.initialize()
     bus.$emit('end:spinner')
   },
 
   methods: {
-    /** Event */
-    createBoard () {
-      boardEvent.createBoard(this)
+    async initialize () {
+      const vm = this
+
+      await store.dispatch('FETCH_EDUCATIONS', vm.userId)
+      for (let i in this.$store.state.educations.response) {
+        vm.educationList.push({
+          id: this.$store.state.educations.response[i].id,
+          title: this.$store.state.educations.response[i].title })
+      }
+      vm.isGetData = true
+    },
+
+    async createBoard () {
+      const vm = this
+      const board = {
+        title: vm.title,
+        content: vm.content,
+        educationId: vm.educationId,
+        userId: 2,
+        boardImg: vm.boardImg
+      }
+      console.log(board)
+      try {
+        await postBoardItem(board)
+      } catch (error) {
+        console.log(error)
+      }
+      vm.$router.push({ name: 'Board List' })
     },
 
     checkValidate () {
