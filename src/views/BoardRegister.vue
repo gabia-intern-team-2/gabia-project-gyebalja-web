@@ -38,14 +38,16 @@
                       required/>
                   </v-flex>
                   <v-flex xs12>
-                    <v-textarea
+                    <!-- <vue-editor
                       v-model="content"
-                      class="green-input"
-                      label="본문"
-                      hint="본문을 입력해주세요"
-                      rows="20"
-                    />
+                      placeholder="내용을 입력해주세요"/> -->
+                    <vue-editor
+                      id="editor"
+                      v-model="content"
+                      use-custom-image-handler
+                      @image-added="handleImageAdded"/>
                   </v-flex>
+                  {{ content }}
                   <v-flex xs12>
                     <v-select
                       :items="educationList"
@@ -94,8 +96,14 @@
 import { store } from '../store/index.js'
 import bus from '../utils/bus.js'
 import boardEvent from '../api/board/boardEvent.js'
+import { VueEditor } from 'vue2-editor'
+import axios from 'axios'
 
 export default {
+  components: {
+    VueEditor
+  },
+
   data: () => ({
     // Data
     title: '',
@@ -114,7 +122,7 @@ export default {
   async created () {
     // Data
     const vm = this
-    vm.userId = 866
+    vm.userId = 2
 
     // Logic
     bus.$emit('start:spinner')
@@ -137,6 +145,28 @@ export default {
       if (this.$refs.form.validate()) {
         this.createBoard()
       }
+    },
+    handleImageAdded (file, Editor, cursorLocation, resetUploader) {
+      // An example of using FormData
+      // NOTE: Your key could be different such as:
+      // formData.append('file', file)
+
+      var formData = new FormData()
+      formData.append('image', file)
+
+      axios({
+        url: 'http://localhost:8282/api/v1/boardImgs',
+        method: 'POST',
+        data: formData
+      })
+        .then(result => {
+          let url = result.data // Get url from response
+          Editor.insertEmbed(cursorLocation, 'image', url)
+          resetUploader()
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }

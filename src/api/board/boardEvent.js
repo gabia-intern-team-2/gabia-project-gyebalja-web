@@ -13,10 +13,10 @@ export default {
       title: vm.title,
       content: vm.content,
       educationId: vm.educationId,
-      userId: 866,
+      userId: 2,
       boardImg: vm.boardImg
     }
-
+    console.log(board)
     try {
       await postBoardItem(board)
       vm.$router.push({ name: 'Board List' })

@@ -367,7 +367,7 @@ export default {
 
   async created () {
     const vm = this
-    vm.userId = 866
+    vm.userId = 2
     bus.$emit('start:spinner')
     try {
       await statisticsEvent.readStatisticsMain(vm)

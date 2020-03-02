@@ -291,7 +291,7 @@ export default {
           place: this.place,
           categoryId: this.category,
           hashTag: this.hashTag,
-          userId: '866'
+          userId: '2'
         }
         postEducation(education)
           .then(response => this.$router.push('/myEducation'))
@@ -310,7 +310,7 @@ export default {
           place: this.place,
           categoryId: this.category.id,
           hashTag: this.hashTag,
-          userId: '866'
+          userId: '2'
         }
         putMyEducationItem(this.$route.params.educationId, editedEducation)
           .then(response => this.$router.push({ name: 'Education Detail', params: { educationId: this.$route.params.educationId } }))
