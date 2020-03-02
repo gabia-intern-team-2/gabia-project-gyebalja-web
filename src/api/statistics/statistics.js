@@ -6,7 +6,11 @@ import { config } from '../index.js'
 function getStatisticsMain () {
   return axios.get(`${config.baseUrl}statistics/main`)
 }
-
+/** 조회 - 사용자 교육 관리 페이지 */
+function getStatisticsEducation (userId) {
+  return axios.get(`${config.baseUrl}statistics/education/users/${userId}`)
+}
 export {
-  getStatisticsMain
+  getStatisticsMain,
+  getStatisticsEducation
 }
