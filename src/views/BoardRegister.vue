@@ -141,26 +141,27 @@ export default {
     createBoard () {
       boardEvent.createBoard(this)
     },
+
     checkValidate () {
       if (this.$refs.form.validate()) {
         this.createBoard()
       }
     },
-    handleImageAdded (file, Editor, cursorLocation, resetUploader) {
-      // An example of using FormData
-      // NOTE: Your key could be different such as:
-      // formData.append('file', file)
 
-      var formData = new FormData()
+    handleImageAdded (file, Editor, cursorLocation, resetUploader) {
+      let formData = new FormData()
       formData.append('image', file)
 
+      let baseUrl = 'http://localhost:8282'
+
       axios({
-        url: 'http://localhost:8282/api/v1/boardImgs',
+        url: baseUrl + '/api/v1/boardImgs',
         method: 'POST',
         data: formData
       })
         .then(result => {
           let url = result.data // Get url from response
+          url = baseUrl + url
           Editor.insertEmbed(cursorLocation, 'image', url)
           resetUploader()
         })
