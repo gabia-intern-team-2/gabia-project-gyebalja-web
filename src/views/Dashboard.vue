@@ -133,19 +133,18 @@
         </v-flex>
 
         <!-- 게시판 -->
+        <!-- 요약 게시판 1 - 교육 게시판 -->
         <v-flex
           md12
           lg12
         >
           <material-card
-            color="orange"
-            title="Employee Stats"
-            text="New employees on 15th September, 2016"
+            color="cyan"
+            title="교육 게시판"
           >
             <v-data-table
               :headers="headers"
-              :items="this.$store.state.boards"
-              hide-actions
+              :items="this.$store.state.boards.content"
             >
               <template
                 slot="headerCell"
@@ -167,6 +166,46 @@
                 </router-link>
                 <td>{{ item.views }}</td>
                 <td>{{ item.modifiedDate }}</td>
+              </template>
+            </v-data-table>
+          </material-card>
+        </v-flex>
+        <!-- 요약 게시판 2 - 개인 교육 내역 -->
+        <v-flex
+          md12
+          lg12
+        >
+          <material-card
+            color="cyan"
+            title="개인 교육 내역"
+          >
+            <v-data-table
+              :headers="educationHeaders"
+              :items="this.$store.state.educations.response"
+            >
+              <template
+                slot="headerCell"
+                slot-scope="{ header }"
+              >
+                <span
+                  class="font-weight-light text-warning text--darken-3"
+                  v-text="header.text"
+                />
+              </template>
+              <template
+                slot="items"
+                slot-scope="{ item }"
+              >
+                <router-link
+                  :to="{name:'Education Detail', params:{educationId:item.id}}">
+                  <td>{{ item.title }}</td>
+                </router-link>
+                <td>{{ item.startDate }}</td>
+                <td>{{ item.endDate }}</td>
+                <td>{{ item.totalHours }}hr</td>
+                <td>{{ item.type }}</td>
+                <td>{{ item.place }}</td>
+                <td>{{ item.category.name }}</td>
               </template>
             </v-data-table>
           </material-card>
@@ -274,6 +313,44 @@ export default {
           sortable: false,
           text: '수정일',
           value: 'modifiedDate'
+        }
+      ],
+      educationHeaders: [
+        {
+          sortable: false,
+          text: '교육명',
+          value: 'title',
+          width: '480px'
+        },
+        {
+          sortable: false,
+          text: '시작날짜',
+          value: 'startDate'
+        },
+        {
+          sortable: false,
+          text: '종료날짜',
+          value: 'endDate'
+        },
+        {
+          sortable: false,
+          text: '시간',
+          value: 'totalHours'
+        },
+        {
+          sortable: false,
+          text: '교육유형',
+          value: 'type'
+        },
+        {
+          sortable: false,
+          text: '장소',
+          value: 'place'
+        },
+        {
+          sortable: false,
+          text: '카테고리',
+          value: 'category'
         }
       ],
       // Flag

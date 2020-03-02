@@ -20,7 +20,9 @@
             text="게시글을 작성해주세요."
           >
             <!-- 입력 폼 -->
-            <v-form>
+            <v-form
+              ref="form"
+            >
               <v-container py-0>
                 <v-layout column>
                   <v-flex
@@ -29,6 +31,7 @@
                   >
                     <v-text-field
                       v-model="title"
+                      :rules="[v => !!v || '제목명은 필수 입력사항입니다']"
                       label="제목"
                       class="green-input"
                       hint="제목을 입력해주세요"
@@ -50,6 +53,7 @@
                     <v-select
                       :items="educationList"
                       :reduce="title => title.id"
+                      :rules="[v => !!v || '교육명은 필수 입력사항입니다.']"
                       v-model="educationId"
                       item-text="title"
                       item-value="id"
@@ -74,7 +78,7 @@
                     <v-btn
                       class="mx-0 font-weight-light"
                       color="success"
-                      @click="submit"
+                      @click="checkValidate"
                     >
                       수정하기
                     </v-btn>
@@ -136,7 +140,7 @@ export default {
     },
 
     /** Methods */
-    async submit () {
+    async updateBoard () {
       // Data
       const board = {
         title: this.title,
@@ -148,6 +152,12 @@ export default {
 
       // Logic
       await boardEvent.updateBoard(this, board)
+    },
+
+    checkValidate () {
+      if (this.$refs.form.validate()) {
+        this.updateBoard()
+      }
     }
   }
 }
