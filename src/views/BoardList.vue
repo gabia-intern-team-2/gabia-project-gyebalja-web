@@ -20,7 +20,9 @@
           >
             <v-data-table
               :headers="headers"
-              :items="this.$store.state.boards"
+              :items="this.$store.state.boards.content"
+              :pagination.sync="pagination"
+              hide-actions
             >
               <!-- 테이블 -->
               <!-- 테이블 헤더 -->
@@ -67,6 +69,14 @@
               </router-link>
             </v-flex>
           </material-card>
+          <!-- 페이징 -->
+          <div class="text-xs-center pt-2">
+            <v-pagination
+              v-model="pagination.page"
+              :length="this.$store.state.boards.totalPages"
+              color="info"
+              circle/>
+          </div>
         </v-flex>
       </v-layout>
     </v-container>
@@ -78,6 +88,7 @@ import { mapGetters } from 'vuex'
 import bus from '../utils/bus'
 export default {
   data: () => ({
+    pagination: {},
     headers: [
       {
         sortable: false,
