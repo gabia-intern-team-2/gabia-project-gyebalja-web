@@ -17,7 +17,9 @@
           text="* 보라색 필드는 필수입력 사항입니다."
         >
           <v-form
-            ref="form">
+            ref="form"
+            v-model="valid"
+            lazy-validation>
             <v-container py-0>
               <v-layout wrap>
                 <v-flex
@@ -40,6 +42,7 @@
                   <v-select
                     v-model="category"
                     :items="categoryList"
+                    :rules="[ v => !!v || '카테고리는 필수 입력사항입니다']"
                     label="카테고리(Category)"
                     hint=""
                     class="purple-input"
@@ -131,6 +134,7 @@
                     />
                     <v-date-picker
                       v-model="sdate"
+                      :max="getMaxDate"
                       @input="$refs.startDate.save(sdate)"/>
                   </v-menu>
                 </v-flex>
@@ -154,6 +158,7 @@
                     <v-text-field
                       slot="activator"
                       v-model="edate"
+                      :rules="[v => !!v || '종료날짜는 필수 입력사항입니다']"
                       class="purple-input"
                       label="교육 종료날짜(endDate)"
                       readonly
@@ -163,6 +168,7 @@
                     />
                     <v-date-picker
                       v-model="edate"
+                      :min="getMinDate"
                       @input="$refs.endDate.save(edate)"/>
                   </v-menu>
                 </v-flex>
@@ -203,6 +209,7 @@
                       </v-tooltip>
                     </v-slide-x-reverse-transition> -->
                   <v-btn
+                    :disabled="!valid"
                     class="mx-1 font-weight-light"
                     color="success"
                     @click="submit"
@@ -234,6 +241,7 @@ import { getCategoryList } from '../api/category/category.js'
 export default {
   data () {
     return {
+      valid: true,
       title: '',
       category: null,
       content: '',
@@ -242,7 +250,7 @@ export default {
       type: null,
       totalHours: '',
       totalHoursRules: [
-        v => !!v || '교육시간은 필수 입력사항입니다.',
+        v => !!v || '필수 입력사항입니다.',
         v => (v && v > 0) || '0보다 큰값을 입력해주세요.'
       ],
       sdate: null,
@@ -251,6 +259,14 @@ export default {
       endDate: false,
       categoryList: [],
       edutypeList: ['ONLINE', 'OFFLINE']
+    }
+  },
+  computed: {
+    getMinDate () {
+      return this.sdate
+    },
+    getMaxDate () {
+      return this.edate
     }
   },
   created () {
@@ -280,44 +296,48 @@ export default {
   },
   methods: {
     submit () {
-      if (this.$route.name === 'Education Register') {
-        var education = {
-          title: this.title,
-          content: this.content,
-          startDate: this.sdate,
-          endDate: this.edate,
-          totalHours: this.totalHours,
-          type: this.type,
-          place: this.place,
-          categoryId: this.category,
-          hashTag: this.hashTag,
-          userId: '866'
+      if (this.$refs.form.validate()) {
+        if (this.$route.name === 'Education Register') {
+          var education = {
+            title: this.title,
+            content: this.content,
+            startDate: this.sdate,
+            endDate: this.edate,
+            totalHours: this.totalHours,
+            type: this.type,
+            place: this.place,
+            categoryId: this.category,
+            hashTag: this.hashTag,
+            userId: '1952'
+          }
+          postEducation(education)
+            .then(response => this.$router.push('/myEducation'))
+            .catch(error => {
+              console.log(error)
+              alert('값을 정확히 입력해주세요.')
+            })
+        } else {
+          var editedEducation = {
+            title: this.title,
+            content: this.content,
+            startDate: this.sdate,
+            endDate: this.edate,
+            totalHours: this.totalHours,
+            type: this.type,
+            place: this.place,
+            categoryId: this.category.id,
+            hashTag: this.hashTag,
+            userId: '1952'
+          }
+          putMyEducationItem(this.$route.params.educationId, editedEducation)
+            .then(response => this.$router.push({
+              name: 'Education Detail', params: { educationId: this.$route.params.educationId }
+            }))
+            .catch(error => {
+              console.log(error)
+              alert('값을 정확히 입력해주세요.')
+            })
         }
-        postEducation(education)
-          .then(response => this.$router.push('/myEducation'))
-          .catch(error => {
-            console.log(error)
-            alert('값을 정확히 입력해주세요.')
-          })
-      } else {
-        var editedEducation = {
-          title: this.title,
-          content: this.content,
-          startDate: this.sdate,
-          endDate: this.edate,
-          totalHours: this.totalHours,
-          type: this.type,
-          place: this.place,
-          categoryId: this.category.id,
-          hashTag: this.hashTag,
-          userId: '866'
-        }
-        putMyEducationItem(this.$route.params.educationId, editedEducation)
-          .then(response => this.$router.push({ name: 'Education Detail', params: { educationId: this.$route.params.educationId } }))
-          .catch(error => {
-            console.log(error)
-            alert('값을 정확히 입력해주세요.')
-          })
       }
     },
     back () {
