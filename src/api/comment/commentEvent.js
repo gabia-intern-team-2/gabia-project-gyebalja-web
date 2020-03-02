@@ -5,8 +5,6 @@ import {
 
 export default {
 
-  /** Api CRUD  */
-
   async createComment (vm) {
     const comment = {
       content: vm.commentContent,
@@ -18,7 +16,7 @@ export default {
       await postCommentItem(comment)
     } catch (error) {
       // Error Page
-      vm.$router.go()
+      vm.$router.push({ name: 'Board List' })
     }
 
     vm.$router.go()
@@ -47,8 +45,6 @@ export default {
       .then(response => console.log(response))
       .catch(error => console.log(error))
   },
-
-  /** Api etc  */
 
   changeComment (vm, comment, flag) {
     if (flag === true) {

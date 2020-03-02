@@ -8,8 +8,6 @@ import {
 
 export default {
 
-  /** Api CRUD */
-
   async createBoard (vm) {
     const board = {
       title: vm.title,
@@ -36,7 +34,7 @@ export default {
       bus.$emit('end:spinner')
     } catch (error) {
       // Error Page
-      vm.$router.go()
+      vm.$router.push({ name: 'Board List' })
       console.log(error)
     }
   },

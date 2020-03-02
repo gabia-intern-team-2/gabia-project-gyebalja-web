@@ -114,11 +114,13 @@ export default {
 
     isGetData: false
   }),
+
   computed: {
     ...mapGetters({
       boards: 'fetchedBoards'
     })
   },
+
   async created () {
     bus.$emit('start:spinner')
     try {
