@@ -122,6 +122,24 @@ export default {
     this.initialize()
     bus.$emit('end:spinner')
   },
+<<<<<<< HEAD
+=======
+
+  methods: {
+    // Board
+    readBoardOne () {
+      boardEvent.readBoardOne(this)
+    },
+
+    deleteBoard () {
+      boardEvent.deleteBoardWithConfirm(this, 'board')
+    },
+
+    // Comment
+    createComment () {
+      commentEvent.createComment(this)
+    },
+>>>>>>> 84290d426d0a2d97622892d8bdba9dd612aefb25
 
   methods: {
     async initialize () {

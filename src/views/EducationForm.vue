@@ -11,15 +11,19 @@
         xs12
         md10
       >
+        <!-- 카드 -->
         <material-card
           color="green"
           title="나의 교육 입력"
           text="* 보라색 필드는 필수입력 사항입니다."
         >
           <v-form
-            ref="form">
+            ref="form"
+            v-model="valid"
+            lazy-validation>
             <v-container py-0>
               <v-layout wrap>
+                <!-- 교육 명 입력 란 -->
                 <v-flex
                   xs12
                   md8
@@ -33,6 +37,7 @@
                     required
                   />
                 </v-flex>
+                <!-- 카테고리 셀렉트 박스 -->
                 <v-flex
                   xs12
                   md4
@@ -40,6 +45,7 @@
                   <v-select
                     v-model="category"
                     :items="categoryList"
+                    :rules="[ v => !!v || '카테고리는 필수 입력사항입니다']"
                     label="카테고리(Category)"
                     hint=""
                     class="purple-input"
@@ -51,6 +57,7 @@
                     color="purple"
                   />
                 </v-flex>
+                <!-- 교육 내용 입력 란 -->
                 <v-flex
                   xs12
                   md12
@@ -62,6 +69,7 @@
                     hint="교육 내용을 입력해주세요."
                   />
                 </v-flex>
+                <!-- 해시태그 입력 란 -->
                 <v-flex
                   xs12
                   md6
@@ -73,6 +81,7 @@
                     prepend-icon="mdi-tag"
                   />
                 </v-flex>
+                <!-- 교육장소 입력 란 -->
                 <v-flex
                   xs12
                   md3
@@ -84,6 +93,7 @@
                     prepend-icon="mdi-map-marker"
                   />
                 </v-flex>
+                <!-- 교육유형 셀렉트 박스 -->
                 <v-flex
                   xs12
                   md3
@@ -102,6 +112,7 @@
                     color="purple"
                   />
                 </v-flex>
+                <!-- 시작날짜 입력 란 및 Date Picker -->
                 <v-flex
                   xs12
                   md5
@@ -131,9 +142,11 @@
                     />
                     <v-date-picker
                       v-model="sdate"
+                      :max="getMaxDate"
                       @input="$refs.startDate.save(sdate)"/>
                   </v-menu>
                 </v-flex>
+                <!-- 종료날짜 입력 란 및 Date Picker -->
                 <v-flex
                   xs12
                   md5
@@ -154,6 +167,7 @@
                     <v-text-field
                       slot="activator"
                       v-model="edate"
+                      :rules="[v => !!v || '종료날짜는 필수 입력사항입니다']"
                       class="purple-input"
                       label="교육 종료날짜(endDate)"
                       readonly
@@ -163,9 +177,11 @@
                     />
                     <v-date-picker
                       v-model="edate"
+                      :min="getMinDate"
                       @input="$refs.endDate.save(edate)"/>
                   </v-menu>
                 </v-flex>
+                <!-- 교육시간 입력 란 -->
                 <v-flex
                   xs12
                   md2
@@ -182,27 +198,14 @@
                     color="purple"
                   />
                 </v-flex>
+                <!-- 버튼 -->
                 <v-flex
                   xs12
                   text-xs-right
                 >
-                  <!-- <v-slide-x-reverse-transition>
-                      <v-tooltip
-                        v-if="formHasErrors"
-                        left
-                      >
-                        <v-btn
-                          slot="activator"
-                          icon
-                          class="my-0"
-                          @click="resetForm"
-                        >
-                          <v-icon color="blue">mdi-autorenew</v-icon>
-                        </v-btn>
-                        <span>초기화</span>
-                      </v-tooltip>
-                    </v-slide-x-reverse-transition> -->
+                  <!-- 등록 버튼 -->
                   <v-btn
+                    :disabled="!valid"
                     class="mx-1 font-weight-light"
                     color="success"
                     @click="submit"
@@ -210,6 +213,7 @@
                     <v-icon>mdi-check</v-icon>
                     등록
                   </v-btn>
+                  <!-- 목록으로 버튼 -->
                   <v-btn
                     class="mx-0 font-weight-light"
                     color="info"
@@ -231,9 +235,12 @@
 <script>
 import { postEducation, getMyEducationItem, putMyEducationItem } from '../api/education/education.js'
 import { getCategoryList } from '../api/category/category.js'
+import bus from '../utils/bus'
+
 export default {
   data () {
     return {
+      valid: true,
       title: '',
       category: null,
       content: '',
@@ -242,7 +249,7 @@ export default {
       type: null,
       totalHours: '',
       totalHoursRules: [
-        v => !!v || '교육시간은 필수 입력사항입니다.',
+        v => !!v || '필수 입력사항입니다.',
         v => (v && v > 0) || '0보다 큰값을 입력해주세요.'
       ],
       sdate: null,
@@ -253,31 +260,16 @@ export default {
       edutypeList: ['ONLINE', 'OFFLINE']
     }
   },
-  created () {
-    getCategoryList()
-      .then(response => {
-        this.categoryList = response.data.response
-      })
-      .catch(error => console.log(error))
-
-    if (this.$route.name === 'Education Edit') {
-      getMyEducationItem(this.$route.params.educationId)
-        .then(response => {
-          this.title = response.data.response.title
-          this.content = response.data.response.content
-          this.sdate = response.data.response.startDate
-          this.edate = response.data.response.endDate
-          this.totalHours = response.data.response.totalHours
-          this.place = response.data.response.place
-          this.type = response.data.response.type
-          this.category = response.data.response.category
-          for (var i = 0; i < response.data.response.eduTags.length; i++) {
-            this.hashTag += response.data.response.eduTags[i].tagName + ' '
-          }
-        })
-        .catch(error => console.log(error))
+  // date picker의 시작 날짜 종료 날짜 선택 범위
+  computed: {
+    getMinDate () {
+      return this.sdate
+    },
+    getMaxDate () {
+      return this.edate
     }
   },
+<<<<<<< HEAD
   methods: {
     submit () {
       if (this.$route.name === 'Education Register') {
@@ -292,12 +284,59 @@ export default {
           categoryId: this.category,
           hashTag: this.hashTag,
           userId: '2'
+=======
+  // 최초 실행 라이프사이클 훅
+  async created () {
+    bus.$emit('start:spinner')
+    try {
+      let categoryRes = await getCategoryList()
+      this.categoryList = categoryRes.data.response
+      // 새로 작성이 아니라 수정인 경우 값 매핑
+      if (this.$route.name === 'Education Edit') {
+        let educationRes = await getMyEducationItem(this.$route.params.educationId)
+        this.title = educationRes.data.response.title
+        this.content = educationRes.data.response.content
+        this.sdate = educationRes.data.response.startDate
+        this.edate = educationRes.data.response.endDate
+        this.totalHours = educationRes.data.response.totalHours
+        this.place = educationRes.data.response.place
+        this.type = educationRes.data.response.type
+        this.category = educationRes.data.response.category.id
+        for (let i = 0; i < educationRes.data.response.eduTags.length; i++) {
+          this.hashTag += educationRes.data.response.eduTags[i].tagName + ' '
+>>>>>>> 84290d426d0a2d97622892d8bdba9dd612aefb25
         }
-        postEducation(education)
-          .then(response => this.$router.push('/myEducation'))
-          .catch(error => {
+      }
+    } catch (error) {
+      console.log(error)
+    }
+    bus.$emit('end:spinner')
+  },
+
+  methods: {
+    // 등록 메서드
+    async submit () {
+      let education = {
+        title: this.title,
+        content: this.content,
+        startDate: this.sdate,
+        endDate: this.edate,
+        totalHours: this.totalHours,
+        type: this.type,
+        place: this.place,
+        categoryId: this.category,
+        hashTag: this.hashTag,
+        userId: '2'
+      }
+      if (this.$refs.form.validate()) {
+        if (this.$route.name === 'Education Register') {
+          try {
+            await postEducation(education)
+            this.$router.push('/myEducation')
+          } catch (error) {
             console.log(error)
             alert('값을 정확히 입력해주세요.')
+<<<<<<< HEAD
           })
       } else {
         var editedEducation = {
@@ -315,11 +354,23 @@ export default {
         putMyEducationItem(this.$route.params.educationId, editedEducation)
           .then(response => this.$router.push({ name: 'Education Detail', params: { educationId: this.$route.params.educationId } }))
           .catch(error => {
+=======
+          }
+        } else {
+          try {
+            await putMyEducationItem(this.$route.params.educationId, education)
+            this.$router.push({
+              name: 'Education Detail', params: { educationId: this.$route.params.educationId }
+            })
+          } catch (error) {
+>>>>>>> 84290d426d0a2d97622892d8bdba9dd612aefb25
             console.log(error)
             alert('값을 정확히 입력해주세요.')
-          })
+          }
+        }
       }
     },
+    // 목록으로 메서드
     back () {
       if (this.$route.name === 'Education Edit') {
         this.$router.push('/myEducation')

@@ -117,6 +117,7 @@ export default {
 
   async created () {
     // Data
+<<<<<<< HEAD
     this.userId = 2
 
     // Logic
@@ -154,6 +155,27 @@ export default {
         console.log(error)
       }
       vm.$router.push({ name: 'Board List' })
+=======
+    const vm = this
+    vm.userId = 866
+
+    // Logic
+    bus.$emit('start:spinner')
+    await store.dispatch('FETCH_EDUCATIONS', vm.userId)
+    for (let i in this.$store.state.educations.response) {
+      vm.educationList.push({
+        id: this.$store.state.educations.response[i].id,
+        title: this.$store.state.educations.response[i].title })
+    }
+    vm.isGetData = true
+    bus.$emit('end:spinner')
+  },
+
+  methods: {
+    /** Event */
+    createBoard () {
+      boardEvent.createBoard(this)
+>>>>>>> 84290d426d0a2d97622892d8bdba9dd612aefb25
     },
 
     checkValidate () {
