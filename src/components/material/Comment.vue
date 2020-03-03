@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { postCommentItem, putCommentItem, deleteCommentItem } from '../api/comment/comment.js'
+import { postCommentItem, putCommentItem, deleteCommentItem } from '../../api/comment/comment.js'
 
 export default {
   props: {

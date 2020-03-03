@@ -82,7 +82,7 @@
           </material-card>
 
           <!-- 댓글 -->
-          <comment-layout
+          <material-comment
             :comments="commentList"
             :user-id="userId"
             :board-id="boardId"/>
@@ -94,15 +94,10 @@
 
 <script>
 import bus from '../utils/bus.js'
-import CommentLayout from './CommentLayout.vue'
 import { getBoardItem, deleteBoardItem } from '../api/board/board.js'
 import { postLikesItem, getLikesItem, deleteLikesItem } from '../api/likes/likes.js'
 
 export default {
-  components: {
-    CommentLayout
-  },
-
   data: () => ({
     // Board
     responseBoard: {},
