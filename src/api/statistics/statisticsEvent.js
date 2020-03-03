@@ -1,7 +1,6 @@
 import { getStatisticsMain } from './statistics.js'
 
 export default {
-  /** Api CRUD */
 
   async readStatisticsMain (vm) {
     try {
@@ -26,8 +25,8 @@ export default {
       console.log(vm.tagData)
     } catch (error) {
       // Error Page
-      vm.$router.go()
       console.log(error)
     }
   }
+
 }

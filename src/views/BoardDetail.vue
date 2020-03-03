@@ -36,6 +36,7 @@
                   <h6 class="category text-gray font-weight-thin mb-3">교육명 - {{ responseBoard.educationTitle }}</h6><br>
                   <h3 class="card-title font-weight-light">{{ responseBoard.title }}</h3>
                   <p
+                    id="my-v-html"
                     class="font-weight-light"
                     v-html="responseBoard.content"/>
                   <v-flex>
@@ -81,90 +82,10 @@
           </material-card>
 
           <!-- 댓글 -->
-          <material-card>
-            <v-flex xs12>
-              <!-- 댓글 출력 -->
-              <v-card
-                v-for="comment in commentList"
-                :key="comment.id">
-                <div
-                  v-if="comment.id !== isChangeCommentId"
-                  id="my-div">
-                  <p
-                    id="my-p"
-                    class="text-gray font-weight-thin mb-5 text-xs-left"
-                    v-html="comment.content"/>
-                  <h6
-                    class="text-gray font-weight-thin mb-3 text-xs-right"
-                    style="margin-bottom:1rem !important;">
-                    {{ comment.userName }}<br>
-                    {{ comment.modifiedDate }}
-                  </h6>
-                  <v-layout
-                    v-if="userId === comment.userId"
-                    id="my-v-layout"
-                    row
-                    reverse>
-                    <h6
-                      id="my-h6"
-                      class="text-gray font-weight-thin mb-0"
-                      @click="deleteComment(comment.id)"
-                    >삭제</h6>
-                    &nbsp;
-                    <h6
-                      id="my-h6"
-                      class="text-gray font-weight-thin mb-0"
-                      @click="changeComment(comment, true)"
-                    >수정</h6>
-                  </v-layout>
-                </div>
-
-                <!-- 댓글 수정 -->
-                <v-flex
-                  v-if="isChangeComment && (comment.id == isChangeCommentId)"
-                  text-xs-right>
-                  <v-textarea
-                    v-model="modifiedCommentContent"
-                    auto-grow
-                    solo
-                    class="green-input"
-                    label="댓글"
-                    rows="5"
-                  />
-                  <v-btn
-                    small
-                    color="success"
-                    round
-                    @click="updateComment(comment.id)"
-                  >등록</v-btn>
-                  <v-btn
-                    small
-                    color="orange"
-                    round
-                    @click="changeComment(comment, false)"
-                  >취소</v-btn>
-                </v-flex>
-              </v-card>
-            </v-flex>
-
-            <!-- 댓글 생성 -->
-            <v-flex text-xs-right>
-              <v-textarea
-                v-model="commentContent"
-                auto-grow
-                solo
-                class="green-input"
-                label="댓글"
-                rows="5"
-              />
-              <v-btn
-                small
-                color="success"
-                round
-                @click="createComment"
-              >등록</v-btn>
-            </v-flex>
-          </material-card>
+          <material-comment
+            :comments="commentList"
+            :user-id="userId"
+            :board-id="boardId"/>
         </div>
       </v-flex>
     </v-layout>
@@ -173,9 +94,8 @@
 
 <script>
 import bus from '../utils/bus.js'
-import boardEvent from '../api/board/boardEvent.js'
-import commentEvent from '../api/comment/commentEvent.js'
-import likesEvent from '../api/likes/likesEvent.js'
+import { getBoardItem, deleteBoardItem } from '../api/board/board.js'
+import { postLikesItem, getLikesItem, deleteLikesItem } from '../api/likes/likes.js'
 
 export default {
   data: () => ({
@@ -185,94 +105,88 @@ export default {
     boardId: {},
     commentList: [],
 
-    // Comment
-    commentContent: null,
-    modifiedCommentContent: null,
-
     // Flag
     isLikes: true,
     isGetData: false,
-    isUser: false,
-    isChangeComment: false,
-    isChangeCommentId: null
+    isUser: false
   }),
-  created () {
+
+  async created () {
     // Data
     const vm = this
-    vm.userId = 866
+    vm.userId = 2
     vm.boardId = vm.$route.params.boardId
 
     // Logic
     bus.$emit('start:spinner')
-    this.checkLikes()
-    this.readBoardOne()
+    this.initialize()
+    bus.$emit('end:spinner')
   },
+
   methods: {
-    /** Api CRUD */
-    // Board
-    readBoardOne () {
-      boardEvent.readBoardOne(this)
+    async initialize () {
+      const vm = this
+
+      // Check Likes
+      try {
+        await getLikesItem(vm.userId, vm.boardId)
+        vm.isLikes = false
+      } catch (error) {
+        console.log(error)
+        vm.isLikes = true
+      }
+
+      // Read Board
+      try {
+        vm.responseBoard = await getBoardItem(vm.$route.params.boardId)
+        vm.responseBoard = vm.responseBoard.data.response
+        vm.commentList = vm.responseBoard.commentList
+        vm.isGetData = true
+      } catch (error) {
+        // Error Page
+        console.log(error)
+        vm.$router.push({ name: 'Board List' })
+      }
     },
 
-    deleteBoard () {
-      boardEvent.deleteBoardWithConfirm(this, 'board')
+    async deleteBoard () {
+      const vm = this
+      try {
+        confirm('정말 삭제하시겠습니까?') && await deleteBoardItem(vm.boardId)
+      } catch (error) {
+        // Error page
+        console.log(error)
+      }
+      vm.$router.push({ name: 'Board List' })
     },
 
-    // Comment
-    createComment () {
-      commentEvent.createComment(this)
-    },
+    async createLikes () {
+      const vm = this
+      const likes = {
+        userId: vm.userId,
+        boardId: vm.boardId
+      }
 
-    updateComment (commentId) {
-      commentEvent.updateComment(this, commentId)
-    },
-
-    deleteComment (commentId) {
-      commentEvent.deleteCommentWithConfirm(this, commentId, 'comment')
-    },
-
-    // Likes
-    createLikes () {
-      likesEvent.createLikes(this)
-    },
-
-    checkLikes () {
-      likesEvent.checkLikes(this)
-    },
-
-    /** Event */
-    changeComment (comment, flag) {
-      commentEvent.changeComment(this, comment, flag)
+      if (vm.isLikes === true) {
+        vm.isLikes = false
+        vm.responseBoard.likes = vm.responseBoard.likes + 1
+        await postLikesItem(likes)
+      } else {
+        vm.isLikes = true
+        vm.responseBoard.likes = vm.responseBoard.likes - 1
+        await deleteLikesItem(vm.userId, vm.boardId)
+      }
     }
   }
 }
 </script>
 
 <style scoped>
-#my-div {
-  /* top right bottom left */
-  padding: 2% 1% 0% 2%;
-}
-
-#my-p {
-  font-size: small !important;
-}
-
-#my-v-flex {
-  margin-top:0;
-  padding-top:0;
-}
-
-#my-h6 {
-  cursor: pointer;
-}
-#my-h6:hover {
-  font-size: 0.8rem !important;
-}
-
-#my-v-layout {
-  margin: 0;
-  padding-bottom:1%;
+#my-v-html
+  /deep/ pre {
+  background-color: black !important;
+  color: #f8f8f2 !important;
+  overflow: visible;
 }
 
 .v-card {

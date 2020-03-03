@@ -490,7 +490,7 @@ export default {
     }
   },
   created () {
-    getMyEducationList(866)
+    getMyEducationList(2)
       .then((response) => { this.items = response.data.response })
       .catch(error => console.log(error))
   },
@@ -545,7 +545,7 @@ export default {
               type: vm.editedItem.type,
               place: vm.editedItem.place,
               hashTag: vm.hashTagString,
-              userId: 866,
+              userId: 2,
               categoryId: vm.editedItem.category.id
             }
             putMyEducationItem(response.data.response.id, editedEducation)

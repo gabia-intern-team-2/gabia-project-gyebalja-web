@@ -35,7 +35,7 @@ export default {
   data () {
     return {
       loadingStatus: false,
-      isAuthenticationUser: false
+      isAuthenticationUser: true
     }
   },
 

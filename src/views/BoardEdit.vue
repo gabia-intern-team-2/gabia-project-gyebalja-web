@@ -96,7 +96,7 @@
 <script>
 import bus from '../utils/bus.js'
 import { store } from '../store/index.js'
-import boardEvent from '../api/board/boardEvent.js'
+import { getBoardItem, putBoardItem } from '../api/board/board.js'
 
 export default {
   data: () => ({
@@ -115,43 +115,64 @@ export default {
     // Flag
     isGetData: false
   }),
-  created () {
+
+  async created () {
     // Data
-    this.userId = 866
+    this.userId = 2
 
     // Logic
     bus.$emit('start:spinner')
     this.initialize()
+    bus.$emit('end:spinner')
   },
+
   methods: {
-    /** Apis */
     async initialize () {
       const vm = this
-      await boardEvent.readBoardOne(vm)
-      await store.dispatch('FETCH_EDUCATIONS', vm.userId)
-      for (let i in vm.$store.state.educations.response) {
-        vm.educationList.push({ id: vm.$store.state.educations.response[i].id, title: vm.$store.state.educations.response[i].title })
+
+      try {
+        // Read Board
+        vm.responseBoard = await getBoardItem(vm.$route.params.boardId)
+        vm.responseBoard = vm.responseBoard.data.response
+        vm.commentList = vm.responseBoard.commentList
+
+        // Read Educations
+        await store.dispatch('FETCH_EDUCATIONS', vm.userId)
+        for (let i in vm.$store.state.educations.response) {
+          vm.educationList.push({
+            id: vm.$store.state.educations.response[i].id,
+            title: vm.$store.state.educations.response[i].title })
+        }
+        vm.title = vm.responseBoard.title
+        vm.content = vm.responseBoard.content
+        vm.educationId = vm.responseBoard.educationId
+
+        vm.isGetData = true
+      } catch (error) {
+        // Error Page
+        console.log(error)
+        vm.$router.push({ name: 'Board List' })
       }
-      vm.title = vm.responseBoard.title
-      vm.content = vm.responseBoard.content
-      vm.educationId = vm.responseBoard.educationId
-      vm.isGetData = true
-      bus.$emit('end:spinner')
     },
 
-    /** Methods */
     async updateBoard () {
-      // Data
+      const vm = this
       const board = {
-        title: this.title,
-        content: this.content,
-        educationId: this.educationId,
-        userId: 866,
-        boardImg: this.boardImg
+        title: vm.title,
+        content: vm.content,
+        educationId: vm.educationId,
+        userId: 2,
+        boardImg: vm.boardImg
       }
 
-      // Logic
-      await boardEvent.updateBoard(this, board)
+      try {
+        await putBoardItem(vm.responseBoard.id, board)
+        vm.$router.push({ name: 'Board Detail', params: { boardId: vm.responseBoard.id } })
+      } catch (error) {
+        // Error page
+        console.log(error)
+        vm.$router.push({ name: 'Board List' })
+      }
     },
 
     checkValidate () {
