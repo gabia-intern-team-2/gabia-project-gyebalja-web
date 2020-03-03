@@ -59,7 +59,12 @@ export default {
 
   methods: {
     async login () {
-      let response = await getLoginRedirect()
+      let response = null
+      try {
+        response = await getLoginRedirect()
+      } catch (error) {
+        console.log(error)
+      }
       window.location.href = response.data.response
     }
   }
