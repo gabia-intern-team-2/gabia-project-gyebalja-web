@@ -27,22 +27,21 @@
             xs12
             text-xs-center
           >
-            <a href="https://api.hiworks.com/open/auth/authform?client_id=vtovgjlvdskcasrbiownu1wgjy2xures5e3276b98dd6a9.36873902.open.apps&access_type=offline">
-              <v-btn
-                class="mx-0 font-weight-light"
-                color="white"
-              >
-                <div>
-                  <img
-                    class="mb-2"
-                    src="../../images/hiworks_logo1.png"
-                    width="150"
-                    alt="하이웍스 로그인"
-                  >
-                  <p class="card-description font-weight-light mb-0">하이웍스 로그인</p>
-                </div>
-              </v-btn>
-            </a>
+            <v-btn
+              class="mx-0 font-weight-light"
+              color="white"
+              @click="login"
+            >
+              <div>
+                <img
+                  class="mb-2"
+                  src="../../images/hiworks_logo1.png"
+                  width="150"
+                  alt="하이웍스 로그인"
+                >
+                <p class="card-description font-weight-light mb-0">하이웍스 로그인</p>
+              </div>
+            </v-btn>
           </v-flex>
         </material-card>
       </v-flex>
@@ -51,8 +50,19 @@
 </template>
 
 <script>
+import { getLoginRedirect } from '../../api/login/login.js'
 export default {
-  //
+  data () {
+    return {
+    }
+  },
+
+  methods: {
+    async login () {
+      let response = await getLoginRedirect()
+      window.location.href = response.data.response
+    }
+  }
 }
 </script>
 
