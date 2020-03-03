@@ -38,13 +38,11 @@
                       required/>
                   </v-flex>
                   <v-flex xs12>
-                    <v-textarea
+                    <vue-editor
+                      id="editor"
                       v-model="content"
-                      class="green-input"
-                      label="본문"
-                      hint="본문을 입력해주세요"
-                      rows="20"
-                    />
+                      use-custom-image-handler
+                      @image-added="handleImageAdded"/>
                   </v-flex>
                   <v-flex xs12>
                     <v-select
@@ -91,11 +89,17 @@
 </template>
 
 <script>
-import { store } from '../store/index.js'
+import axios from 'axios'
 import bus from '../utils/bus.js'
-import boardEvent from '../api/board/boardEvent.js'
+import { store } from '../store/index.js'
+import { postBoardItem } from '../api/board/board.js'
+import { VueEditor } from 'vue2-editor'
 
 export default {
+  components: {
+    VueEditor
+  },
+
   data: () => ({
     // Data
     title: '',
@@ -113,30 +117,71 @@ export default {
 
   async created () {
     // Data
-    const vm = this
-    vm.userId = 866
+    this.userId = 2
 
     // Logic
     bus.$emit('start:spinner')
-    await store.dispatch('FETCH_EDUCATIONS', vm.userId)
-    for (let i in this.$store.state.educations.response) {
-      vm.educationList.push({
-        id: this.$store.state.educations.response[i].id,
-        title: this.$store.state.educations.response[i].title })
-    }
-    vm.isGetData = true
+    this.initialize()
     bus.$emit('end:spinner')
   },
 
   methods: {
-    /** Event */
-    createBoard () {
-      boardEvent.createBoard(this)
+    async initialize () {
+      const vm = this
+
+      await store.dispatch('FETCH_EDUCATIONS', vm.userId)
+      for (let i in this.$store.state.educations.response) {
+        vm.educationList.push({
+          id: this.$store.state.educations.response[i].id,
+          title: this.$store.state.educations.response[i].title })
+      }
+      vm.isGetData = true
     },
+
+    async createBoard () {
+      const vm = this
+      const board = {
+        title: vm.title,
+        content: vm.content,
+        educationId: vm.educationId,
+        userId: 2,
+        boardImg: vm.boardImg
+      }
+      console.log(board)
+      try {
+        await postBoardItem(board)
+      } catch (error) {
+        console.log(error)
+      }
+      vm.$router.push({ name: 'Board List' })
+    },
+
     checkValidate () {
       if (this.$refs.form.validate()) {
         this.createBoard()
       }
+    },
+
+    handleImageAdded (file, Editor, cursorLocation, resetUploader) {
+      let formData = new FormData()
+      formData.append('image', file)
+
+      let baseUrl = 'http://localhost:8282'
+
+      axios({
+        url: baseUrl + '/api/v1/boardImgs',
+        method: 'POST',
+        data: formData
+      })
+        .then(result => {
+          let url = result.data // Get url from response
+          url = baseUrl + url
+          Editor.insertEmbed(cursorLocation, 'image', url)
+          resetUploader()
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }
