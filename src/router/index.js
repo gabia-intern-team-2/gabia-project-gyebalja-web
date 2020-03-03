@@ -18,13 +18,23 @@ import Meta from 'vue-meta'
 // Routes
 import paths from './paths'
 
+var VueCookie = require('vue-cookie')
+Vue.use(VueCookie)
+
 function route (path, view, name) {
   return {
     name: name || view,
     path,
     component: (resolve) => import(
       `@/views/${view}.vue`
-    ).then(resolve)
+    ).then(resolve),
+    beforeEnter: (to, from, next) => {
+      console.log(to)
+      console.log(from)
+      console.log(next)
+      console.log(VueCookie.get('em_cdn_uid'))
+      console.log(VueCookie.get('JSESSIONID'))
+    }
   }
 }
 
