@@ -557,12 +557,6 @@ export default {
       return Math.ceil(this.items.length / 5)
     }
   },
-<<<<<<< HEAD
-  created () {
-    getMyEducationList(2)
-      .then((response) => { this.items = response.data.response })
-      .catch(error => console.log(error))
-=======
   // 최초 실행 라이프사이클 훅
   async created () {
     bus.$emit('start:spinner')
@@ -594,7 +588,6 @@ export default {
       console.log(error)
     }
     bus.$emit('end:spinner')
->>>>>>> 84290d426d0a2d97622892d8bdba9dd612aefb25
   },
 
   methods: {

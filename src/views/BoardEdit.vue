@@ -118,7 +118,6 @@ export default {
 
   async created () {
     // Data
-<<<<<<< HEAD
     this.userId = 2
 
     // Logic
@@ -158,30 +157,6 @@ export default {
 
     async updateBoard () {
       const vm = this
-=======
-    const vm = this
-    vm.userId = 866
-
-    // Logic
-    bus.$emit('start:spinner')
-    await boardEvent.readBoardOne(vm)
-    await store.dispatch('FETCH_EDUCATIONS', vm.userId)
-    for (let i in vm.$store.state.educations.response) {
-      vm.educationList.push({
-        id: vm.$store.state.educations.response[i].id,
-        title: vm.$store.state.educations.response[i].title })
-    }
-    vm.title = vm.responseBoard.title
-    vm.content = vm.responseBoard.content
-    vm.educationId = vm.responseBoard.educationId
-    vm.isGetData = true
-    bus.$emit('end:spinner')
-  },
-
-  methods: {
-    /** Event */
-    async updateBoard () {
->>>>>>> 84290d426d0a2d97622892d8bdba9dd612aefb25
       const board = {
         title: vm.title,
         content: vm.content,
@@ -190,7 +165,6 @@ export default {
         boardImg: vm.boardImg
       }
 
-<<<<<<< HEAD
       try {
         await putBoardItem(vm.responseBoard.id, board)
         vm.$router.push({ name: 'Board Detail', params: { boardId: vm.responseBoard.id } })
@@ -199,9 +173,6 @@ export default {
         console.log(error)
         vm.$router.push({ name: 'Board List' })
       }
-=======
-      await boardEvent.updateBoard(this, board)
->>>>>>> 84290d426d0a2d97622892d8bdba9dd612aefb25
     },
 
     checkValidate () {

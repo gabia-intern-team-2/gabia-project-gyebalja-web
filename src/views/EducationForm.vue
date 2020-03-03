@@ -269,22 +269,6 @@ export default {
       return this.edate
     }
   },
-<<<<<<< HEAD
-  methods: {
-    submit () {
-      if (this.$route.name === 'Education Register') {
-        var education = {
-          title: this.title,
-          content: this.content,
-          startDate: this.sdate,
-          endDate: this.edate,
-          totalHours: this.totalHours,
-          type: this.type,
-          place: this.place,
-          categoryId: this.category,
-          hashTag: this.hashTag,
-          userId: '2'
-=======
   // 최초 실행 라이프사이클 훅
   async created () {
     bus.$emit('start:spinner')
@@ -304,7 +288,6 @@ export default {
         this.category = educationRes.data.response.category.id
         for (let i = 0; i < educationRes.data.response.eduTags.length; i++) {
           this.hashTag += educationRes.data.response.eduTags[i].tagName + ' '
->>>>>>> 84290d426d0a2d97622892d8bdba9dd612aefb25
         }
       }
     } catch (error) {
@@ -336,25 +319,6 @@ export default {
           } catch (error) {
             console.log(error)
             alert('값을 정확히 입력해주세요.')
-<<<<<<< HEAD
-          })
-      } else {
-        var editedEducation = {
-          title: this.title,
-          content: this.content,
-          startDate: this.sdate,
-          endDate: this.edate,
-          totalHours: this.totalHours,
-          type: this.type,
-          place: this.place,
-          categoryId: this.category.id,
-          hashTag: this.hashTag,
-          userId: '2'
-        }
-        putMyEducationItem(this.$route.params.educationId, editedEducation)
-          .then(response => this.$router.push({ name: 'Education Detail', params: { educationId: this.$route.params.educationId } }))
-          .catch(error => {
-=======
           }
         } else {
           try {
@@ -363,7 +327,6 @@ export default {
               name: 'Education Detail', params: { educationId: this.$route.params.educationId }
             })
           } catch (error) {
->>>>>>> 84290d426d0a2d97622892d8bdba9dd612aefb25
             console.log(error)
             alert('값을 정확히 입력해주세요.')
           }
