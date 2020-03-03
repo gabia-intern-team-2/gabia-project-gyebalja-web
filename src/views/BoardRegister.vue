@@ -44,7 +44,6 @@
                       use-custom-image-handler
                       @image-added="handleImageAdded"/>
                   </v-flex>
-                  {{ content }}
                   <v-flex xs12>
                     <v-select
                       :items="educationList"
