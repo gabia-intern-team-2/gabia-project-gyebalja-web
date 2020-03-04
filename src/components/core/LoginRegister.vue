@@ -131,7 +131,7 @@ export default {
       console.log(vm.$store.state.departments)
     },
     submit () {
-
+      // 사용자 등록 (POST) 로직
     }
   }
 }
