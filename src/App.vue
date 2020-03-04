@@ -76,7 +76,7 @@ export default {
 
         // 조회 - 등록 사용자 여부
         response = await getIsRegisterUser()
-        this.isRegisterUser = response.data.response
+        this.isRegisterUser = !response.data.response
       } catch (error) {
         console.log(error)
       }
