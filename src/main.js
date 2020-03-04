@@ -39,8 +39,3 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
-
-// Require dependencies
-var VueCookie = require('vue-cookie')
-// Tell Vue to use the plugin
-Vue.use(VueCookie)
