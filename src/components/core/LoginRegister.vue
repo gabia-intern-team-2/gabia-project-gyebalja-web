@@ -164,6 +164,7 @@ export default {
   data () {
     return {
       name: null,
+      engName: null,
       gender: null,
       phone: null,
       tel: null,
