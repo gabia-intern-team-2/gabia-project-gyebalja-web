@@ -377,6 +377,7 @@ export default {
     } catch (error) {
       // Error Page
       console.log(error)
+      vm.$router.push({ name: 'Error Page' })
     }
     bus.$emit('end:spinner')
   }

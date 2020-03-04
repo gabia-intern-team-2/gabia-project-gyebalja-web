@@ -43,7 +43,7 @@ export default {
     return {
       loadingStatus: false,
       isAuthenticationUser: true,
-      isRegisterUser: false
+      isRegisterUser: true
     }
   },
 

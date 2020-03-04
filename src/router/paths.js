@@ -60,6 +60,11 @@ export default [
     name: 'Education Detail',
     view: 'EducationDetail'
   },
+  {
+    path: '/errorPage',
+    name: 'Error Page',
+    view: 'ErrorPage'
+  },
 
   /** 기존 정의 Path */
   {
