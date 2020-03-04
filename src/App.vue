@@ -1,31 +1,32 @@
 <template>
   <v-app>
-    <!-- 인증 전 -->
-    <div v-if="!isAuthenticationUser">
-      <core-login/>
+    <div v-if="isGetData">
+      <!-- 등록 후 -->
+      <div v-if="isAuthenticationUser && isRegisterUser">
+        <!-- HEADER -->
+        <core-toolbar />
+
+        <!-- RIGHT -->
+        <core-filter />
+
+        <!-- LEFT -->
+        <core-drawer />
+
+        <!-- CONTENTS -->
+        <core-view />
+      </div>
+      <!-- 인증 전 -->
+      <div v-if="!isAuthenticationUser">
+        <core-login/>
+      </div>
+
+      <!-- 인증 후 -->
+      <!-- 등록 전 -->
+      <div v-if="isAuthenticationUser && !isRegisterUser">
+        <core-login-register/>
+      </div>
+      <spinner :loading="loadingStatus"/>
     </div>
-
-    <!-- 인증 후 -->
-    <!-- 등록 전 -->
-    <div v-if="isAuthenticationUser && !isRegisterUser">
-      <core-login-register/>
-    </div>
-
-    <!-- 등록 후 -->
-    <div v-if="isAuthenticationUser && isRegisterUser">
-      <!-- HEADER -->
-      <core-toolbar />
-
-      <!-- RIGHT -->
-      <core-filter />
-
-      <!-- LEFT -->
-      <core-drawer />
-
-      <!-- CONTENTS -->
-      <core-view />
-    </div>
-    <spinner :loading="loadingStatus"/>
   </v-app>
 </template>
 
@@ -42,8 +43,9 @@ export default {
   data () {
     return {
       loadingStatus: false,
-      isAuthenticationUser: true,
-      isRegisterUser: true
+      isAuthenticationUser: false,
+      isRegisterUser: false,
+      isGetData: false
     }
   },
 
@@ -66,12 +68,19 @@ export default {
       this.loadingStatus = false
     },
     async initializeUser () {
-      let response = await getIsAuthenticationUser()
-      if (response.data === false) return
-      this.isAuthenticationUser = response.data
+      try {
+        // 조회 - 인증 사용자 여부
+        let response = await getIsAuthenticationUser()
+        if (response.data === false) return
+        this.isAuthenticationUser = response.data.response
 
-      response = await getIsRegisterUser()
-      this.isRegisterUser = response.data
+        // 조회 - 등록 사용자 여부
+        response = await getIsRegisterUser()
+        this.isRegisterUser = response.data.response
+      } catch (error) {
+        console.log(error)
+      }
+      this.isGetData = true
     }
   }
 }

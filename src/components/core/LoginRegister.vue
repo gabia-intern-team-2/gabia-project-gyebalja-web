@@ -21,43 +21,115 @@
             <!-- 입력 폼 -->
             <v-form>
               <v-container>
-                <v-text-field
-                  v-model="name"
-                  label="이름"
-                  class="purple-input"/>
-                <v-select
-                  :items="genderList"
-                  v-model="gender"
-                  label="성별"
-                  class="theme--light"
-                  chips
-                />
-                <v-text-field
-                  v-model="phone"
-                  label="핸드폰"
-                  class="purple-input"/>
-                <v-text-field
-                  v-model="tel"
-                  label="내선 전화"
-                  class="purple-input"/>
-                <v-select
-                  :items="this.$store.state.departments"
-                  v-model="departmentId"
-                  item-text="name"
-                  item-value="id"
-                  label="부서"
-                  class="theme--light"
-                  chips
-                />
-                <v-select
-                  :items="positionList"
-                  v-model="positionId"
-                  item-text="positionName"
-                  item-value="positionId"
-                  label="직책"
-                  class="theme--light"
-                  chips
-                />
+                <v-layout wrap>
+                  <v-flex
+                    xs12
+                    md6
+                    lg6
+                  >
+                    <v-text-field
+                      v-model="name"
+                      label="이름"
+                      prepend-icon="mdi-account"
+                      disabled/>
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md6
+                    lg6
+                  >
+                    <v-text-field
+                      v-model="email"
+                      label="Email"
+                      prepend-icon="mdi-email"
+                      disabled/>
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md4
+                    lg4
+                  >
+                    <v-text-field
+                      v-model="engName"
+                      label="영어이름"
+                      prepend-icon="mdi-account"/>
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md4
+                    lg4
+                  >
+                    <v-text-field
+                      v-model="phone"
+                      label="핸드폰"
+                      class="green-input"
+                      prepend-icon="mdi-phone"/>
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md4
+                    lg4
+                  >
+                    <v-text-field
+                      v-model="tel"
+                      label="내선 전화"
+                      class="green-input"
+                      prepend-icon="mdi-phone-classic"/>
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md4
+                    lg4
+                  >
+                    <v-select
+                      :items="genderList"
+                      v-model="gender"
+                      label="성별"
+                      chips
+                      prepend-icon="mdi-gender-male-female"/>
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md4
+                    lg4
+                  >
+                    <v-select
+                      :items="this.$store.state.departments"
+                      v-model="departmentId"
+                      item-text="name"
+                      item-value="id"
+                      label="부서"
+                      class="theme--light"
+                      chips
+                      prepend-icon="mdi-animation"
+                    />
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md4
+                    lg4
+                  >
+                    <v-select
+                      :items="positionList"
+                      v-model="positionId"
+                      item-text="positionName"
+                      item-value="positionId"
+                      label="직책"
+                      class="theme--light"
+                      chips
+                      prepend-icon="mdi-animation"
+                    />
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md12
+                  >
+                    <v-text-field
+                      v-model="image"
+                      label="이미지 등록"
+                      prepend-icon="mdi-camera"/>
+                  </v-flex>
+                </v-layout>
                 <!-- 등록 버튼 -->
                 <div id="my-div">
                   <v-btn
@@ -97,6 +169,7 @@ export default {
       tel: null,
       positionId: null,
       departmentId: null,
+      image: null,
       // email: null,
       // password: null,
 
@@ -120,15 +193,12 @@ export default {
   },
 
   async created () {
-    console.log('ee')
     this.initialize()
   },
 
   methods: {
     async initialize () {
-      const vm = this
-      await vm.$store.dispatch('FETCH_DEPARTMENTS')
-      console.log(vm.$store.state.departments)
+      await this.$store.dispatch('FETCH_DEPARTMENTS')
     },
     submit () {
       // 사용자 등록 (POST) 로직

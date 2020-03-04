@@ -25,7 +25,7 @@
             <v-card-text class="text-xs-center">
               <img
                 class="mb-2"
-                src="http://www.amoo.co.kr/images/slide_05.jpg"
+                src="../images/error01.jpg"
                 width="300"
                 alt="Error Page"
                 disabled
