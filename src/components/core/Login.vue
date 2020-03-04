@@ -39,7 +39,7 @@
                   width="150"
                   alt="하이웍스 로그인"
                 >
-                <p class="card-description font-weight-light mb-0">하이웍스 로그인</p>
+                <p class="card-description font-weight-light mt-1 mb-1">하이웍스 로그인</p>
               </div>
             </v-btn>
           </v-flex>
@@ -52,11 +52,6 @@
 <script>
 import { getLoginRedirect } from '../../api/login/login.js'
 export default {
-  data () {
-    return {
-    }
-  },
-
   methods: {
     async login () {
       let response = null
@@ -70,6 +65,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-</style>

@@ -5,5 +5,8 @@ export default {
   },
   SET_EDUCATIONS (state, educations) {
     state.educations = educations
+  },
+  SET_DEPARTMENTS (state, departments) {
+    state.departments = departments
   }
 }

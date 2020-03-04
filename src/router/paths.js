@@ -6,6 +6,11 @@
 export default [
   /** 사용자 정의 Path */
   {
+    path: '/login/register',
+    name: 'Login Register',
+    view: 'LoginRegister'
+  },
+  {
     path: '/boardList',
     name: 'Board List',
     view: 'BoardList'
@@ -55,11 +60,17 @@ export default [
     name: 'Education Detail',
     view: 'EducationDetail'
   },
+  {
+    path: '/errorPage',
+    name: 'Error Page',
+    view: 'ErrorPage'
+  },
 
   /** 기존 정의 Path */
   {
     path: '',
     // Relative to /src/views
+    name: 'Dashboard',
     view: 'Dashboard'
   },
   {
