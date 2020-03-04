@@ -1,7 +1,18 @@
 <template>
   <v-app>
+    <!-- 인증 전 -->
+    <div v-if="!isAuthenticationUser">
+      <core-login/>
+    </div>
+
     <!-- 인증 후 -->
-    <div v-if="isAuthenticationUser">
+    <!-- 등록 전 -->
+    <div v-if="isAuthenticationUser && !isRegisterUser">
+      <core-login-register/>
+    </div>
+
+    <!-- 등록 후 -->
+    <div v-if="isAuthenticationUser && isRegisterUser">
       <!-- HEADER -->
       <core-toolbar />
 
@@ -14,11 +25,6 @@
       <!-- CONTENTS -->
       <core-view />
     </div>
-
-    <!-- 인증 전 -->
-    <div v-if="!isAuthenticationUser">
-      <core-login/>
-    </div>
     <spinner :loading="loadingStatus"/>
   </v-app>
 </template>
@@ -26,6 +32,7 @@
 <script>
 import bus from './utils/bus.js'
 import Spinner from './components/helper/Spinner.vue'
+import { getIsAuthenticationUser, getIsRegisterUser } from './api/login/login.js'
 
 export default {
   components: {
@@ -35,12 +42,14 @@ export default {
   data () {
     return {
       loadingStatus: false,
-      isAuthenticationUser: false
+      isAuthenticationUser: true,
+      isRegisterUser: false
     }
   },
 
   created () {
     bus.$on('start:spinner', this.startSpinner)
+    this.initializeUser()
     bus.$on('end:spinner', this.endSpinner)
   },
 
@@ -55,6 +64,14 @@ export default {
     },
     endSpinner () {
       this.loadingStatus = false
+    },
+    async initializeUser () {
+      let response = await getIsAuthenticationUser()
+      if (response.data === false) return
+      this.isAuthenticationUser = response.data
+
+      response = await getIsRegisterUser()
+      this.isRegisterUser = response.data
     }
   }
 }

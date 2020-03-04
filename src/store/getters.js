@@ -5,5 +5,8 @@ export default {
   },
   fetchedEducations (state) {
     return state.educations.response
+  },
+  fetchedDepartments (state) {
+    return state.departments
   }
 }
