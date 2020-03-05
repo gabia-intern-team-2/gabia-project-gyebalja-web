@@ -8,6 +8,7 @@ Vue.use(Vuex)
 export default {
   state: {
     boards: [],
-    educations: []
+    educations: [],
+    departments: []
   }
 }

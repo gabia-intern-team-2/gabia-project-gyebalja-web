@@ -1,31 +1,39 @@
 <template>
   <v-app>
-    <!-- 인증 후 -->
-    <div v-if="isAuthenticationUser">
-      <!-- HEADER -->
-      <core-toolbar />
+    <div v-if="isGetData">
+      <!-- 등록 후 -->
+      <div v-if="isAuthenticationUser && isRegisterUser">
+        <!-- HEADER -->
+        <core-toolbar />
 
-      <!-- RIGHT -->
-      <core-filter />
+        <!-- RIGHT -->
+        <core-filter />
 
-      <!-- LEFT -->
-      <core-drawer />
+        <!-- LEFT -->
+        <core-drawer />
 
-      <!-- CONTENTS -->
-      <core-view />
+        <!-- CONTENTS -->
+        <core-view />
+      </div>
+      <!-- 인증 전 -->
+      <div v-if="!isAuthenticationUser">
+        <core-login/>
+      </div>
+
+      <!-- 인증 후 -->
+      <!-- 등록 전 -->
+      <div v-if="isAuthenticationUser && !isRegisterUser">
+        <core-login-register/>
+      </div>
+      <spinner :loading="loadingStatus"/>
     </div>
-
-    <!-- 인증 전 -->
-    <div v-if="!isAuthenticationUser">
-      <core-login/>
-    </div>
-    <spinner :loading="loadingStatus"/>
   </v-app>
 </template>
 
 <script>
 import bus from './utils/bus.js'
 import Spinner from './components/helper/Spinner.vue'
+import { getIsAuthenticationUser, getIsRegisterUser } from './api/login/login.js'
 
 export default {
   components: {
@@ -35,12 +43,15 @@ export default {
   data () {
     return {
       loadingStatus: false,
-      isAuthenticationUser: false
+      isAuthenticationUser: false,
+      isRegisterUser: false,
+      isGetData: false
     }
   },
 
   created () {
     bus.$on('start:spinner', this.startSpinner)
+    this.initializeUser()
     bus.$on('end:spinner', this.endSpinner)
   },
 
@@ -55,6 +66,21 @@ export default {
     },
     endSpinner () {
       this.loadingStatus = false
+    },
+    async initializeUser () {
+      try {
+        // 조회 - 인증 사용자 여부
+        let response = await getIsAuthenticationUser()
+        if (response.data === false) return
+        this.isAuthenticationUser = response.data.response
+
+        // 조회 - 등록 사용자 여부
+        response = await getIsRegisterUser()
+        this.isRegisterUser = !response.data.response
+      } catch (error) {
+        console.log(error)
+      }
+      this.isGetData = true
     }
   }
 }

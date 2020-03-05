@@ -12,8 +12,8 @@ import VueAnalytics from 'vue-analytics'
 import Router from 'vue-router'
 import Meta from 'vue-meta'
 
-// import bus from '../utils/bus.js'
-// import { store } from '../store/index.js'
+// Api
+import { getIsAuthenticationUser } from '../api/login/login.js'
 
 // Routes
 import paths from './paths'
@@ -24,7 +24,12 @@ function route (path, view, name) {
     path,
     component: (resolve) => import(
       `@/views/${view}.vue`
-    ).then(resolve)
+    ).then(resolve),
+    beforeEnter: (to, from, next) => {
+      getIsAuthenticationUser()
+        .then(next())
+        .catch(error => console.log(error))
+    }
   }
 }
 
