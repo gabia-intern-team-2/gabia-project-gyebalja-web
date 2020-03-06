@@ -53,6 +53,12 @@ export default {
     bus.$on('start:spinner', this.startSpinner)
     this.initializeUser()
     bus.$on('end:spinner', this.endSpinner)
+    bus.$on('register-success', success => {
+      this.isRegisterUser = true
+    })
+    bus.$on('logout-success', success => {
+      this.isAuthenticationUser = false
+    })
   },
 
   beforeDestroy () {
@@ -76,7 +82,7 @@ export default {
 
         // 조회 - 등록 사용자 여부
         response = await getIsRegisterUser()
-        this.isRegisterUser = !response.data.response
+        this.isRegisterUser = response.data.response
       } catch (error) {
         console.log(error)
       }

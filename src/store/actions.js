@@ -2,6 +2,7 @@
 import { getBoardList } from '../api/board/board.js'
 import { getMyEducationList } from '../api/education/education.js'
 import { getDepartmentList } from '../api/department/department.js'
+import { getUserItem } from '../api/user/user.js'
 
 export default {
   async FETCH_BOARDS (context) {

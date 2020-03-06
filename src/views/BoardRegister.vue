@@ -166,7 +166,7 @@ export default {
       let formData = new FormData()
       formData.append('image', file)
 
-      let baseUrl = 'http://localhost:8282'
+      let baseUrl = 'http://api.gyeblja.com:8080'
 
       axios({
         url: baseUrl + '/api/v1/boardImgs',

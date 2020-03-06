@@ -29,7 +29,7 @@
             />
           </v-list-tile-avatar>
           <v-list-tile-title class="title">
-            Vuetify MD
+            gㅖ발자
           </v-list-tile-title>
         </v-list-tile>
         <v-divider/>
@@ -94,33 +94,13 @@ export default {
       },
       {
         to: '/myEducation',
-        icon: 'mdi-clipboard-outline',
+        icon: 'mdi-book-open-page-variant',
         text: '나의 교육관리'
       },
       {
         to: '/userProfile',
         icon: 'mdi-account',
         text: '내 정보 관리'
-      },
-      {
-        to: '/typography',
-        icon: 'mdi-format-font',
-        text: 'Typography'
-      },
-      {
-        to: '/icons',
-        icon: 'mdi-chart-bubble',
-        text: 'Icons'
-      },
-      {
-        to: '/maps',
-        icon: 'mdi-map-marker',
-        text: 'Maps'
-      },
-      {
-        to: '/notifications',
-        icon: 'mdi-bell',
-        text: 'Notifications'
       }
     ]
   }),

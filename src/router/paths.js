@@ -65,43 +65,9 @@ export default [
     name: 'Error Page',
     view: 'ErrorPage'
   },
-
-  /** 기존 정의 Path */
   {
     path: '',
-    // Relative to /src/views
     name: 'Dashboard',
     view: 'Dashboard'
-  },
-  {
-    path: '/user-profile',
-    name: 'User Profile',
-    view: 'UserProfile'
-  },
-  {
-    path: '/table-list',
-    name: 'Table List',
-    view: 'TableList'
-  },
-  {
-    path: '/typography',
-    view: 'Typography'
-  },
-  {
-    path: '/icons',
-    view: 'Icons'
-  },
-  {
-    path: '/maps',
-    view: 'Maps'
-  },
-  {
-    path: '/notifications',
-    view: 'Notifications'
-  },
-  {
-    path: '/upgrade',
-    name: 'Upgrade to PRO',
-    view: 'Upgrade'
   }
 ]

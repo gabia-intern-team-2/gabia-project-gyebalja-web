@@ -157,7 +157,7 @@ export default {
   },
   methods: {
     home () {
-      this.$router.push({ name: 'DashBoard' })
+      this.$router.push('/')
     }
   }
 }
