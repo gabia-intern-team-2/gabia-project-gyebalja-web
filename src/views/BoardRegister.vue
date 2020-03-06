@@ -89,11 +89,13 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import bus from '../utils/bus.js'
+import { VueEditor } from 'vue2-editor'
+import { config } from '../api/index.js'
 import { store } from '../store/index.js'
 import { postBoardItem } from '../api/board/board.js'
-import { VueEditor } from 'vue2-editor'
+import { postBoardImgItem } from '../api/boardImg/boardImg.js'
 
 export default {
   components: {
@@ -147,7 +149,7 @@ export default {
         userId: 2,
         boardImg: vm.boardImg
       }
-      console.log(board)
+
       try {
         await postBoardItem(board)
       } catch (error) {
@@ -166,22 +168,28 @@ export default {
       let formData = new FormData()
       formData.append('image', file)
 
-      let baseUrl = 'http://api.gyeblja.com:8080'
-
-      axios({
-        url: baseUrl + '/api/v1/boardImgs',
-        method: 'POST',
-        data: formData
-      })
-        .then(result => {
-          let url = result.data // Get url from response
-          url = baseUrl + url
+      postBoardImgItem(formData)
+        .then(response => {
+          let url = config.hostUrl + response.data
           Editor.insertEmbed(cursorLocation, 'image', url)
           resetUploader()
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch(error => console.log(error))
+      // let baseUrl = 'http://api.gyeblja.com:8080'
+      // axios({
+      //   url: baseUrl + '/api/v1/boardImgs',
+      //   method: 'POST',
+      //   data: formData
+      // })
+      //   .then(result => {
+      //     let url = result.data // Get url from response
+      //     url = baseUrl + url
+      //     Editor.insertEmbed(cursorLocation, 'image', url)
+      //     resetUploader()
+      //   })
+      //   .catch(err => {
+      //     console.log(err)
+      //   })
     }
   }
 }
