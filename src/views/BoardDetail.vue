@@ -22,6 +22,7 @@
               xs12
             >
               <material-card class="v-card--flat">
+                <!-- 작성자 이미지 -->
                 <v-avatar
                   slot="offset"
                   class="mx-auto d-block"
@@ -31,16 +32,22 @@
                     src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
                   >
                 </v-avatar>
+
                 <v-card-text class="text-xs-center">
+                  <!-- 헤더 -->
                   <h6 class="category text-gray font-weight-thin mb-3"> CEO / {{ responseBoard.userName }}</h6>
                   <h6 class="category text-gray font-weight-thin mb-3">교육명 - {{ responseBoard.educationTitle }}</h6><br>
+                  <h3 class="card-title font-weight-bold">{{ responseBoard.title }}</h3>
+
+                  <!-- 본문 -->
                   <div class="text-xs-left">
-                    <h3 class="card-title font-weight-light">{{ responseBoard.title }}</h3>
                     <p
                       id="my-v-html"
                       class="font-weight-light"
                       v-html="responseBoard.content"/>
                   </div>
+
+                  <!-- 버튼 -->
                   <v-flex>
                     <v-btn
                       small
@@ -48,19 +55,11 @@
                       round
                       class="font-weight-light"
                       @click="createLikes">
-                      <div
-                        v-if="isLikes">
-                        <v-icon
-                          color="white"
-                          small>mdi-thumb-up</v-icon>
-                      </div>
-                      <div
-                        v-if="!isLikes">
-                        <v-icon
-                          color="black"
-                          small>mdi-thumb-up</v-icon>
-                      </div>
+                      <v-icon
+                        :color="getLikes"
+                        small>mdi-thumb-up</v-icon>
                     </v-btn>
+
                     <v-btn
                       v-if="userId === responseBoard.userId"
                       :to="{name:'Board Edit', params:{boardId:responseBoard.id}}"
@@ -68,6 +67,7 @@
                       color="success"
                       round
                     >수정</v-btn>
+
                     <v-btn
                       v-if="userId === responseBoard.userId"
                       small
@@ -76,6 +76,7 @@
                       @click="deleteBoard"
                     >삭제</v-btn>
                   </v-flex>
+
                   <br>
                   <p class="card-description font-weight-light text-xs-right">조회수 {{ responseBoard.views }} &nbsp; 좋아요 {{ responseBoard.likes }} <br><br> 수정일: {{ responseBoard.modifiedDate }}</p>
                 </v-card-text>
@@ -112,6 +113,12 @@ export default {
     isGetData: false,
     isUser: false
   }),
+
+  computed: {
+    getLikes () {
+      return this.isLikes ? 'white' : 'black'
+    }
+  },
 
   async created () {
     // Data
