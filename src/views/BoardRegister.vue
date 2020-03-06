@@ -37,6 +37,7 @@
                       hint="제목을 입력해주세요"
                       required/>
                   </v-flex>
+
                   <v-flex xs12>
                     <vue-editor
                       id="editor"
@@ -44,6 +45,7 @@
                       use-custom-image-handler
                       @image-added="handleImageAdded"/>
                   </v-flex>
+
                   <v-flex xs12>
                     <v-select
                       :items="educationList"
@@ -56,13 +58,6 @@
                       class="theme--light"
                       chips
                     />
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md4>
-                    <v-text-field
-                      label="이미지 업로드"
-                      class="green-input"/>
                   </v-flex>
 
                   <!-- 등록 버튼 -->
@@ -89,11 +84,13 @@
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 import bus from '../utils/bus.js'
+import { VueEditor } from 'vue2-editor'
+import { config } from '../api/index.js'
 import { store } from '../store/index.js'
 import { postBoardItem } from '../api/board/board.js'
-import { VueEditor } from 'vue2-editor'
+import { postBoardImgItem } from '../api/boardImg/boardImg.js'
 
 export default {
   components: {
@@ -106,7 +103,6 @@ export default {
     content: '',
     educationId: '',
     userId: '',
-    boardImg: '',
 
     // Education
     educationList: [],
@@ -144,10 +140,9 @@ export default {
         title: vm.title,
         content: vm.content,
         educationId: vm.educationId,
-        userId: 2,
-        boardImg: vm.boardImg
+        userId: 2
       }
-      console.log(board)
+
       try {
         await postBoardItem(board)
       } catch (error) {
@@ -166,22 +161,13 @@ export default {
       let formData = new FormData()
       formData.append('image', file)
 
-      let baseUrl = 'http://localhost:8282'
-
-      axios({
-        url: baseUrl + '/api/v1/boardImgs',
-        method: 'POST',
-        data: formData
-      })
-        .then(result => {
-          let url = result.data // Get url from response
-          url = baseUrl + url
+      postBoardImgItem(formData)
+        .then(response => {
+          let url = config.hostUrl + response.data
           Editor.insertEmbed(cursorLocation, 'image', url)
           resetUploader()
         })
-        .catch(err => {
-          console.log(err)
-        })
+        .catch(error => console.log(error))
     }
   }
 }
