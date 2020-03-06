@@ -60,13 +60,6 @@
                       chips
                     />
                   </v-flex>
-                  <v-flex
-                    xs12
-                    md4>
-                    <v-text-field
-                      label="이미지 업로드"
-                      class="green-input"/>
-                  </v-flex>
 
                   <!-- 수정 버튼 -->
                   <v-flex
@@ -110,7 +103,6 @@ export default {
     content: '',
     educationId: '',
     userId: '',
-    boardImg: '',
 
     // Board
     responseBoard: {},
@@ -166,8 +158,7 @@ export default {
         title: vm.title,
         content: vm.content,
         educationId: vm.educationId,
-        userId: 2,
-        boardImg: vm.boardImg
+        userId: 2
       }
 
       try {

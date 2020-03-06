@@ -37,6 +37,7 @@
                       hint="제목을 입력해주세요"
                       required/>
                   </v-flex>
+
                   <v-flex xs12>
                     <vue-editor
                       id="editor"
@@ -44,6 +45,7 @@
                       use-custom-image-handler
                       @image-added="handleImageAdded"/>
                   </v-flex>
+
                   <v-flex xs12>
                     <v-select
                       :items="educationList"
@@ -56,13 +58,6 @@
                       class="theme--light"
                       chips
                     />
-                  </v-flex>
-                  <v-flex
-                    xs12
-                    md4>
-                    <v-text-field
-                      label="이미지 업로드"
-                      class="green-input"/>
                   </v-flex>
 
                   <!-- 등록 버튼 -->
@@ -108,7 +103,6 @@ export default {
     content: '',
     educationId: '',
     userId: '',
-    boardImg: '',
 
     // Education
     educationList: [],
@@ -146,8 +140,7 @@ export default {
         title: vm.title,
         content: vm.content,
         educationId: vm.educationId,
-        userId: 2,
-        boardImg: vm.boardImg
+        userId: 2
       }
 
       try {
