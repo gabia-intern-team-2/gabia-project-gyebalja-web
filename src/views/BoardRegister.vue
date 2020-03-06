@@ -175,21 +175,6 @@ export default {
           resetUploader()
         })
         .catch(error => console.log(error))
-      // let baseUrl = 'http://api.gyeblja.com:8080'
-      // axios({
-      //   url: baseUrl + '/api/v1/boardImgs',
-      //   method: 'POST',
-      //   data: formData
-      // })
-      //   .then(result => {
-      //     let url = result.data // Get url from response
-      //     url = baseUrl + url
-      //     Editor.insertEmbed(cursorLocation, 'image', url)
-      //     resetUploader()
-      //   })
-      //   .catch(err => {
-      //     console.log(err)
-      //   })
     }
   }
 }
