@@ -218,8 +218,8 @@
 
 <script>
 import bus from '../utils/bus.js'
-import statisticsEvent from '../api/statistics/statisticsEvent.js'
 import { mapGetters } from 'vuex'
+import { getStatisticsMain } from '../api/statistics/statistics.js'
 export default {
   data () {
     return {
@@ -370,9 +370,9 @@ export default {
     vm.userId = 2
     bus.$emit('start:spinner')
     try {
-      await statisticsEvent.readStatisticsMain(vm)
       await vm.$store.dispatch('FETCH_BOARDS')
       await vm.$store.dispatch('FETCH_EDUCATIONS', vm.userId)
+      this.initialize()
       vm.isGetData = true
     } catch (error) {
       // Error Page
@@ -380,6 +380,31 @@ export default {
       vm.$router.push({ name: 'Error Page' })
     }
     bus.$emit('end:spinner')
+  },
+
+  methods: {
+    async initialize () {
+      try {
+        const response = await getStatisticsMain()
+        this.yearlyData.data.labels = response.data.response.yearlyData.years
+        this.yearlyData.data.series.push(response.data.response.yearlyData.totalEducationTime)
+        this.yearlyData.data.series.push(response.data.response.yearlyData.totalEducationCount)
+
+        this.monthlyData.data.labels = response.data.response.monthlyData.months
+        this.monthlyData.data.series.push(response.data.response.monthlyData.totalEducationTime)
+        this.monthlyData.data.series.push(response.data.response.monthlyData.totalEducationCount)
+
+        this.categoryData.data.labels = response.data.response.categoryData.categories
+        this.categoryData.data.series.push(response.data.response.categoryData.totalCategoryCount)
+
+        this.tagData.data.labels = response.data.response.tagData.names
+        this.tagData.data.series.push(response.data.response.tagData.totalTagCount)
+      } catch (error) {
+        // Error Page
+        console.log(error)
+        this.$router.push({ name: 'Error Page' })
+      }
+    }
   }
 }
 </script>

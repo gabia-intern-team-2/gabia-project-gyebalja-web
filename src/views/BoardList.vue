@@ -18,13 +18,14 @@
             title="게시판"
             text="사내 교육 게시판"
           >
+            <!-- 테이블 -->
             <v-data-table
               :headers="headers"
               :items="this.$store.state.boards.content"
               :pagination.sync="pagination"
               hide-actions
             >
-              <!-- 테이블 -->
+
               <!-- 테이블 헤더 -->
               <template
                 slot="headerCell"
@@ -69,6 +70,7 @@
               </router-link>
             </v-flex>
           </material-card>
+
           <!-- 페이징 -->
           <div class="text-xs-center pt-2">
             <v-pagination
