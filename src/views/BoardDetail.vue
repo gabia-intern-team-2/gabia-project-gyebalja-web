@@ -85,7 +85,7 @@
           <material-comment
             :comments="commentList"
             :user-id="userId"
-            :board-id="boardId"/>
+            :board-id="boardId.toString()"/>
         </div>
       </v-flex>
     </v-layout>
@@ -128,13 +128,8 @@ export default {
       const vm = this
 
       // Check Likes
-      try {
-        await getLikesItem(vm.userId, vm.boardId)
-        vm.isLikes = false
-      } catch (error) {
-        console.log(error)
-        vm.isLikes = true
-      }
+      vm.responseLikes = await getLikesItem(vm.userId, vm.boardId)
+      vm.isLikes = !vm.responseLikes.data.response.likes
 
       // Read Board
       try {
