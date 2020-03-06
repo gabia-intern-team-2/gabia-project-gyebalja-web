@@ -34,11 +34,13 @@
                 <v-card-text class="text-xs-center">
                   <h6 class="category text-gray font-weight-thin mb-3"> CEO / {{ responseBoard.userName }}</h6>
                   <h6 class="category text-gray font-weight-thin mb-3">교육명 - {{ responseBoard.educationTitle }}</h6><br>
-                  <h3 class="card-title font-weight-light">{{ responseBoard.title }}</h3>
-                  <p
-                    id="my-v-html"
-                    class="font-weight-light"
-                    v-html="responseBoard.content"/>
+                  <div class="text-xs-left">
+                    <h3 class="card-title font-weight-light">{{ responseBoard.title }}</h3>
+                    <p
+                      id="my-v-html"
+                      class="font-weight-light"
+                      v-html="responseBoard.content"/>
+                  </div>
                   <v-flex>
                     <v-btn
                       small
@@ -178,12 +180,30 @@ export default {
 
 <style scoped>
 #my-v-html
-  /deep/ pre {
-  background-color: black !important;
-  color: #f8f8f2 !important;
-  overflow: visible;
-}
-
+  >>> pre {
+    background-color: black;
+    color: #f8f8f2;
+    overflow: visible;
+  }
+#my-v-html
+  >>> blockquote {
+    margin-left: 1%;
+    padding-left: 1%;
+    border-left: 5px solid #eeeeee;
+    color: grey;
+  }
+#my-v-html
+  >>> strong {
+    font-weight: bold
+  }
+#my-v-html
+  >>> .ql-align-center {
+    text-align: center;
+  }
+#my-v-html
+  >>> .ql-align-right {
+    text-align: right;
+  }
 .v-card {
   padding-bottom: 1%;
   margin-bottom: 3%;
