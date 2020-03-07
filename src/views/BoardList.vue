@@ -20,7 +20,7 @@
           >
             <!-- 테이블 -->
             <v-data-table
-              :headers="headers"
+              :headers="this.$store.state.state.boardHeaders"
               :items="this.$store.state.boards.content"
               :pagination.sync="pagination"
               hide-actions
@@ -90,30 +90,10 @@ import { mapGetters } from 'vuex'
 import bus from '../utils/bus'
 export default {
   data: () => ({
+    // Paging
     pagination: {},
-    headers: [
-      {
-        sortable: false,
-        text: 'No',
-        value: Number
-      },
-      {
-        sortable: false,
-        text: '제목',
-        value: 'country'
-      },
-      {
-        sortable: false,
-        text: '조회수',
-        value: 'views'
-      },
-      {
-        sortable: false,
-        text: '수정일',
-        value: 'modifiedDate'
-      }
-    ],
 
+    // Flag
     isGetData: false
   }),
 
