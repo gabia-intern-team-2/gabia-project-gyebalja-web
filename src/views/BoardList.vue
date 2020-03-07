@@ -75,7 +75,7 @@
           <div class="text-xs-center pt-2">
             <v-pagination
               v-model="pagination.page"
-              :length="this.$store.state.boards.totalPages"
+              :length="pages"
               color="info"
               circle/>
           </div>
@@ -118,6 +118,9 @@ export default {
   }),
 
   computed: {
+    pages () {
+      return Math.ceil(this.$store.state.boards.totalElements / 5)
+    },
     ...mapGetters({
       boards: 'fetchedBoards'
     })
