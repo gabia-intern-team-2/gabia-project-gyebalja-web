@@ -559,10 +559,12 @@ export default {
   },
   // 최초 실행 라이프사이클 훅
   async created () {
+    const vm = this
     bus.$emit('start:spinner')
     try {
-      let response = await getMyEducationList(2) // 교육 리스트 요청
-      let response2 = await getStatisticsEducation(2) // 통계 리스트 요청
+      console.log(vm.$store.state.user.id)
+      let response = await getMyEducationList(vm.$store.state.user.id) // 교육 리스트 요청
+      let response2 = await getStatisticsEducation(vm.$store.state.user.id) // 통계 리스트 요청
       this.items = response.data.response
       // 월별 교육 통계
       this.monthlyData.data.labels = response2.data.response.monthlyData.months

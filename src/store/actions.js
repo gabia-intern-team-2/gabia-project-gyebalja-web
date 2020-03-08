@@ -16,5 +16,9 @@ export default {
   async FETCH_DEPARTMENTS (context) {
     const response = await getDepartmentList()
     context.commit('SET_DEPARTMENTS', response.data.response)
+  },
+  async FETCH_USER (context, userId) {
+    const response = await getUserItem(userId)
+    context.commit('SET_USER', response.data.response)
   }
 }

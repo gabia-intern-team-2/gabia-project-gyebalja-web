@@ -240,6 +240,7 @@ import bus from '../utils/bus'
 export default {
   data () {
     return {
+      id: this.$store.state.user.id,
       valid: true,
       title: '',
       category: null,
@@ -309,7 +310,7 @@ export default {
         place: this.place,
         categoryId: this.category,
         hashTag: this.hashTag,
-        userId: '2'
+        userId: this.id
       }
       if (this.$refs.form.validate()) {
         if (this.$route.name === 'Education Register') {

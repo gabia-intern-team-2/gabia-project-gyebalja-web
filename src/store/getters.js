@@ -8,5 +8,8 @@ export default {
   },
   fetchedDepartments (state) {
     return state.departments
+  },
+  fetchedUser (state) {
+    return state.user
   }
 }

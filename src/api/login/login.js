@@ -5,17 +5,14 @@ import { config } from '../index.js'
 function getLoginRedirect () {
   return axios.get(`${config.baseUrl}login`, { withCredentials: true })
 }
-
 // 조회 - 등록 사용자 여부
 function getIsRegisterUser () {
   return axios.get(`${config.baseUrl}login/isRegister`, { withCredentials: true })
 }
-
 // 조회 - 인증 사용자 여부
 function getIsAuthenticationUser () {
   return axios.get(`${config.baseUrl}auth/user`, { withCredentials: true })
 }
-
 // 조회 - 가비아 사용자 프로필
 function getGabiaProfile () {
   return axios.get(`${config.baseUrl}gabia-user`, { withCredentials: true })

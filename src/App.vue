@@ -34,7 +34,6 @@
 import bus from './utils/bus.js'
 import Spinner from './components/helper/Spinner.vue'
 import { getIsAuthenticationUser, getIsRegisterUser } from './api/login/login.js'
-
 export default {
   components: {
     Spinner
@@ -48,13 +47,15 @@ export default {
       isGetData: false
     }
   },
-
   created () {
+    const vm = this
     bus.$on('start:spinner', this.startSpinner)
     this.initializeUser()
     bus.$on('end:spinner', this.endSpinner)
-    bus.$on('register-success', success => {
+    bus.$on('register-success', userId => {
       this.isRegisterUser = true
+      // VUEX에 유저정보 저장
+      vm.$store.dispatch('FETCH_USER', userId)
     })
     bus.$on('logout-success', success => {
       this.isAuthenticationUser = false

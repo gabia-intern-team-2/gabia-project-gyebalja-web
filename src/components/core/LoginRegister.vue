@@ -140,10 +140,7 @@
                     xs12
                     md12
                   >
-                    <v-text-field
-                      v-model="profileImg"
-                      label="이미지 등록"
-                      prepend-icon="mdi-camera"/>
+                    <input type="file">
                   </v-flex>
                 </v-layout>
                 <!-- 등록 버튼 -->
@@ -166,7 +163,7 @@
 </template>
 
 <script>
-import { getGabiaProfile } from '../../api/login/login'
+import { getGabiaProfile } from '../../api/login/login.js'
 import { postUserItem } from '../../api/user/user.js'
 import bus from '../../utils/bus.js'
 export default {
@@ -179,6 +176,9 @@ export default {
       ],
       telRules: [
         v => !v || /^\d{2,3}-\d{3,4}-\d{4}$/.test(v) || 'XXX-XXXX-XXXX 형식을 맞춰주세요!'
+      ],
+      imgRules: [
+        v => !v || v.size < 2000000 || '사진 용량은 2MB이하만 가능합니다.'
       ],
       gabiaUserNo: null,
       email: null,
@@ -243,11 +243,10 @@ export default {
             deptId: this.deptId,
             profileImg: this.profileImg
           }
-          console.log(this.positionId)
-          await postUserItem(user)
+          let response = await postUserItem(user)
           alert('등록이 완료 되었습니다. 환영합니다!')
           // APP.vue 의 플래그 조작을 위한 이벤트 버스
-          bus.$emit('register-success')
+          bus.$emit('register-success', response.data.response)
           // 메인으로 이동
           this.$router.push({ name: 'Dashboard' })
         } catch (error) {

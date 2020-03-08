@@ -9,6 +9,7 @@ export default {
   state: {
     boards: [],
     educations: [],
-    departments: []
+    departments: [],
+    user: []
   }
 }

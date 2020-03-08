@@ -9,7 +9,7 @@ export default {
   SET_DEPARTMENTS (state, departments) {
     state.departments = departments
   },
-  SET_USERINFO (state, user) {
+  SET_USER (state, user) {
     state.user = user
   }
 }

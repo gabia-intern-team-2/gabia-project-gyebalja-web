@@ -31,8 +31,8 @@
                 >
               </v-avatar>
               <v-card-text class="text-xs-center">
-                <h4 class="category text-gray font-weight-thin mb-3">인턴 / HR부서</h4>
-                <h3 class="card-title font-weight-light"><v-icon color="black">mdi-account</v-icon>정태균</h3>
+                <h4 class="category text-gray font-weight-thin mb-3">{{ this.$store.state.user.positionName }} / {{ this.$store.state.user.department.name }}</h4>
+                <h3 class="card-title font-weight-light"><v-icon color="black">mdi-account</v-icon>{{ this.$store.state.user.name }}({{ this.$store.state.user.engName }})</h3>
               </v-card-text>
               <v-container py-0>
                 <v-layout wrap>
@@ -47,7 +47,7 @@
                     >
                       <v-card-text>
                         <h6 class="grey--text font-italic"><v-icon color="grey">mdi-email</v-icon>이메일(ID)</h6>
-                        <div>test@gabia.com</div>
+                        <div>{{ this.$store.state.user.email }}</div>
                       </v-card-text>
                     </v-card>
                   </v-flex>
@@ -62,7 +62,7 @@
                     >
                       <v-card-text>
                         <h6 class="grey--text font-italic text-xs-left"><v-icon color="grey">mdi-gender-male-female</v-icon>성별(Gender)</h6>
-                        <div>MALE</div>
+                        <div>{{ this.$store.state.user.gender }}</div>
                       </v-card-text>
                     </v-card>
                   </v-flex>
@@ -78,7 +78,7 @@
                     >
                       <v-card-text>
                         <h6 class="grey--text font-italic text-xs-left"><v-icon color="grey">mdi-shield</v-icon>등록번호</h6>
-                        <div>No.200</div>
+                        <div>No.{{ this.$store.state.user.id }}</div>
                       </v-card-text>
                     </v-card>
                   </v-flex>
@@ -94,7 +94,7 @@
                       <v-card-text>
                         <div>
                           <h6 class="grey--text font-italic"><v-icon color="grey">mdi-phone</v-icon>핸드폰 번호(Phone Number)</h6>
-                          010-9999-9999
+                          {{ this.$store.state.user.phone }}
                         </div>
                       </v-card-text>
                     </v-card>
@@ -111,7 +111,7 @@
                       <v-card-text>
                         <h6 class="grey--text font-italic"><v-icon color="grey">mdi-phone-classic</v-icon>내선 번호(Tel.)</h6>
                         <div>
-                          031-2222-2222
+                          {{ this.$store.state.user.tel }}
                         </div>
                       </v-card-text>
                     </v-card>
@@ -150,10 +150,18 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
     }
+  },
+  computed: {
+    ...mapGetters({
+      user: 'fetchedUser'
+    })
+  },
+  created () {
   },
   methods: {
     home () {
