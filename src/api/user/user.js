@@ -5,7 +5,26 @@ import { config } from '../index.js'
 function postUserItem (user) {
   return axios.post(`${config.baseUrl}users`, user, { withCredentials: true })
 }
-
+// 조회 - 사용자
+function getUserItem (userId) {
+  return axios.get(`${config.baseUrl}users/${userId}`, { withCredentials: true })
+}
+// 수정 - 사용자
+function putUserItem (userId, user) {
+  return axios.put(`${config.baseUrl}users/${userId}`, user, { withCredentials: true })
+}
+// 조회 - 사용자 (토큰)
+function getUserItemByToken () {
+  return axios.get(`${config.baseUrl}users`, { withCredentials: true })
+}
+// 저장 - 사용자 이미지
+function postUserImgItem (userImg) {
+  return axios.post(`${config.baseUrl}userImgs`, userImg, { withCredentials: true })
+}
 export {
-  postUserItem
+  postUserItem,
+  getUserItem,
+  putUserItem,
+  getUserItemByToken,
+  postUserImgItem
 }
