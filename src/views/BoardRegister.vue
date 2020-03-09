@@ -68,7 +68,7 @@
                     <v-btn
                       class="mx-0 font-weight-light"
                       color="success"
-                      @click="checkValidate"
+                      @click="submit"
                     >
                       등록하기
                     </v-btn>
@@ -151,7 +151,7 @@ export default {
       vm.$router.push({ name: 'Board List' })
     },
 
-    checkValidate () {
+    submit () {
       if (this.$refs.form.validate()) {
         this.createBoard()
       }
