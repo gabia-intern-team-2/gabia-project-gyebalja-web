@@ -18,13 +18,14 @@
             title="게시판"
             text="사내 교육 게시판"
           >
+            <!-- 테이블 -->
             <v-data-table
-              :headers="headers"
+              :headers="this.$store.state.state.boardHeaders"
               :items="this.$store.state.boards.content"
               :pagination.sync="pagination"
               hide-actions
             >
-              <!-- 테이블 -->
+
               <!-- 테이블 헤더 -->
               <template
                 slot="headerCell"
@@ -69,11 +70,12 @@
               </router-link>
             </v-flex>
           </material-card>
+
           <!-- 페이징 -->
           <div class="text-xs-center pt-2">
             <v-pagination
               v-model="pagination.page"
-              :length="this.$store.state.boards.totalPages"
+              :length="pages"
               color="info"
               circle/>
           </div>
@@ -88,34 +90,17 @@ import { mapGetters } from 'vuex'
 import bus from '../utils/bus'
 export default {
   data: () => ({
+    // Paging
     pagination: {},
-    headers: [
-      {
-        sortable: false,
-        text: 'No',
-        value: Number
-      },
-      {
-        sortable: false,
-        text: '제목',
-        value: 'country'
-      },
-      {
-        sortable: false,
-        text: '조회수',
-        value: 'views'
-      },
-      {
-        sortable: false,
-        text: '수정일',
-        value: 'modifiedDate'
-      }
-    ],
 
+    // Flag
     isGetData: false
   }),
 
   computed: {
+    pages () {
+      return Math.ceil(this.$store.state.boards.totalElements / 5)
+    },
     ...mapGetters({
       boards: 'fetchedBoards'
     })
