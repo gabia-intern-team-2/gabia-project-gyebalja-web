@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-data-table
-      :headers="headers"
+      :headers="this.$store.state.state.boardHeaders"
       :items="this.$store.state.boards.content"
       :pagination.sync="value"
       hide-actions
