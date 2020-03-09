@@ -84,7 +84,6 @@
 </template>
 
 <script>
-// import axios from 'axios'
 import bus from '../utils/bus.js'
 import { VueEditor } from 'vue2-editor'
 import { config } from '../api/index.js'

@@ -10,6 +10,7 @@ export default {
     boards: [],
     educations: [],
     departments: [],
+    user: [],
     boardHeaders: [
       {
         sortable: false,

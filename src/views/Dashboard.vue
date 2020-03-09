@@ -291,6 +291,8 @@ export default {
     try {
       await vm.$store.dispatch('FETCH_BOARDS')
       await vm.$store.dispatch('FETCH_EDUCATIONS', vm.userId)
+      await vm.$store.dispatch('FETCH_USER')
+      
       this.initialize()
       vm.isGetData = true
     } catch (error) {

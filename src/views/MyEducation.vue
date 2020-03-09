@@ -1,404 +1,406 @@
 <template>
-  <v-container
-    fill-height
-    fluid
-    grid-list-xl
-  >
-    <v-layout
-      justify-center
-      wrap
+  <div v-if="isGetData">
+    <v-container
+      fill-height
+      fluid
+      grid-list-xl
     >
       <v-layout
-        row
+        justify-center
+        wrap
       >
-        <v-flex
-          sm12
-          xs12
-          lg12
-          md12
+        <v-layout
+          row
         >
-          <!-- 통계 1 - 부서 내 나의 순위 -->
-          <material-stats-card
-            :value="rank +' / '+ teamMembers"
-            :icon="rank"
-            color="orange"
-            title="부서 내 나의 순위"
-            height="125px"
-            min-width="250px"
-          />
-          <!-- 통계 2 - 주력 카테고리 -->
-          <material-stats-card
-            :value="mainCategory"
-            color="purple"
-            icon="mdi-finance"
-            title="주력 카테고리"
-            height="125px"
-            min-width="250px"
-          />
-        </v-flex>
-        <!-- 통계 3 - 나 vs 가비아 -->
-        <v-flex
-          sm12
-          xs12
-          md12
-          lg12
-        >
-          <material-chart-card
-            :data="hoursData.data"
-            :options="hoursData.options"
-            :responsive-options="hoursData.responsiveOptions"
-            color="red"
-            type="Bar"
-            height="275px"
-            min-width="250px"
+          <v-flex
+            sm12
+            xs12
+            lg12
+            md12
           >
-            <h4 class="title font-weight-light">{{ currentYear }}년 나 vs 가비아 평균</h4>
-            <p class="category d-inline-flex font-weight-light">사내 인원별 교육시간 평균</p>
-
-            <template slot="actions">
-              <v-icon
-                class="mr-2"
-                small
-              >
-                mdi-clock-outline
-              </v-icon>
-              <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
-            </template>
-          </material-chart-card>
-        </v-flex>
-        <!-- 통계 4 - 나의 태그 Top 3 -->
-        <v-flex
-          sm12
-          xs12
-          md12
-          lg12
-        >
-          <material-chart-card
-            :data="tagData.data"
-            color="green"
-            type="Bar"
-            height="275px"
-            min-width="250px"
+            <!-- 통계 1 - 부서 내 나의 순위 -->
+            <material-stats-card
+              :value="rank +' / '+ teamMembers"
+              :icon="rank"
+              color="orange"
+              title="부서 내 나의 순위"
+              height="125px"
+              min-width="250px"
+            />
+            <!-- 통계 2 - 주력 카테고리 -->
+            <material-stats-card
+              :value="mainCategory"
+              color="purple"
+              icon="mdi-finance"
+              title="주력 카테고리"
+              height="125px"
+              min-width="250px"
+            />
+          </v-flex>
+          <!-- 통계 3 - 나 vs 가비아 -->
+          <v-flex
+            sm12
+            xs12
+            md12
+            lg12
           >
-            <h4 class="title font-weight-light">나의 태그 Top 3</h4>
-            <p class="category d-inline-flex font-weight-light"> <span class="green--text">최고 관심 : {{ mainTag }}</span>&nbsp;</p>
-
-            <template slot="actions">
-              <v-icon
-                class="mr-2"
-                small
-              >
-                mdi-clock-outline
-              </v-icon>
-              <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
-            </template>
-          </material-chart-card>
-        </v-flex>
-        <!-- 통계 5 - 월별 교육 추이 -->
-        <v-flex
-          sm12
-          xs12
-          md12
-          lg12
-        >
-          <material-chart-card
-            :data="monthlyData.data"
-            :options="monthlyData.options"
-            color="info"
-            type="Line"
-            height="275px"
-            min-width="350px"
-          >
-            <h4 class="title font-weight-light">{{ currentYear }}년 나의 월별 교육 추이</h4>
-            <p class="category d-inline-flex font-weight-light">
-              <v-icon
-                color="green"
-                small
-              >
-                mdi-arrow-up
-              </v-icon>
-              <span class="green--text">55%</span>&nbsp;
-              increase in today's sales
-            </p>
-
-            <template slot="actions">
-              <v-icon
-                class="mr-2"
-                small
-              >
-                mdi-clock-outline
-              </v-icon>
-              <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
-            </template>
-          </material-chart-card>
-        </v-flex>
-        <!-- 유저 프로필 요약 -->
-        <v-flex
-          sm12
-          xs12
-          md12
-          lg12
-        >
-          <material-card class="v-card-profile">
-            <v-avatar
-              slot="offset"
-              class="mx-auto d-block"
-              size="120"
+            <material-chart-card
+              :data="hoursData.data"
+              :options="hoursData.options"
+              :responsive-options="hoursData.responsiveOptions"
+              color="red"
+              type="Bar"
+              height="275px"
+              min-width="250px"
             >
-              <img
-                src="../images/dog.jpg"
+              <h4 class="title font-weight-light">{{ currentYear }}년 나 vs 가비아 평균</h4>
+              <p class="category d-inline-flex font-weight-light">사내 인원별 교육시간 평균</p>
+
+              <template slot="actions">
+                <v-icon
+                  class="mr-2"
+                  small
+                >
+                  mdi-clock-outline
+                </v-icon>
+                <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
+              </template>
+            </material-chart-card>
+          </v-flex>
+          <!-- 통계 4 - 나의 태그 Top 3 -->
+          <v-flex
+            sm12
+            xs12
+            md12
+            lg12
+          >
+            <material-chart-card
+              :data="tagData.data"
+              color="green"
+              type="Bar"
+              height="275px"
+              min-width="250px"
+            >
+              <h4 class="title font-weight-light">나의 태그 Top 3</h4>
+              <p class="category d-inline-flex font-weight-light"> <span class="green--text">최고 관심 : {{ mainTag }}</span>&nbsp;</p>
+
+              <template slot="actions">
+                <v-icon
+                  class="mr-2"
+                  small
+                >
+                  mdi-clock-outline
+                </v-icon>
+                <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
+              </template>
+            </material-chart-card>
+          </v-flex>
+          <!-- 통계 5 - 월별 교육 추이 -->
+          <v-flex
+            sm12
+            xs12
+            md12
+            lg12
+          >
+            <material-chart-card
+              :data="monthlyData.data"
+              :options="monthlyData.options"
+              color="info"
+              type="Line"
+              height="275px"
+              min-width="350px"
+            >
+              <h4 class="title font-weight-light">{{ currentYear }}년 나의 월별 교육 추이</h4>
+              <p class="category d-inline-flex font-weight-light">
+                <v-icon
+                  color="green"
+                  small
+                >
+                  mdi-arrow-up
+                </v-icon>
+                <span class="green--text">55%</span>&nbsp;
+                increase in today's sales
+              </p>
+
+              <template slot="actions">
+                <v-icon
+                  class="mr-2"
+                  small
+                >
+                  mdi-clock-outline
+                </v-icon>
+                <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
+              </template>
+            </material-chart-card>
+          </v-flex>
+          <!-- 유저 프로필 요약 -->
+          <v-flex
+            sm12
+            xs12
+            md12
+            lg12
+          >
+            <material-card class="v-card-profile">
+              <v-avatar
+                slot="offset"
+                class="mx-auto d-block"
+                size="120"
               >
-            </v-avatar>
-            <v-card-text class="text-xs-center">
-              <h6 class="category text-gray font-weight-thin mb-3">인턴 / HR인사팀</h6>
-              <h4 class="card-title font-weight-light">정태균(Thor)</h4>
-              <router-link
-                :to="{name: 'User Profile'}">
-                <v-btn
-                  color="success"
-                  round
-                  class="font-weight-light"
-                >상세 보기</v-btn>
-              </router-link>
-            </v-card-text>
+                <img
+                  :src="imgUrl"
+                >
+              </v-avatar>
+              <v-card-text class="text-xs-center">
+                <h6 class="category text-gray font-weight-thin mb-3">{{ this.$store.state.user.positionName }} / {{ this.$store.state.user.department.name }}</h6>
+                <h4 class="card-title font-weight-light">{{ this.$store.state.user.name }}({{ this.$store.state.user.engName }})</h4>
+                <router-link
+                  :to="{name: 'User Profile'}">
+                  <v-btn
+                    color="success"
+                    round
+                    class="font-weight-light"
+                  >상세 보기</v-btn>
+                </router-link>
+              </v-card-text>
+            </material-card>
+          </v-flex>
+        </v-layout>
+        <!-- 간편 수정 Dialog -->
+        <v-flex
+          md12
+        >
+          <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation>
+            <v-dialog
+              v-model="dialog"
+              max-width="700px">
+              <v-card>
+                <v-card-title>
+                  <span class="headline">나의 교육 간편 수정</span>
+                  <v-spacer/>
+                  <h6 class="red--text">* 교육 내용, 해시태그는 상세페이지에서 수정가능합니다.</h6>
+                </v-card-title>
+                <v-card-text>
+                  <v-container grid-list-md>
+                    <v-layout wrap>
+                      <!-- 교육 명 입력 란 -->
+                      <v-flex
+                        xs12
+                        sm6
+                        md8>
+                        <v-text-field
+                          v-model="editedItem.title"
+                          :rules="[v => !!v || '필수 입력사항입니다']"
+                          class="purple-input"
+                          label="교육 명"/>
+                      </v-flex>
+                      <!-- 카테고리 입력 란 -->
+                      <v-flex
+                        xs12
+                        sm6
+                        md4>
+                        <v-select
+                          v-model="editedItem.category.id"
+                          :items="categoryList"
+                          :rules="[v => !!v || '필수 입력사항입니다']"
+                          label="카테고리(Category)"
+                          class="purple-input"
+                          prepend-icon="mdi-animation"
+                          item-text="name"
+                          item-value="id"
+                          required
+                          chips
+                          color="purple"
+                        />
+                      </v-flex>
+                      <!-- 시작날짜 입력 란 -->
+                      <v-flex
+                        xs12
+                        sm6
+                        md4>
+                        <v-text-field
+                          v-model="editedItem.startDate"
+                          :rules="dateRules"
+                          class="purple-input"
+                          hint="YYYY-MM-DD"
+                          label="시작 날짜"/>
+                      </v-flex>
+                      <!-- 종료날짜 입력 란 -->
+                      <v-flex
+                        xs12
+                        sm6
+                        md4>
+                        <v-text-field
+                          v-model="editedItem.endDate"
+                          :rules="dateRules"
+                          class="purple-input"
+                          hint="YYYY-MM-DD"
+                          label="종료 날짜"/>
+                      </v-flex>
+                      <!-- 교육시간 입력 란 -->
+                      <v-flex
+                        xs12
+                        sm6
+                        md4>
+                        <v-text-field
+                          v-model="editedItem.totalHours"
+                          :rules="totalHoursRules"
+                          class="purple-input"
+                          type="number"
+                          hint="숫자입력(시간)"
+                          label="교육시간"/>
+                      </v-flex>
+                      <!-- 교육 유형 입력 란 -->
+                      <v-flex
+                        xs12
+                        sm6
+                        md6>
+                        <v-select
+                          v-model="editedItem.type"
+                          :items="edutypeList"
+                          :rules="[v => !!v || '필수 입력사항입니다']"
+                          label="교육유형"
+                          class="purple-input"
+                          prepend-icon="mdi-animation"
+                          required
+                          chips
+                          color="purple"
+                        />
+                      </v-flex>
+                      <!-- 교육 장소 입력 란 -->
+                      <v-flex
+                        xs12
+                        sm6
+                        md6>
+                        <v-text-field
+                          v-model="editedItem.place"
+                          label="교육 장소"/>
+                      </v-flex>
+                    </v-layout>
+                  </v-container>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer/>
+                  <v-btn
+                    color="blue darken-1"
+                    flat
+                    @click.native="cancle">취소</v-btn>
+                  <v-btn
+                    :disabled="!valid"
+                    color="blue darken-1"
+                    flat
+                    @click.native="update">수정</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+          </v-form>
+          <!-- 카드 -->
+          <material-card
+            color="blue"
+            title="My Educations"
+            text="나의 교육 현황 리스트"
+          >
+            <v-data-table
+              :headers="headers"
+              :items="items"
+              :pagination.sync="pagination"
+              hide-actions
+              class="elevation-1"
+            >
+              <!-- 테이블 -->
+              <!-- 테이블 헤더 -->
+              <template
+                slot="headerCell"
+                slot-scope="{ header }"
+              >
+                <span
+                  class="subheading font-weight-light text-info text--darken-3"
+                  v-text="header.text"
+                />
+              </template>
+              <!-- 테이블 본문 -->
+              <template
+                slot="items"
+                slot-scope="{ item }"
+              >
+                <router-link
+                  id="router-link"
+                  :to="{name: 'Education Detail', params: {educationId: item.id}}">
+                  <td>{{ item.title }}</td>
+                </router-link>
+                <td>{{ item.startDate }}</td>
+                <td>{{ item.endDate }}</td>
+                <td class="text-xs-center">{{ item.totalHours }}</td>
+                <td class="text-xs-center">
+                  <v-chip
+                    :color="getColor(item.type)"
+                    dark
+                    class="text-xs-center">
+                    <td>{{ item.type }}</td>
+                  </v-chip>
+                </td>
+                <td>{{ item.place }}</td>
+                <td class="text-xs-center">{{ item.category.name }}</td>
+                <v-tooltip
+                  top
+                  content-class="top">
+                  <v-btn
+                    slot="activator"
+                    class="v-btn--simple"
+                    color="info"
+                    icon
+                    @click="editEducation(item)"
+                  >
+                    <v-icon color="teal">mdi-pen</v-icon>
+                  </v-btn>
+                  <span>수정</span>
+                </v-tooltip>
+                <v-tooltip
+                  top
+                  content-class="top">
+                  <v-btn
+                    slot="activator"
+                    class="v-btn--simple"
+                    color="danger"
+                    icon
+                    @click="removeEducation(item)"
+                  >
+                    <v-icon color="error">mdi-delete</v-icon>
+                  </v-btn>
+                  <span>삭제</span>
+                </v-tooltip>
+              </template>
+              <template slot="no-data">
+                <v-alert
+                  :value="true"
+                  color="teal"
+                  icon="mdi-alert">
+                  나의 교육이 없습니다. 교육을 추가해보세요!:)
+                </v-alert>
+              </template>
+            </v-data-table>
           </material-card>
+          <div class="text-xs-center pt-2">
+            <v-pagination
+              v-model="pagination.page"
+              :length="pages"
+              color="info"
+              circle/>
+          </div>
+          <!-- 교육 작성 버튼 -->
+          <div class="text-xs-center pt-2">
+            <router-link to="/myEducation/register"><v-btn
+              color="success"
+              round
+              class="font-weight-light"
+            >교육 작성</v-btn></router-link>
+          </div>
         </v-flex>
       </v-layout>
-      <!-- 간편 수정 Dialog -->
-      <v-flex
-        md12
-      >
-        <v-form
-          ref="form"
-          v-model="valid"
-          lazy-validation>
-          <v-dialog
-            v-model="dialog"
-            max-width="700px">
-            <v-card>
-              <v-card-title>
-                <span class="headline">나의 교육 간편 수정</span>
-                <v-spacer/>
-                <h6 class="red--text">* 교육 내용, 해시태그는 상세페이지에서 수정가능합니다.</h6>
-              </v-card-title>
-              <v-card-text>
-                <v-container grid-list-md>
-                  <v-layout wrap>
-                    <!-- 교육 명 입력 란 -->
-                    <v-flex
-                      xs12
-                      sm6
-                      md8>
-                      <v-text-field
-                        v-model="editedItem.title"
-                        :rules="[v => !!v || '필수 입력사항입니다']"
-                        class="purple-input"
-                        label="교육 명"/>
-                    </v-flex>
-                    <!-- 카테고리 입력 란 -->
-                    <v-flex
-                      xs12
-                      sm6
-                      md4>
-                      <v-select
-                        v-model="editedItem.category.id"
-                        :items="categoryList"
-                        :rules="[v => !!v || '필수 입력사항입니다']"
-                        label="카테고리(Category)"
-                        class="purple-input"
-                        prepend-icon="mdi-animation"
-                        item-text="name"
-                        item-value="id"
-                        required
-                        chips
-                        color="purple"
-                      />
-                    </v-flex>
-                    <!-- 시작날짜 입력 란 -->
-                    <v-flex
-                      xs12
-                      sm6
-                      md4>
-                      <v-text-field
-                        v-model="editedItem.startDate"
-                        :rules="dateRules"
-                        class="purple-input"
-                        hint="YYYY-MM-DD"
-                        label="시작 날짜"/>
-                    </v-flex>
-                    <!-- 종료날짜 입력 란 -->
-                    <v-flex
-                      xs12
-                      sm6
-                      md4>
-                      <v-text-field
-                        v-model="editedItem.endDate"
-                        :rules="dateRules"
-                        class="purple-input"
-                        hint="YYYY-MM-DD"
-                        label="종료 날짜"/>
-                    </v-flex>
-                    <!-- 교육시간 입력 란 -->
-                    <v-flex
-                      xs12
-                      sm6
-                      md4>
-                      <v-text-field
-                        v-model="editedItem.totalHours"
-                        :rules="totalHoursRules"
-                        class="purple-input"
-                        type="number"
-                        hint="숫자입력(시간)"
-                        label="교육시간"/>
-                    </v-flex>
-                    <!-- 교육 유형 입력 란 -->
-                    <v-flex
-                      xs12
-                      sm6
-                      md6>
-                      <v-select
-                        v-model="editedItem.type"
-                        :items="edutypeList"
-                        :rules="[v => !!v || '필수 입력사항입니다']"
-                        label="교육유형"
-                        class="purple-input"
-                        prepend-icon="mdi-animation"
-                        required
-                        chips
-                        color="purple"
-                      />
-                    </v-flex>
-                    <!-- 교육 장소 입력 란 -->
-                    <v-flex
-                      xs12
-                      sm6
-                      md6>
-                      <v-text-field
-                        v-model="editedItem.place"
-                        label="교육 장소"/>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-              </v-card-text>
-              <v-card-actions>
-                <v-spacer/>
-                <v-btn
-                  color="blue darken-1"
-                  flat
-                  @click.native="cancle">취소</v-btn>
-                <v-btn
-                  :disabled="!valid"
-                  color="blue darken-1"
-                  flat
-                  @click.native="update">수정</v-btn>
-              </v-card-actions>
-            </v-card>
-          </v-dialog>
-        </v-form>
-        <!-- 카드 -->
-        <material-card
-          color="blue"
-          title="My Educations"
-          text="나의 교육 현황 리스트"
-        >
-          <v-data-table
-            :headers="this.$store.state.state.educationHeaders"
-            :items="items"
-            :pagination.sync="pagination"
-            hide-actions
-            class="elevation-1"
-          >
-            <!-- 테이블 -->
-            <!-- 테이블 헤더 -->
-            <template
-              slot="headerCell"
-              slot-scope="{ header }"
-            >
-              <span
-                class="subheading font-weight-light text-info text--darken-3"
-                v-text="header.text"
-              />
-            </template>
-            <!-- 테이블 본문 -->
-            <template
-              slot="items"
-              slot-scope="{ item }"
-            >
-              <router-link
-                id="router-link"
-                :to="{name: 'Education Detail', params: {educationId: item.id}}">
-                <td>{{ item.title }}</td>
-              </router-link>
-              <td>{{ item.startDate }}</td>
-              <td>{{ item.endDate }}</td>
-              <td class="text-xs-center">{{ item.totalHours }}</td>
-              <td class="text-xs-center">
-                <v-chip
-                  :color="getColor(item.type)"
-                  dark
-                  class="text-xs-center">
-                  <td>{{ item.type }}</td>
-                </v-chip>
-              </td>
-              <td>{{ item.place }}</td>
-              <td class="text-xs-center">{{ item.category.name }}</td>
-              <v-tooltip
-                top
-                content-class="top">
-                <v-btn
-                  slot="activator"
-                  class="v-btn--simple"
-                  color="info"
-                  icon
-                  @click="editEducation(item)"
-                >
-                  <v-icon color="teal">mdi-pen</v-icon>
-                </v-btn>
-                <span>수정</span>
-              </v-tooltip>
-              <v-tooltip
-                top
-                content-class="top">
-                <v-btn
-                  slot="activator"
-                  class="v-btn--simple"
-                  color="danger"
-                  icon
-                  @click="removeEducation(item)"
-                >
-                  <v-icon color="error">mdi-delete</v-icon>
-                </v-btn>
-                <span>삭제</span>
-              </v-tooltip>
-            </template>
-            <template slot="no-data">
-              <v-alert
-                :value="true"
-                color="teal"
-                icon="mdi-alert">
-                나의 교육이 없습니다. 교육을 추가해보세요!:)
-              </v-alert>
-            </template>
-          </v-data-table>
-        </material-card>
-        <div class="text-xs-center pt-2">
-          <v-pagination
-            v-model="pagination.page"
-            :length="pages"
-            color="info"
-            circle/>
-        </div>
-        <!-- 교육 작성 버튼 -->
-        <div class="text-xs-center pt-2">
-          <router-link to="/myEducation/register"><v-btn
-            color="success"
-            round
-            class="font-weight-light"
-          >교육 작성</v-btn></router-link>
-        </div>
-      </v-flex>
-    </v-layout>
-  </v-container>
+    </v-container>
+  </div>
 </template>
 <script>
 import { getMyEducationList, deleteMyEducationItem, putMyEducationItem, getMyEducationItem } from '../api/education/education.js'
@@ -507,7 +509,9 @@ export default {
       rank: 0,
       teamMembers: 0,
       mainCategory: '',
-      mainTag: ''
+      mainTag: '',
+      imgUrl: '',
+      isGetData: false
     }
   },
 
@@ -518,10 +522,13 @@ export default {
   },
   // 최초 실행 라이프사이클 훅
   async created () {
+    const vm = this
     bus.$emit('start:spinner')
     try {
-      let response = await getMyEducationList(2) // 교육 리스트 요청
-      let response2 = await getStatisticsEducation(2) // 통계 리스트 요청
+      await this.$store.dispatch('FETCH_USER')
+      this.imgUrl = this.$store.state.user.profileImg
+      let response = await getMyEducationList(vm.$store.state.user.id) // 교육 리스트 요청
+      let response2 = await getStatisticsEducation(vm.$store.state.user.id) // 통계 리스트 요청
       this.items = response.data.response
       // 월별 교육 통계
       this.monthlyData.data.labels = response2.data.response.monthlyData.months
@@ -543,6 +550,7 @@ export default {
       this.mainTag = response2.data.response.tagData.tagNames[0]
 
       this.currentYear = response2.data.response.monthlyData.year
+      this.isGetData = true
     } catch (error) {
       console.log(error)
     }
@@ -607,7 +615,7 @@ export default {
               type: vm.editedItem.type,
               place: vm.editedItem.place,
               hashTag: vm.hashTagString,
-              userId: 2,
+              userId: vm.$store.state.user.id,
               categoryId: vm.editedItem.category.id
             }
             await putMyEducationItem(educationRes.data.response.id, editedEducation)

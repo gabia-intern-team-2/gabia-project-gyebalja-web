@@ -34,7 +34,6 @@
 import bus from './utils/bus.js'
 import Spinner from './components/helper/Spinner.vue'
 import { getIsAuthenticationUser, getIsRegisterUser } from './api/login/login.js'
-
 export default {
   components: {
     Spinner
@@ -48,16 +47,21 @@ export default {
       isGetData: false
     }
   },
-
   created () {
     bus.$on('start:spinner', this.startSpinner)
     this.initializeUser()
     bus.$on('end:spinner', this.endSpinner)
+    bus.$on('register-success', userId => {
+      this.isRegisterUser = true
+    })
+    bus.$on('logout-success', success => {
+      this.isAuthenticationUser = false
+    })
   },
 
   beforeDestroy () {
     bus.$off('start:spinner', this.startSpinner)
-    bus.$oof('end:spinner', this.endSpinner)
+    bus.$off('end:spinner', this.endSpinner)
   },
 
   methods: {
@@ -76,7 +80,7 @@ export default {
 
         // 조회 - 등록 사용자 여부
         response = await getIsRegisterUser()
-        this.isRegisterUser = !response.data.response
+        this.isRegisterUser = response.data.response
       } catch (error) {
         console.log(error)
       }

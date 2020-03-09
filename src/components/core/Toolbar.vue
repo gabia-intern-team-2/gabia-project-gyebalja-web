@@ -30,12 +30,6 @@
         layout
         py-2
       >
-        <v-text-field
-          class="mr-4 purple-input"
-          label="Search..."
-          hide-details
-          color="purple"
-        />
         <router-link
           v-ripple
           class="toolbar-items"
@@ -43,48 +37,35 @@
         >
           <v-icon color="tertiary">mdi-view-dashboard</v-icon>
         </router-link>
-        <v-menu
-          bottom
-          left
-          content-class="dropdown-menu"
-          offset-y
-          transition="slide-y-transition">
-          <router-link
-            v-ripple
-            slot="activator"
-            class="toolbar-items"
-            to="/notifications"
-          >
-            <v-badge
-              color="error"
-              overlap
-            >
-              <template slot="badge">
-                {{ notifications.length }}
-              </template>
-              <v-icon color="tertiary">mdi-bell</v-icon>
-            </v-badge>
-          </router-link>
-          <v-card>
-            <v-list dense>
-              <v-list-tile
-                v-for="notification in notifications"
-                :key="notification"
-                @click="onClick"
-              >
-                <v-list-tile-title
-                  v-text="notification"
-                />
-              </v-list-tile>
-            </v-list>
-          </v-card>
-        </v-menu>
         <router-link
           v-ripple
           class="toolbar-items"
-          to="/user-profile"
+          to="/boardList"
+        >
+          <v-icon color="tertiary">mdi-clipboard-outline</v-icon>
+        </router-link>
+        <router-link
+          v-ripple
+          class="toolbar-items"
+          to="/myEducation"
+        >
+          <v-icon color="tertiary">mdi-book-open-page-variant</v-icon>
+        </router-link>
+        <router-link
+          v-ripple
+          class="toolbar-items"
+          to="/userProfile"
         >
           <v-icon color="tertiary">mdi-account</v-icon>
+        </router-link>
+        <router-link
+          v-ripple
+          class="toolbar-items"
+          to="/"
+        >
+          <span @click="logout">
+            <v-icon color="tertiary">mdi-logout</v-icon>
+          </span>
         </router-link>
       </v-flex>
     </v-toolbar-items>
@@ -96,6 +77,8 @@
 import {
   mapMutations
 } from 'vuex'
+import { logout } from '../../api/login/login.js'
+import bus from '../../utils/bus.js'
 
 export default {
   data: () => ({
@@ -137,6 +120,15 @@ export default {
         this.responsive = true
       } else {
         this.responsive = false
+      }
+    },
+    // 로그아웃 메서드
+    async logout () {
+      try {
+        confirm('로그아웃 하시겠습니까?') && await logout()
+        bus.$emit('logout-success')
+      } catch (error) {
+        console.log(error)
       }
     }
   }
