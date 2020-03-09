@@ -8,133 +8,84 @@
       <v-layout wrap>
         <!-- 통계 1 - 연간 교육 건수, 시간 -->
         <v-flex
+          xs12
           md12
           sm12
           lg6
         >
           <material-chart-card
+            id="my-statistics"
             :data="yearlyData.data"
             :options="yearlyData.options"
             color="info"
             type="Line"
           >
-            <h4 class="title font-weight-light">Daily Sales</h4>
-            <p class="category d-inline-flex font-weight-light">
-              <v-icon
-                color="green"
-                small
-              >
-                mdi-arrow-up
-              </v-icon>
-              <span class="green--text">55%</span>&nbsp;
-              increase in today's sales
-            </p>
-
-            <template slot="actions">
-              <v-icon
-                class="mr-2"
-                small
-              >
-                mdi-clock-outline
-              </v-icon>
-              <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
-            </template>
+            <h4 class="title font-weight-light">연간 교육 건수/시간</h4>
+            <span class="caption grey--text font-weight-light">Yearly education statistics</span>
           </material-chart-card>
         </v-flex>
 
         <!-- 통계 2 - 월간 교육 건수, 시간 -->
         <v-flex
+          xs12
           md12
           sm12
           lg6
         >
           <material-chart-card
+            id="my-statistics"
             :data="monthlyData.data"
             :options="monthlyData.options"
             color="info"
             type="Line"
           >
-            <h4 class="title font-weight-light">Daily Sales</h4>
-            <p class="category d-inline-flex font-weight-light">
-              <v-icon
-                color="green"
-                small
-              >
-                mdi-arrow-up
-              </v-icon>
-              <span class="green--text">55%</span>&nbsp;
-              increase in today's sales
-            </p>
-
-            <template slot="actions">
-              <v-icon
-                class="mr-2"
-                small
-              >
-                mdi-clock-outline
-              </v-icon>
-              <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
-            </template>
+            <h4 class="title font-weight-light">월간 교육 건수/시간</h4>
+            <span class="caption grey--text font-weight-light">Monthly education statistics</span>
           </material-chart-card>
         </v-flex>
 
         <!-- 통계 3 - 카테고리 -->
         <v-flex
+          xs12
           md12
           sm12
           lg6
         >
           <material-chart-card
+            id="my-statistics"
             :data="categoryData.data"
             :options="categoryData.options"
             color="red"
             type="Bar"
           >
-            <h4 class="title font-weight-light">Email Subscription</h4>
-            <p class="category d-inline-flex font-weight-light">Last Campaign Performance</p>
-
-            <template slot="actions">
-              <v-icon
-                class="mr-2"
-                small
-              >
-                mdi-clock-outline
-              </v-icon>
-              <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
-            </template>
+            <h4 class="title font-weight-light">카테고리 TOP3</h4>
+            <span class="caption grey--text font-weight-light">Category Top3</span>
           </material-chart-card>
         </v-flex>
 
         <!-- 통계 4 - 태그 -->
         <v-flex
+          xs12
           md12
           sm12
           lg6
         >
           <material-chart-card
+            id="my-statistics"
             :data="tagData.data"
             :options="tagData.options"
             color="red"
             type="Bar"
           >
-            <h4 class="title font-weight-light">Email Subscription</h4>
-            <p class="category d-inline-flex font-weight-light">Last Campaign Performance</p>
-
-            <template slot="actions">
-              <v-icon
-                class="mr-2"
-                small
-              >
-                mdi-clock-outline
-              </v-icon>
-              <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
-            </template>
+            <h4 class="title font-weight-light">태그 TOP3</h4>
+            <span class="caption grey--text font-weight-light">Tag TOP3</span>
           </material-chart-card>
         </v-flex>
 
         <!-- 게시판 -->
         <!-- 요약 게시판 1 - 교육 게시판 -->
         <v-flex
+          xs12
           md12
           lg12
         >
@@ -143,7 +94,7 @@
             title="교육 게시판"
           >
             <v-data-table
-              :headers="headers"
+              :headers="this.$store.state.state.boardHeaders"
               :items="this.$store.state.boards.content"
             >
               <template
@@ -173,6 +124,7 @@
 
         <!-- 요약 게시판 2 - 개인 교육 내역 -->
         <v-flex
+          xs12
           md12
           lg12
         >
@@ -181,7 +133,7 @@
             title="개인 교육 내역"
           >
             <v-data-table
-              :headers="educationHeaders"
+              :headers="this.$store.state.state.educationHeaders"
               :items="this.$store.state.educations.response"
             >
               <template
@@ -218,8 +170,8 @@
 
 <script>
 import bus from '../utils/bus.js'
-import statisticsEvent from '../api/statistics/statisticsEvent.js'
 import { mapGetters } from 'vuex'
+import { getStatisticsMain } from '../api/statistics/statistics.js'
 export default {
   data () {
     return {
@@ -228,12 +180,38 @@ export default {
         data: {
           labels: [],
           series: []
+        },
+        options: {
+          axisX: {
+            showGrid: false
+          },
+          low: 0,
+          high: 10,
+          chartPadding: {
+            top: 30,
+            right: 5,
+            bottom: 0,
+            left: 0
+          }
         }
       },
       monthlyData: {
         data: {
           labels: [],
           series: []
+        },
+        options: {
+          axisX: {
+            showGrid: false
+          },
+          low: 0,
+          high: 10,
+          chartPadding: {
+            top: 30,
+            right: 5,
+            bottom: 0,
+            left: 0
+          }
         }
       },
       categoryData: {
@@ -246,9 +224,9 @@ export default {
             showGrid: false
           },
           low: 0,
-          high: 20,
+          high: 10,
           chartPadding: {
-            top: 0,
+            top: 30,
             right: 5,
             bottom: 0,
             left: 0
@@ -275,9 +253,9 @@ export default {
             showGrid: false
           },
           low: 0,
-          high: 5,
+          high: 10,
           chartPadding: {
-            top: 0,
+            top: 30,
             right: 5,
             bottom: 0,
             left: 0
@@ -294,66 +272,7 @@ export default {
           }]
         ]
       },
-      headers: [
-        {
-          sortable: false,
-          text: 'No',
-          value: Number
-        },
-        {
-          sortable: false,
-          text: '제목',
-          value: 'country'
-        },
-        {
-          sortable: false,
-          text: '조회수',
-          value: 'views'
-        },
-        {
-          sortable: false,
-          text: '수정일',
-          value: 'modifiedDate'
-        }
-      ],
-      educationHeaders: [
-        {
-          sortable: false,
-          text: '교육명',
-          value: 'title',
-          width: '480px'
-        },
-        {
-          sortable: false,
-          text: '시작날짜',
-          value: 'startDate'
-        },
-        {
-          sortable: false,
-          text: '종료날짜',
-          value: 'endDate'
-        },
-        {
-          sortable: false,
-          text: '시간',
-          value: 'totalHours'
-        },
-        {
-          sortable: false,
-          text: '교육유형',
-          value: 'type'
-        },
-        {
-          sortable: false,
-          text: '장소',
-          value: 'place'
-        },
-        {
-          sortable: false,
-          text: '카테고리',
-          value: 'category'
-        }
-      ],
+
       // Flag
       isGetData: false
     }
@@ -367,13 +286,14 @@ export default {
 
   async created () {
     const vm = this
-    vm.userId = 2
+    vm.userId = vm.$store.state.user.id
     bus.$emit('start:spinner')
     try {
-      await statisticsEvent.readStatisticsMain(vm)
       await vm.$store.dispatch('FETCH_BOARDS')
       await vm.$store.dispatch('FETCH_EDUCATIONS', vm.userId)
       await vm.$store.dispatch('FETCH_USER')
+      
+      this.initialize()
       vm.isGetData = true
     } catch (error) {
       // Error Page
@@ -381,12 +301,47 @@ export default {
       vm.$router.push({ name: 'Error Page' })
     }
     bus.$emit('end:spinner')
+  },
+
+  methods: {
+    async initialize () {
+      try {
+        const response = await getStatisticsMain()
+        this.yearlyData.data.labels = response.data.response.yearlyData.years
+        this.yearlyData.data.series.push(response.data.response.yearlyData.totalEducationTime)
+        this.yearlyData.data.series.push(response.data.response.yearlyData.totalEducationCount)
+        this.yearlyData.options.high = Math.max(...response.data.response.yearlyData.totalEducationTime) + 15
+
+        this.monthlyData.data.labels = response.data.response.monthlyData.months
+        this.monthlyData.data.series.push(response.data.response.monthlyData.totalEducationTime)
+        this.monthlyData.data.series.push(response.data.response.monthlyData.totalEducationCount)
+        this.monthlyData.options.high = Math.max(...response.data.response.monthlyData.totalEducationTime) + 5
+
+        this.categoryData.data.labels = response.data.response.categoryData.categories
+        this.categoryData.data.series.push(response.data.response.categoryData.totalCategoryCount)
+        this.categoryData.options.high = Math.max(...response.data.response.categoryData.totalCategoryCount) + 5
+
+        this.tagData.data.labels = response.data.response.tagData.names
+        this.tagData.data.series.push(response.data.response.tagData.totalTagCount)
+        this.tagData.options.high = Math.max(...response.data.response.tagData.totalTagCount) + 5
+      } catch (error) {
+        // Error Page
+        console.log(error)
+        this.$router.push({ name: 'Error Page' })
+      }
+    }
   }
 }
 </script>
 
 <style scoped>
-  a {
-    color: black;
-  }
+a {
+  color: black;
+}
+
+#my-statistics
+  >>> .empty {
+  text-align: center;
+  padding-top: 4rem;
+}
 </style>

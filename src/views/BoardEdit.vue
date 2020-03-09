@@ -40,13 +40,11 @@
                   </v-flex>
 
                   <v-flex xs12>
-                    <v-textarea
+                    <vue-editor
+                      id="editor"
                       v-model="content"
-                      class="green-input"
-                      label="본문"
-                      hint="본문을 입력해주세요"
-                      rows="20"
-                    />
+                      use-custom-image-handler
+                      @image-added="handleImageAdded"/>
                   </v-flex>
 
                   <v-flex xs12>
@@ -62,13 +60,6 @@
                       chips
                     />
                   </v-flex>
-                  <v-flex
-                    xs12
-                    md4>
-                    <v-text-field
-                      label="이미지 업로드"
-                      class="green-input"/>
-                  </v-flex>
 
                   <!-- 수정 버튼 -->
                   <v-flex
@@ -78,7 +69,7 @@
                     <v-btn
                       class="mx-0 font-weight-light"
                       color="success"
-                      @click="checkValidate"
+                      @click="submit"
                     >
                       수정하기
                     </v-btn>
@@ -95,17 +86,23 @@
 
 <script>
 import bus from '../utils/bus.js'
+import { VueEditor } from 'vue2-editor'
+import { config } from '../api/index.js'
 import { store } from '../store/index.js'
 import { getBoardItem, putBoardItem } from '../api/board/board.js'
+import { postBoardImgItem } from '../api/boardImg/boardImg.js'
 
 export default {
+  components: {
+    VueEditor
+  },
+
   data: () => ({
     // Data
     title: '',
     content: '',
     educationId: '',
     userId: '',
-    boardImg: '',
 
     // Board
     responseBoard: {},
@@ -118,7 +115,7 @@ export default {
 
   async created () {
     // Data
-    this.userId = 2
+    this.userId = this.$store.state.user.id
 
     // Logic
     bus.$emit('start:spinner')
@@ -161,8 +158,7 @@ export default {
         title: vm.title,
         content: vm.content,
         educationId: vm.educationId,
-        userId: 2,
-        boardImg: vm.boardImg
+        userId: vm.$store.state.user.id
       }
 
       try {
@@ -175,10 +171,23 @@ export default {
       }
     },
 
-    checkValidate () {
+    submit () {
       if (this.$refs.form.validate()) {
         this.updateBoard()
       }
+    },
+
+    handleImageAdded (file, Editor, cursorLocation, resetUploader) {
+      let formData = new FormData()
+      formData.append('image', file)
+
+      postBoardImgItem(formData)
+        .then(response => {
+          let url = config.hostUrl + response.data
+          Editor.insertEmbed(cursorLocation, 'image', url)
+          resetUploader()
+        })
+        .catch(error => console.log(error))
     }
   }
 }

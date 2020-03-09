@@ -22,6 +22,7 @@
               xs12
             >
               <material-card class="v-card--flat">
+                <!-- 작성자 이미지 -->
                 <v-avatar
                   slot="offset"
                   class="mx-auto d-block"
@@ -31,14 +32,22 @@
                     src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
                   >
                 </v-avatar>
+
                 <v-card-text class="text-xs-center">
+                  <!-- 헤더 -->
                   <h6 class="category text-gray font-weight-thin mb-3"> CEO / {{ responseBoard.userName }}</h6>
                   <h6 class="category text-gray font-weight-thin mb-3">교육명 - {{ responseBoard.educationTitle }}</h6><br>
-                  <h3 class="card-title font-weight-light">{{ responseBoard.title }}</h3>
-                  <p
-                    id="my-v-html"
-                    class="font-weight-light"
-                    v-html="responseBoard.content"/>
+                  <h3 class="card-title font-weight-bold">{{ responseBoard.title }}</h3>
+
+                  <!-- 본문 -->
+                  <div class="text-xs-left">
+                    <p
+                      id="my-v-html"
+                      class="font-weight-light"
+                      v-html="responseBoard.content"/>
+                  </div>
+
+                  <!-- 버튼 -->
                   <v-flex>
                     <v-btn
                       small
@@ -46,19 +55,11 @@
                       round
                       class="font-weight-light"
                       @click="createLikes">
-                      <div
-                        v-if="isLikes">
-                        <v-icon
-                          color="white"
-                          small>mdi-thumb-up</v-icon>
-                      </div>
-                      <div
-                        v-if="!isLikes">
-                        <v-icon
-                          color="black"
-                          small>mdi-thumb-up</v-icon>
-                      </div>
+                      <v-icon
+                        :color="getLikes"
+                        small>mdi-thumb-up</v-icon>
                     </v-btn>
+
                     <v-btn
                       v-if="userId === responseBoard.userId"
                       :to="{name:'Board Edit', params:{boardId:responseBoard.id}}"
@@ -66,6 +67,7 @@
                       color="success"
                       round
                     >수정</v-btn>
+
                     <v-btn
                       v-if="userId === responseBoard.userId"
                       small
@@ -74,6 +76,7 @@
                       @click="deleteBoard"
                     >삭제</v-btn>
                   </v-flex>
+
                   <br>
                   <p class="card-description font-weight-light text-xs-right">조회수 {{ responseBoard.views }} &nbsp; 좋아요 {{ responseBoard.likes }} <br><br> 수정일: {{ responseBoard.modifiedDate }}</p>
                 </v-card-text>
@@ -85,7 +88,7 @@
           <material-comment
             :comments="commentList"
             :user-id="userId"
-            :board-id="boardId"/>
+            :board-id="boardId.toString()"/>
         </div>
       </v-flex>
     </v-layout>
@@ -111,10 +114,16 @@ export default {
     isUser: false
   }),
 
+  computed: {
+    getLikes () {
+      return this.isLikes ? 'white' : 'black'
+    }
+  },
+
   async created () {
     // Data
     const vm = this
-    vm.userId = 2
+    vm.userId = vm.$store.state.user.id
     vm.boardId = vm.$route.params.boardId
 
     // Logic
@@ -128,13 +137,8 @@ export default {
       const vm = this
 
       // Check Likes
-      try {
-        await getLikesItem(vm.userId, vm.boardId)
-        vm.isLikes = false
-      } catch (error) {
-        console.log(error)
-        vm.isLikes = true
-      }
+      vm.responseLikes = await getLikesItem(vm.userId, vm.boardId)
+      vm.isLikes = !vm.responseLikes.data.response.likes
 
       // Read Board
       try {
@@ -183,12 +187,30 @@ export default {
 
 <style scoped>
 #my-v-html
-  /deep/ pre {
-  background-color: black !important;
-  color: #f8f8f2 !important;
-  overflow: visible;
-}
-
+  >>> pre {
+    background-color: black;
+    color: #f8f8f2;
+    overflow: visible;
+  }
+#my-v-html
+  >>> blockquote {
+    margin-left: 1%;
+    padding-left: 1%;
+    border-left: 5px solid #eeeeee;
+    color: grey;
+  }
+#my-v-html
+  >>> strong {
+    font-weight: bold
+  }
+#my-v-html
+  >>> .ql-align-center {
+    text-align: center;
+  }
+#my-v-html
+  >>> .ql-align-right {
+    text-align: right;
+  }
 .v-card {
   padding-bottom: 1%;
   margin-bottom: 3%;
