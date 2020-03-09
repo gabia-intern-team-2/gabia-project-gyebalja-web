@@ -2,7 +2,7 @@
 import { getBoardList } from '../api/board/board.js'
 import { getMyEducationList } from '../api/education/education.js'
 import { getDepartmentList } from '../api/department/department.js'
-import { getUserItem } from '../api/user/user.js'
+import { getUserItemByToken } from '../api/user/user.js'
 
 export default {
   async FETCH_BOARDS (context) {
@@ -17,8 +17,8 @@ export default {
     const response = await getDepartmentList()
     context.commit('SET_DEPARTMENTS', response.data.response)
   },
-  async FETCH_USER (context, userId) {
-    const response = await getUserItem(userId)
+  async FETCH_USER (context) {
+    const response = await getUserItemByToken()
     context.commit('SET_USER', response.data.response)
   }
 }

@@ -140,7 +140,30 @@
                     xs12
                     md12
                   >
-                    <input type="file">
+                    <v-btn
+                      color="success"
+                      raised
+                      @click="onPickFile"
+                    >프로필 사진 등록
+                    </v-btn>
+                    <span v-if="image">
+                      파일 명 : {{ image.name }}
+                    </span>
+                    <input
+                      ref="fileInput"
+                      type ="file"
+                      style="display: none"
+                      accept="image/*"
+                      @change="onFilePicked"
+                    >
+                  </v-flex>
+                  <v-flex
+                    xs12
+                    md12
+                  >
+                    <img
+                      :src="imageUrl"
+                      height="100">
                   </v-flex>
                 </v-layout>
                 <!-- 등록 버튼 -->
@@ -164,7 +187,7 @@
 
 <script>
 import { getGabiaProfile } from '../../api/login/login.js'
-import { postUserItem } from '../../api/user/user.js'
+import { postUserItem, postUserImgItem } from '../../api/user/user.js'
 import bus from '../../utils/bus.js'
 export default {
   data () {
@@ -190,8 +213,6 @@ export default {
       positionId: null,
       positionName: null,
       deptId: null,
-      profileImg: null,
-
       departmentList: [],
       positionList: [
         {
@@ -207,7 +228,9 @@ export default {
           positionName: '임직원'
         }
       ],
-      genderList: ['MALE', 'FEMALE']
+      genderList: ['MALE', 'FEMALE'],
+      image: null,
+      imageUrl: ''
     }
   },
 
@@ -241,7 +264,15 @@ export default {
             positionId: this.positionId,
             positionName: this.positionList[this.positionId - 1].positionName,
             deptId: this.deptId,
-            profileImg: this.profileImg
+            profileImg: ''
+          }
+          if (this.$refs.fileInput.files[0] != null) {
+            let formData = new FormData()
+            formData.append('image', this.$refs.fileInput.files[0])
+            let imgUrl = await postUserImgItem(formData)
+            user.profileImg = imgUrl.data
+          } else {
+            user.profileImg = 'http://api.gyeblja.com/images/users/basic.jpg'
           }
           let response = await postUserItem(user)
           alert('등록이 완료 되었습니다. 환영합니다!')
@@ -256,6 +287,22 @@ export default {
       } else {
         alert('필수 입력 사항들을 입력해주세요.')
       }
+    },
+    onPickFile () {
+      this.$refs.fileInput.click()
+    },
+    onFilePicked (event) {
+      const files = event.target.files
+      let filename = files[0].name
+      if (filename.lastIndexOf('.') <= 0) {
+        return alert('형식에 맞는 사진을 첨부해주세요!')
+      }
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', () => {
+        this.imageUrl = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+      this.image = files[0]
     }
   }
 }

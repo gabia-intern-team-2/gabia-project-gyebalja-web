@@ -373,6 +373,7 @@ export default {
       await statisticsEvent.readStatisticsMain(vm)
       await vm.$store.dispatch('FETCH_BOARDS')
       await vm.$store.dispatch('FETCH_EDUCATIONS', vm.userId)
+      await vm.$store.dispatch('FETCH_USER')
       vm.isGetData = true
     } catch (error) {
       // Error Page
