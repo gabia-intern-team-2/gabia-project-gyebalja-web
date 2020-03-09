@@ -123,7 +123,7 @@ export default {
   async created () {
     // Data
     const vm = this
-    vm.userId = 2
+    vm.userId = vm.$store.state.user.id
     vm.boardId = vm.$route.params.boardId
 
     // Logic

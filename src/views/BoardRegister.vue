@@ -113,7 +113,7 @@ export default {
 
   async created () {
     // Data
-    this.userId = 2
+    this.userId = this.$store.state.user.id
 
     // Logic
     bus.$emit('start:spinner')
@@ -140,7 +140,7 @@ export default {
         title: vm.title,
         content: vm.content,
         educationId: vm.educationId,
-        userId: 2
+        userId: vm.$store.state.user.id
       }
 
       try {

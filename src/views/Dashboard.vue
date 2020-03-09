@@ -286,7 +286,7 @@ export default {
 
   async created () {
     const vm = this
-    vm.userId = 2
+    vm.userId = vm.$store.state.user.id
     bus.$emit('start:spinner')
     try {
       await vm.$store.dispatch('FETCH_BOARDS')
