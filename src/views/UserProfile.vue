@@ -8,6 +8,7 @@
         justify-center
         wrap
       >
+        <!-- 카드 -->
         <v-flex
           xs12
           md8
@@ -27,16 +28,19 @@
                   class="mx-auto d-block"
                   size="200"
                 >
+                  <!-- 프로필 사진 -->
                   <img
                     :src="userImgs"
                   >
                 </v-avatar>
+                <!-- 직책, 부서명, 이름, 영어이름 -->
                 <v-card-text class="text-xs-center">
                   <h4 class="category text-gray font-weight-thin mb-3">{{ this.$store.state.user.positionName }} / {{ this.$store.state.user.department.name }}</h4>
-                  <h3 class="card-title font-weight-light"><v-icon color="black">mdi-account</v-icon>{{ this.$store.state.user.name }}({{ this.$store.state.user.engName }})</h3>
+                  <h3 class="card-title font-weight-light"><v-icon color="black">mdi-account</v-icon>{{ this.$store.state.user.name }}<div v-if="this.$store.state.user.engName != null">({{ this.$store.state.user.engName }})</div></h3>
                 </v-card-text>
                 <v-container py-0>
                   <v-layout wrap>
+                    <!-- 이메일 -->
                     <v-flex
                       xs12
                       md7
@@ -52,6 +56,7 @@
                         </v-card-text>
                       </v-card>
                     </v-flex>
+                    <!-- 성별 -->
                     <v-flex
                       xs12
                       md3
@@ -67,6 +72,7 @@
                         </v-card-text>
                       </v-card>
                     </v-flex>
+                    <!-- 등록번호 -->
                     <v-flex
                       xs12
                       md2
@@ -83,6 +89,7 @@
                         </v-card-text>
                       </v-card>
                     </v-flex>
+                    <!-- 핸드폰 -->
                     <v-flex
                       xs12
                       md6
@@ -100,6 +107,7 @@
                         </v-card-text>
                       </v-card>
                     </v-flex>
+                    <!-- 내선 번호 -->
                     <v-flex
                       xs12
                       md6
@@ -121,6 +129,7 @@
                 </v-container>
               </material-card>
             </v-flex>
+            <!-- 버튼 -->
             <v-flex
               xs12
               text-xs-right
@@ -161,9 +170,7 @@ export default {
   },
 
   async created () {
-    await this.$store.dispatch('FETCH_USER')
     this.userImgs = this.$store.state.user.profileImg
-    console.log(this.$store.state.user.profileImg)
     this.isGetData = true
   },
   methods: {
