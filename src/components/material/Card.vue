@@ -1,3 +1,8 @@
+<!--
+ * Author : -
+ * Part : -
+-->
+
 <template>
   <v-card
     v-bind="$attrs"

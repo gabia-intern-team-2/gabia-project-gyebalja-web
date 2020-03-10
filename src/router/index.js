@@ -18,6 +18,11 @@ import { getIsAuthenticationUser } from '../api/login/login.js'
 // Routes
 import paths from './paths'
 
+/**
+ * Author : 이현재
+ * Part : Navigation Guard
+*/
+
 function route (path, view, name) {
   return {
     name: name || view,

@@ -1,3 +1,8 @@
+<!--
+ * Author : 이현재
+ * Part : All
+-->
+
 `<template>
   <!-- https://github.com/joshua1988/vue-advanced/blob/12_spinner/vue-news/src/components/Spinner.vue -->
   <div

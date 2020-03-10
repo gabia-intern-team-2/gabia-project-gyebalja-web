@@ -1,3 +1,8 @@
+<!--
+ * Author : -
+ * Part : -
+-->
+
 <template>
   <v-content>
     <div id="core-view">

@@ -3,8 +3,14 @@
  * for more information on routes, see the
  * official documentation https://router.vuejs.org/en/
  */
+
+/**
+ * Author : 이현재
+ * Part : LoginRegister, BoardList, BoardRegister, BoardDetail, BoardEdit, ErrorPage, Dashboard
+ * Author : 정태균
+ * Part : UserProfile, ProfileForm, MyEducation, EducationForm, EducationEdit, EducationDetail
+*/
 export default [
-  /** 사용자 정의 Path */
   {
     path: '/login/register',
     name: 'Login Register',
