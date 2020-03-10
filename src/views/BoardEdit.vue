@@ -153,6 +153,7 @@ export default {
 
     async updateBoard () {
       const vm = this
+
       const board = {
         title: vm.title,
         content: vm.content,

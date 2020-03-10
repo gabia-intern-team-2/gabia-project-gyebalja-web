@@ -286,6 +286,7 @@ export default {
 
   async created () {
     const vm = this
+
     bus.$emit('start:spinner')
     try {
       await vm.$store.dispatch('FETCH_BOARDS')
@@ -304,29 +305,31 @@ export default {
 
   methods: {
     async initialize () {
+      const vm = this
+
       try {
         const response = await getStatisticsMain()
-        this.yearlyData.data.labels = response.data.response.yearlyData.years
-        this.yearlyData.data.series.push(response.data.response.yearlyData.totalEducationTime)
-        this.yearlyData.data.series.push(response.data.response.yearlyData.totalEducationCount)
-        this.yearlyData.options.high = Math.max(...response.data.response.yearlyData.totalEducationTime) + 15
+        vm.yearlyData.data.labels = response.data.response.yearlyData.years
+        vm.yearlyData.data.series.push(response.data.response.yearlyData.totalEducationTime)
+        vm.yearlyData.data.series.push(response.data.response.yearlyData.totalEducationCount)
+        vm.yearlyData.options.high = Math.max(...response.data.response.yearlyData.totalEducationTime) + 15
 
-        this.monthlyData.data.labels = response.data.response.monthlyData.months
-        this.monthlyData.data.series.push(response.data.response.monthlyData.totalEducationTime)
-        this.monthlyData.data.series.push(response.data.response.monthlyData.totalEducationCount)
-        this.monthlyData.options.high = Math.max(...response.data.response.monthlyData.totalEducationTime) + 5
+        vm.monthlyData.data.labels = response.data.response.monthlyData.months
+        vm.monthlyData.data.series.push(response.data.response.monthlyData.totalEducationTime)
+        vm.monthlyData.data.series.push(response.data.response.monthlyData.totalEducationCount)
+        vm.monthlyData.options.high = Math.max(...response.data.response.monthlyData.totalEducationTime) + 5
 
-        this.categoryData.data.labels = response.data.response.categoryData.categories
-        this.categoryData.data.series.push(response.data.response.categoryData.totalCategoryCount)
-        this.categoryData.options.high = Math.max(...response.data.response.categoryData.totalCategoryCount) + 5
+        vm.categoryData.data.labels = response.data.response.categoryData.categories
+        vm.categoryData.data.series.push(response.data.response.categoryData.totalCategoryCount)
+        vm.categoryData.options.high = Math.max(...response.data.response.categoryData.totalCategoryCount) + 5
 
-        this.tagData.data.labels = response.data.response.tagData.names
-        this.tagData.data.series.push(response.data.response.tagData.totalTagCount)
-        this.tagData.options.high = Math.max(...response.data.response.tagData.totalTagCount) + 5
+        vm.tagData.data.labels = response.data.response.tagData.names
+        vm.tagData.data.series.push(response.data.response.tagData.totalTagCount)
+        vm.tagData.options.high = Math.max(...response.data.response.tagData.totalTagCount) + 5
       } catch (error) {
         // Error Page
         console.log(error)
-        this.$router.push({ name: 'Error Page' })
+        vm.$router.push({ name: 'Error Page' })
       }
     }
   }

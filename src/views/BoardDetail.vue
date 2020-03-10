@@ -122,9 +122,8 @@ export default {
 
   async created () {
     // Data
-    const vm = this
-    vm.userId = vm.$store.state.user.id
-    vm.boardId = vm.$route.params.boardId
+    this.userId = this.$store.state.user.id
+    this.boardId = this.$route.params.boardId
 
     // Logic
     bus.$emit('start:spinner')

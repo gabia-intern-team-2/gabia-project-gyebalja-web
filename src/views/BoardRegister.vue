@@ -125,10 +125,10 @@ export default {
       const vm = this
 
       await store.dispatch('FETCH_EDUCATIONS', vm.userId)
-      for (let i in this.$store.state.educations.response) {
+      for (let i in vm.$store.state.educations.response) {
         vm.educationList.push({
-          id: this.$store.state.educations.response[i].id,
-          title: this.$store.state.educations.response[i].title })
+          id: vm.$store.state.educations.response[i].id,
+          title: vm.$store.state.educations.response[i].title })
       }
       vm.isGetData = true
     },
