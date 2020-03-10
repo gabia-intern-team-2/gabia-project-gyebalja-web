@@ -1,3 +1,8 @@
+<!--
+ * Author : -
+ * Part : -
+-->
+
 <template>
   <v-footer
     id="core-footer"

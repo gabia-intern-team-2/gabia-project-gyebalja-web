@@ -17,6 +17,13 @@ import modules from './modules'
 import mutations from './mutations'
 import state from './state'
 
+/**
+ * Author: 이현재
+ * Part : boards, educations, departments, boardHeaders, educationHeaders
+ * Author : 정태균
+ * Part : user
+ */
+
 Vue.use(Vuex)
 
 // Create a new store

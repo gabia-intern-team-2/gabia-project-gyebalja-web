@@ -1,3 +1,10 @@
+/**
+ * Author : 이현재
+ * Part : getStatisticsMain (조회-메인화면)
+ * Author : 정태균
+ * Part : getStatisticsEducation (조회-사용자교육관리페이지)
+ */
+
 import axios from 'axios'
 import { config } from '../index.js'
 
