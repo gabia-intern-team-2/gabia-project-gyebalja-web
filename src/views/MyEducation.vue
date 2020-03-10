@@ -152,7 +152,7 @@
               </v-avatar>
               <v-card-text class="text-xs-center">
                 <h6 class="category text-gray font-weight-thin mb-3">{{ this.$store.state.user.positionName }} / {{ this.$store.state.user.department.name }}</h6>
-                <h4 class="card-title font-weight-light">{{ this.$store.state.user.name }}({{ this.$store.state.user.engName }})</h4>
+                <h4 class="card-title font-weight-light">{{ this.$store.state.user.name }}<div v-if="this.$store.state.user.engName != null">({{ this.$store.state.user.engName }})</div></h4>
                 <router-link
                   :to="{name: 'User Profile'}">
                   <v-btn
@@ -402,6 +402,7 @@
     </v-container>
   </div>
 </template>
+
 <script>
 import { getMyEducationList, deleteMyEducationItem, putMyEducationItem, getMyEducationItem } from '../api/education/education.js'
 import { getCategoryItem, getCategoryList } from '../api/category/category.js'
@@ -525,7 +526,6 @@ export default {
     const vm = this
     bus.$emit('start:spinner')
     try {
-      await this.$store.dispatch('FETCH_USER')
       this.imgUrl = this.$store.state.user.profileImg
       let response = await getMyEducationList(vm.$store.state.user.id) // 교육 리스트 요청
       let response2 = await getStatisticsEducation(vm.$store.state.user.id) // 통계 리스트 요청
@@ -630,6 +630,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 #router-link {
   color: black;
