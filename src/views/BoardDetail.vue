@@ -35,7 +35,7 @@
 
                 <v-card-text class="text-xs-center">
                   <!-- 헤더 -->
-                  <h6 class="category text-gray font-weight-thin mb-3"> CEO / {{ responseBoard.userName }}</h6>
+                  <h6 class="category text-gray font-weight-thin mb-3"> {{ responseBoard.userPositionName }} / {{ responseBoard.userName }}</h6>
                   <h6 class="category text-gray font-weight-thin mb-3">교육명 - {{ responseBoard.educationTitle }}</h6><br>
                   <h3 class="card-title font-weight-bold">{{ responseBoard.title }}</h3>
 
@@ -122,9 +122,8 @@ export default {
 
   async created () {
     // Data
-    const vm = this
-    vm.userId = vm.$store.state.user.id
-    vm.boardId = vm.$route.params.boardId
+    this.userId = this.$store.state.user.id
+    this.boardId = this.$route.params.boardId
 
     // Logic
     bus.$emit('start:spinner')

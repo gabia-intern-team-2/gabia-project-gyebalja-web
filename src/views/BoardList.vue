@@ -107,12 +107,14 @@ export default {
   },
 
   async created () {
+    const vm = this
+
     bus.$emit('start:spinner')
     try {
-      await this.$store.dispatch('FETCH_BOARDS')
-      this.isGetData = true
+      await vm.$store.dispatch('FETCH_BOARDS')
+      vm.isGetData = true
     } catch (error) {
-      this.$router.push({ name: 'Dashboard' })
+      vm.$router.push({ name: 'Dashboard' })
     }
     bus.$emit('end:spinner')
   }
