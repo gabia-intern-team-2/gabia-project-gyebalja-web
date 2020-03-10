@@ -35,7 +35,7 @@
 
                 <v-card-text class="text-xs-center">
                   <!-- 헤더 -->
-                  <h6 class="category text-gray font-weight-thin mb-3"> CEO / {{ responseBoard.userName }}</h6>
+                  <h6 class="category text-gray font-weight-thin mb-3"> {{ responseBoard.userPositionName }} / {{ responseBoard.userName }}</h6>
                   <h6 class="category text-gray font-weight-thin mb-3">교육명 - {{ responseBoard.educationTitle }}</h6><br>
                   <h3 class="card-title font-weight-bold">{{ responseBoard.title }}</h3>
 
