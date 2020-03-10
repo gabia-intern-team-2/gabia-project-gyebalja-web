@@ -87,7 +87,6 @@
 <script>
 import bus from '../utils/bus.js'
 import { VueEditor } from 'vue2-editor'
-import { config } from '../api/index.js'
 import { store } from '../store/index.js'
 import { getBoardItem, putBoardItem } from '../api/board/board.js'
 import { postBoardImgItem } from '../api/boardImg/boardImg.js'
@@ -183,7 +182,7 @@ export default {
 
       postBoardImgItem(formData)
         .then(response => {
-          let url = config.hostUrl + response.data
+          let url = response.data
           Editor.insertEmbed(cursorLocation, 'image', url)
           resetUploader()
         })

@@ -81,6 +81,11 @@ export default {
         // 조회 - 등록 사용자 여부
         response = await getIsRegisterUser()
         this.isRegisterUser = response.data.response
+
+        // 문제 - Vuex state 데이터 손실, User 정보 조회
+        if (this.isAuthenticationUser && this.isRegisterUser) {
+          await this.$store.dispatch('FETCH_USER')
+        }
       } catch (error) {
         console.log(error)
       }

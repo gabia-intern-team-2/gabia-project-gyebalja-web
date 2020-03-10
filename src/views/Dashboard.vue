@@ -286,13 +286,12 @@ export default {
 
   async created () {
     const vm = this
-    vm.userId = vm.$store.state.user.id
     bus.$emit('start:spinner')
     try {
       await vm.$store.dispatch('FETCH_BOARDS')
-      await vm.$store.dispatch('FETCH_EDUCATIONS', vm.userId)
       await vm.$store.dispatch('FETCH_USER')
-      
+      vm.userId = vm.$store.state.user.id
+      await vm.$store.dispatch('FETCH_EDUCATIONS', vm.userId)
       this.initialize()
       vm.isGetData = true
     } catch (error) {
