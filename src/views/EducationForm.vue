@@ -276,7 +276,6 @@ export default {
   async created () {
     bus.$emit('start:spinner')
     try {
-      await this.$store.dispatch('FETCH_USER')
       let categoryRes = await getCategoryList()
       this.categoryList = categoryRes.data.response
       // 새로 작성이 아니라 수정인 경우 값 매핑

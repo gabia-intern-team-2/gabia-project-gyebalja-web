@@ -45,6 +45,7 @@
                       use-custom-image-handler
                       @image-added="handleImageAdded"/>
                   </v-flex>
+                  {{ content }}
 
                   <v-flex xs12>
                     <v-select
@@ -86,7 +87,6 @@
 <script>
 import bus from '../utils/bus.js'
 import { VueEditor } from 'vue2-editor'
-import { config } from '../api/index.js'
 import { store } from '../store/index.js'
 import { postBoardItem } from '../api/board/board.js'
 import { postBoardImgItem } from '../api/boardImg/boardImg.js'
@@ -125,10 +125,10 @@ export default {
       const vm = this
 
       await store.dispatch('FETCH_EDUCATIONS', vm.userId)
-      for (let i in this.$store.state.educations.response) {
+      for (let i in vm.$store.state.educations.response) {
         vm.educationList.push({
-          id: this.$store.state.educations.response[i].id,
-          title: this.$store.state.educations.response[i].title })
+          id: vm.$store.state.educations.response[i].id,
+          title: vm.$store.state.educations.response[i].title })
       }
       vm.isGetData = true
     },
@@ -162,7 +162,7 @@ export default {
 
       postBoardImgItem(formData)
         .then(response => {
-          let url = config.hostUrl + response.data
+          let url = response.data
           Editor.insertEmbed(cursorLocation, 'image', url)
           resetUploader()
         })

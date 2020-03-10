@@ -12,6 +12,7 @@
           xs12
           md8
         >
+          <!-- 카드 -->
           <material-card
             color="purple"
             title="내 정보 수정"
@@ -23,6 +24,7 @@
               lazy-validation>
               <v-container>
                 <v-layout wrap>
+                  <!-- 사용자 이름 (수정불가)-->
                   <v-flex
                     xs12
                     md6
@@ -34,6 +36,7 @@
                       prepend-icon="mdi-account"
                       disabled/>
                   </v-flex>
+                  <!-- 이메일 (수정불가)-->
                   <v-flex
                     xs12
                     md6
@@ -45,6 +48,7 @@
                       prepend-icon="mdi-email"
                       disabled/>
                   </v-flex>
+                  <!-- 영어 이름 -->
                   <v-flex
                     xs12
                     md4
@@ -55,6 +59,7 @@
                       label="영어이름"
                       prepend-icon="mdi-account"/>
                   </v-flex>
+                  <!-- 핸드폰 -->
                   <v-flex
                     xs12
                     md4
@@ -67,6 +72,7 @@
                       class="green-input"
                       prepend-icon="mdi-phone"/>
                   </v-flex>
+                  <!-- 내선 전화 -->
                   <v-flex
                     xs12
                     md4
@@ -79,6 +85,7 @@
                       class="green-input"
                       prepend-icon="mdi-phone-classic"/>
                   </v-flex>
+                  <!-- 성별 (필수) -->
                   <v-flex
                     xs12
                     md4
@@ -96,6 +103,7 @@
                       required
                     />
                   </v-flex>
+                  <!-- 부서 (필수) -->
                   <v-flex
                     xs12
                     md4
@@ -115,6 +123,7 @@
                       required
                     />
                   </v-flex>
+                  <!-- 직책 (필수) -->
                   <v-flex
                     xs12
                     md4
@@ -134,6 +143,7 @@
                       required
                     />
                   </v-flex>
+                  <!-- 프로필 사진 -->
                   <v-flex
                     xs12
                     md12
@@ -164,6 +174,7 @@
                       height="100">
                   </v-flex>
                 </v-layout>
+                <!-- 버튼 -->
                 <v-flex
                   xs12
                   text-xs-right
@@ -251,8 +262,8 @@ export default {
     })
   },
   async created () {
-    await this.$store.dispatch('FETCH_USER')
     await this.$store.dispatch('FETCH_DEPARTMENTS')
+
     this.id = this.$store.state.user.id
     this.gabiaUserNo = this.$store.state.user.gabiaUserNo
     this.name = this.$store.state.user.name
@@ -269,7 +280,6 @@ export default {
   methods: {
     async modified () {
       const vm = this
-      console.log(this.$refs.fileInput.files[0])
       if (this.$refs.form.validate()) {
         try {
           let user = {
@@ -295,6 +305,7 @@ export default {
           }
           await putUserItem(vm.id, user)
           alert('수정이 완료 되었습니다.')
+          // vuex 최신화
           vm.$store.dispatch('FETCH_USER', vm.id)
           // 사용자 정보로 이동
           this.$router.push({ name: 'User Profile' })

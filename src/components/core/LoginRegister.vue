@@ -9,7 +9,7 @@
         wrap
       >
         <v-flex
-          xs12
+          xs12q
           md8
         >
           <!-- 카드 -->
@@ -194,7 +194,6 @@ export default {
     return {
       valid: true,
       phoneRules: [
-
         v => !v || /^\d{3}-\d{3,4}-\d{4}$/.test(v) || 'XXX-XXXX-XXXX 형식을 맞춰주세요!'
       ],
       telRules: [
@@ -289,6 +288,7 @@ export default {
       }
     },
     onPickFile () {
+      // 이미지 첨부 버튼 클릭 시 input type=file 클릭
       this.$refs.fileInput.click()
     },
     onFilePicked (event) {
