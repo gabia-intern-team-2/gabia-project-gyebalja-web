@@ -635,4 +635,14 @@ export default {
 #router-link {
   color: black;
 }
+
+a {
+  color: black;
+}
+
+#my-statistics
+  >>> .empty {
+  text-align: center;
+  padding-top: 4rem;
+}
 </style>
