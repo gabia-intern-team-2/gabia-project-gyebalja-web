@@ -1,6 +1,6 @@
 <!--
- * Author : -
- * Part : -
+ * Author : 이현재
+ * Part : All
 -->
 
 <template>
@@ -25,7 +25,8 @@
       {{ (new Date()).getFullYear() }}
       <a
         href="https://www.creative-tim.com/"
-        target="_blank">Creative Tim</a>, made with
+        target="_blank"
+        style="color:black">Creative Tim</a>, made with
       <v-icon
         color="tertiary"
         size="17">mdi-heart</v-icon>
@@ -39,9 +40,9 @@ export default {
   data: () => ({
     links: [
       { name: 'Home', Link: '/#' },
-      { name: 'Creative Tim', Link: 'https://www.creative-tim.com' },
-      { name: 'About Us', Link: 'https://creative-tim.com/presentation' },
-      { name: 'Blog', Link: 'https://blog.creative-tim.com' }
+      { name: 'Gabia Homepage', Link: 'https://www.gabia.com/' },
+      { name: 'About Us', Link: 'https://company.gabia.com/' },
+      { name: 'GITHUB', Link: 'https://github.com/gabia-intern-team-2/gabia-project-gyebalja-web' }
     ]
   })
 }
