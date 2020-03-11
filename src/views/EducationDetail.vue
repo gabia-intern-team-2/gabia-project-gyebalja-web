@@ -18,7 +18,7 @@
       >
         <!-- 카드 -->
         <material-card
-          color="orange"
+          color="info"
           title="교육 상세 페이지"
           text="My Education Detail"
         >
@@ -27,12 +27,14 @@
               <v-layout wrap>
                 <!-- 교육 명 -->
                 <v-flex
+                  sm12
                   xs12
-                  md7
+                  md12
+                  lg7
                 >
                   <v-card
                     class="mx-auto font-weight-bold"
-                    max-width="800px"
+                    min-height="92px"
                     hover
                   >
                     <v-card-text>
@@ -43,12 +45,14 @@
                 </v-flex>
                 <!-- 카테고리 -->
                 <v-flex
+                  sm12
                   xs12
-                  md3
+                  md12
+                  lg3
                 >
                   <v-card
                     class="mx-auto  text-xs-center"
-                    max-width="200px"
+                    min-height="92px"
                     hover
                   >
                     <v-card-text>
@@ -59,12 +63,14 @@
                 </v-flex>
                 <!-- 등록번호 -->
                 <v-flex
+                  sm12
                   xs12
-                  md2
+                  md12
+                  lg2
                 >
                   <v-card
                     class="mx-auto text-xs-center"
-                    max-width="200px"
+                    min-height="92px"
                     hover
                     dark
                   >
@@ -76,12 +82,13 @@
                 </v-flex>
                 <!-- 내용 -->
                 <v-flex
+                  sm12
                   xs12
                   md12
+                  lg12
                 >
                   <v-card
                     class="mx-auto"
-                    max-width="1400px"
                     min-height="300px"
                     hover
                   >
@@ -97,12 +104,14 @@
                 </v-flex>
                 <!-- 해시태그 -->
                 <v-flex
+                  sm12
                   xs12
-                  md6
+                  md12
+                  lg5
                 >
                   <v-card
                     class="mx-auto"
-                    max-width="600px"
+                    min-height="92px"
                     hover
                   >
                     <v-card-text>
@@ -115,12 +124,14 @@
                 </v-flex>
                 <!-- 교육장소 -->
                 <v-flex
+                  sm12
                   xs12
-                  md3
+                  md12
+                  lg5
                 >
                   <v-card
                     class="mx-auto"
-                    max-width="300px"
+                    min-height="92px"
                     hover
                   >
                     <v-card-text>
@@ -133,12 +144,14 @@
                 </v-flex>
                 <!-- 교육유형 -->
                 <v-flex
+                  sm12
                   xs12
-                  md3
+                  md12
+                  lg2
                 >
                   <v-card
                     class="mx-auto text-xs-center"
-                    max-width="300px"
+                    min-height="92px"
                     hover
                   >
                     <v-card-text>
@@ -151,12 +164,14 @@
                 </v-flex>
                 <!-- 시작날짜 -->
                 <v-flex
+                  sm12
                   xs12
-                  md5
+                  md12
+                  lg5
                 >
                   <v-card
                     class="mx-auto text-xs-center"
-                    max-width="500px"
+                    min-height="92px"
                     hover
                   >
                     <v-card-text>
@@ -169,12 +184,14 @@
                 </v-flex>
                 <!-- 종료날짜 -->
                 <v-flex
+                  sm12
                   xs12
-                  md5
+                  md12
+                  lg5
                 >
                   <v-card
                     class="mx-auto text-xs-center"
-                    max-width="500px"
+                    min-height="92px"
                     hover
                   >
                     <v-card-text>
@@ -187,12 +204,14 @@
                 </v-flex>
                 <!-- 교육시간 -->
                 <v-flex
+                  sm12
                   xs12
-                  md2
+                  md12
+                  lg2
                 >
                   <v-card
                     class="mx-auto text-xs-center"
-                    max-width="200px"
+                    min-height="92px"
                     hover
                   >
                     <v-card-text>

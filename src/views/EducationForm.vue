@@ -19,7 +19,7 @@
         >
           <!-- 카드 -->
           <material-card
-            color="green"
+            color="info"
             title="나의 교육 입력"
             text="* 보라색 필드는 필수입력 사항입니다."
           >
@@ -149,6 +149,7 @@
                       <v-date-picker
                         v-model="sdate"
                         :max="getMaxDate"
+                        color="purple"
                         @input="$refs.startDate.save(sdate)"/>
                     </v-menu>
                   </v-flex>
@@ -184,7 +185,9 @@
                       <v-date-picker
                         v-model="edate"
                         :min="getMinDate"
-                        @input="$refs.endDate.save(edate)"/>
+                        color="purple"
+                        @input="$refs.endDate.save(edate)"
+                      />
                     </v-menu>
                   </v-flex>
                   <!-- 교육시간 입력 란 -->

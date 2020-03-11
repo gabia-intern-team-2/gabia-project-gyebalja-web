@@ -42,7 +42,7 @@
           v-for="(link, i) in links"
           :key="i"
           :to="link.to"
-          :active-class="color"
+          :active-class="link.color"
           avatar
           class="v-list-item"
         >
@@ -90,22 +90,26 @@ export default {
       {
         to: '/',
         icon: 'mdi-view-dashboard',
-        text: '메인'
+        text: '메인',
+        color: 'blue'
       },
       {
         to: '/boardList',
         icon: 'mdi-clipboard-outline',
-        text: '게시판'
+        text: '게시판',
+        color: 'green'
       },
       {
         to: '/myEducation',
         icon: 'mdi-book-open-page-variant',
-        text: '나의 교육관리'
+        text: '나의 교육관리',
+        color: 'info'
       },
       {
         to: '/userProfile',
         icon: 'mdi-account',
-        text: '내 정보 관리'
+        text: '내 정보 관리',
+        color: 'orange'
       }
     ]
   }),
