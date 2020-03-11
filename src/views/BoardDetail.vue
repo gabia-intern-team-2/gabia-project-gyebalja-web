@@ -238,6 +238,11 @@ export default {
   >>> .ql-align-right {
     text-align: right;
   }
+
+img {
+  max-width: 100%;
+}
+
 .v-card {
   padding-bottom: 1%;
   margin-bottom: 3%;
