@@ -308,7 +308,7 @@
             text="나의 교육 현황 리스트"
           >
             <v-data-table
-              :headers="headers"
+              :headers="this.$store.state.state.educationHeaders"
               :items="items"
               :pagination.sync="pagination"
               hide-actions
