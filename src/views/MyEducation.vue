@@ -14,162 +14,154 @@
         justify-center
         wrap
       >
-        <v-layout
-          row
+        <v-flex
+          xs12
+          md12
+          sm12
+          lg2
         >
-          <v-flex
-            sm12
-            xs12
-            lg12
-            md12
+          <!-- 통계 1 - 부서 내 나의 순위 -->
+          <material-stats-card
+            :value="rank +' / '+ teamMembers"
+            :icon="rank"
+            color="orange"
+            title="부서 내 나의 순위"
+            height="134px"
+          />
+          <!-- 통계 2 - 주력 카테고리 -->
+          <material-stats-card
+            :value="mainCategory"
+            color="purple"
+            icon="mdi-finance"
+            title="주력 카테고리"
+            height="134px"
+          />
+        </v-flex>
+        <!-- 통계 4 - 나의 태그 Top 3 -->
+        <v-flex
+          xs12
+          md12
+          sm12
+          lg2
+        >
+          <material-chart-card
+            id="my-statistics"
+            :data="tagData.data"
+            color="green"
+            type="Bar"
+            height="297px"
           >
-            <!-- 통계 1 - 부서 내 나의 순위 -->
-            <material-stats-card
-              :value="rank +' / '+ teamMembers"
-              :icon="rank"
-              color="orange"
-              title="부서 내 나의 순위"
-              height="125px"
-              min-width="250px"
-            />
-            <!-- 통계 2 - 주력 카테고리 -->
-            <material-stats-card
-              :value="mainCategory"
-              color="purple"
-              icon="mdi-finance"
-              title="주력 카테고리"
-              height="125px"
-              min-width="250px"
-            />
-          </v-flex>
-          <!-- 통계 3 - 나 vs 가비아 -->
-          <v-flex
-            sm12
-            xs12
-            md12
-            lg12
-          >
-            <material-chart-card
-              :data="hoursData.data"
-              :options="hoursData.options"
-              :responsive-options="hoursData.responsiveOptions"
-              color="red"
-              type="Bar"
-              height="275px"
-              min-width="250px"
-            >
-              <h4 class="title font-weight-light">{{ currentYear }}년 나 vs 가비아 평균</h4>
-              <p class="category d-inline-flex font-weight-light">사내 인원별 교육시간 평균</p>
+            <h4 class="title font-weight-light">나의 태그 Top 3</h4>
+            <p class="category d-inline-flex font-weight-light"> <span class="green--text">최고 관심 : {{ mainTag }}</span>&nbsp;</p>
 
-              <template slot="actions">
-                <v-icon
-                  class="mr-2"
-                  small
-                >
-                  mdi-clock-outline
-                </v-icon>
-                <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
-              </template>
-            </material-chart-card>
-          </v-flex>
-          <!-- 통계 4 - 나의 태그 Top 3 -->
-          <v-flex
-            sm12
-            xs12
-            md12
-            lg12
-          >
-            <material-chart-card
-              :data="tagData.data"
-              color="green"
-              type="Bar"
-              height="275px"
-              min-width="250px"
-            >
-              <h4 class="title font-weight-light">나의 태그 Top 3</h4>
-              <p class="category d-inline-flex font-weight-light"> <span class="green--text">최고 관심 : {{ mainTag }}</span>&nbsp;</p>
-
-              <template slot="actions">
-                <v-icon
-                  class="mr-2"
-                  small
-                >
-                  mdi-clock-outline
-                </v-icon>
-                <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
-              </template>
-            </material-chart-card>
-          </v-flex>
-          <!-- 통계 5 - 월별 교육 추이 -->
-          <v-flex
-            sm12
-            xs12
-            md12
-            lg12
-          >
-            <material-chart-card
-              :data="monthlyData.data"
-              :options="monthlyData.options"
-              color="info"
-              type="Line"
-              height="275px"
-              min-width="350px"
-            >
-              <h4 class="title font-weight-light">{{ currentYear }}년 나의 월별 교육 추이</h4>
-              <p class="category d-inline-flex font-weight-light">
-                <v-icon
-                  color="green"
-                  small
-                >
-                  mdi-arrow-up
-                </v-icon>
-                <span class="green--text">55%</span>&nbsp;
-                increase in today's sales
-              </p>
-
-              <template slot="actions">
-                <v-icon
-                  class="mr-2"
-                  small
-                >
-                  mdi-clock-outline
-                </v-icon>
-                <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
-              </template>
-            </material-chart-card>
-          </v-flex>
-          <!-- 유저 프로필 요약 -->
-          <v-flex
-            sm12
-            xs12
-            md12
-            lg12
-          >
-            <material-card class="v-card-profile">
-              <v-avatar
-                slot="offset"
-                class="mx-auto d-block"
-                size="120"
+            <template slot="actions">
+              <v-icon
+                class="mr-2"
+                small
               >
-                <img
-                  :src="imgUrl"
-                >
-              </v-avatar>
-              <v-card-text class="text-xs-center">
-                <h6 class="category text-gray font-weight-thin mb-3">{{ this.$store.state.user.positionName }} / {{ this.$store.state.user.department.name }}</h6>
-                <h4 class="card-title font-weight-light">{{ this.$store.state.user.name }}<div v-if="this.$store.state.user.engName != null">({{ this.$store.state.user.engName }})</div></h4>
-                <router-link
-                  :to="{name: 'User Profile'}">
-                  <v-btn
-                    color="success"
-                    round
-                    class="font-weight-light"
-                  >상세 보기</v-btn>
-                </router-link>
-              </v-card-text>
-            </material-card>
-          </v-flex>
-        </v-layout>
+                mdi-clock-outline
+              </v-icon>
+              <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
+            </template>
+          </material-chart-card>
+        </v-flex>
+        <!-- 통계 3 - 나 vs 가비아 -->
+        <v-flex
+          xs12
+          md12
+          sm12
+          lg2
+        >
+          <material-chart-card
+            id="my-statistics"
+            :data="hoursData.data"
+            :options="hoursData.options"
+            :responsive-options="hoursData.responsiveOptions"
+            color="red"
+            type="Bar"
+            height="297px"
+          >
+            <h4 class="title font-weight-light">{{ currentYear }}년 나 vs 가비아 평균</h4>
+            <p class="category d-inline-flex font-weight-light">사내 인원별 교육시간 평균</p>
+
+            <template slot="actions">
+              <v-icon
+                class="mr-2"
+                small
+              >
+                mdi-clock-outline
+              </v-icon>
+              <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
+            </template>
+          </material-chart-card>
+        </v-flex>
+        <!-- 통계 5 - 월별 교육 추이 -->
+        <v-flex
+          sm12
+          xs12
+          md12
+          lg4
+        >
+          <material-chart-card
+            id="my-statistics"
+            :data="monthlyData.data"
+            :options="monthlyData.options"
+            color="info"
+            type="Line"
+            height="297px"
+          >
+            <h4 class="title font-weight-light">{{ currentYear }}년 나의 월별 교육 추이</h4>
+            <p class="category d-inline-flex font-weight-bold">
+              <span class="red--text">Red Line : Total Count</span><span class="blue--text">||</span><span class="text-xs-right">White Line : Total Time</span>
+            </p>
+
+            <template slot="actions">
+              <v-icon
+                class="mr-2"
+                small
+              >
+                mdi-clock-outline
+              </v-icon>
+              <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
+            </template>
+          </material-chart-card>
+        </v-flex>
+        <!-- 유저 프로필 요약 -->
+        <v-flex
+          sm12
+          xs12
+          md12
+          lg2
+        >
+          <material-card
+            class="v-card-profile"
+            width="245px"
+            min-height="275px"
+          >
+            <v-avatar
+              slot="offset"
+              class="mx-auto d-block"
+              size="120"
+            >
+              <img
+                :src="imgUrl"
+              >
+            </v-avatar>
+            <v-card-text class="text-xs-center">
+              <h6 class="category text-gray font-weight-thin mb-3">{{ this.$store.state.user.positionName }} / {{ this.$store.state.user.department.name }}</h6>
+              <h4 class="card-title font-weight-light">{{ this.$store.state.user.name }}<div v-if="this.$store.state.user.engName.length != 0">({{ this.$store.state.user.engName }})</div></h4>
+              <router-link
+                :to="{name: 'User Profile'}">
+                <v-btn
+                  color="success"
+                  round
+                  class="font-weight-light"
+                >상세 보기</v-btn>
+              </router-link>
+            </v-card-text>
+          </material-card>
+        </v-flex>
+
         <!-- 간편 수정 Dialog -->
         <v-flex
           md12
@@ -201,24 +193,14 @@
                           class="purple-input"
                           label="교육 명"/>
                       </v-flex>
-                      <!-- 카테고리 입력 란 -->
+                      <!-- 교육장소 입력 란 -->
                       <v-flex
                         xs12
                         sm6
                         md4>
-                        <v-select
-                          v-model="editedItem.category.id"
-                          :items="categoryList"
-                          :rules="[v => !!v || '필수 입력사항입니다']"
-                          label="카테고리(Category)"
-                          class="purple-input"
-                          prepend-icon="mdi-animation"
-                          item-text="name"
-                          item-value="id"
-                          required
-                          chips
-                          color="purple"
-                        />
+                        <v-text-field
+                          v-model="editedItem.place"
+                          label="교육 장소"/>
                       </v-flex>
                       <!-- 시작날짜 입력 란 -->
                       <v-flex
@@ -274,14 +256,24 @@
                           color="purple"
                         />
                       </v-flex>
-                      <!-- 교육 장소 입력 란 -->
+                      <!-- 카테고리 입력 란 -->
                       <v-flex
                         xs12
                         sm6
                         md6>
-                        <v-text-field
-                          v-model="editedItem.place"
-                          label="교육 장소"/>
+                        <v-select
+                          v-model="editedItem.category.id"
+                          :items="categoryList"
+                          :rules="[v => !!v || '필수 입력사항입니다']"
+                          label="카테고리(Category)"
+                          class="purple-input"
+                          prepend-icon="mdi-animation"
+                          item-text="name"
+                          item-value="id"
+                          required
+                          chips
+                          color="purple"
+                        />
                       </v-flex>
                     </v-layout>
                   </v-container>
@@ -303,9 +295,9 @@
           </v-form>
           <!-- 카드 -->
           <material-card
-            color="blue"
-            title="My Educations"
-            text="나의 교육 현황 리스트"
+            color="info"
+            title="나의 교육 현황"
+            text="My Educations"
           >
             <v-data-table
               :headers="this.$store.state.state.educationHeaders"
@@ -397,9 +389,9 @@
           <!-- 교육 작성 버튼 -->
           <div class="text-xs-center pt-2">
             <router-link to="/myEducation/register"><v-btn
-              color="success"
+              color="info"
               round
-              class="font-weight-light"
+              class="white--text"
             >교육 작성</v-btn></router-link>
           </div>
         </v-flex>
@@ -504,7 +496,7 @@ export default {
           low: 0,
           high: 0, // creative tim: we recommend you to set the high sa the biggest value + something for a better look
           chartPadding: {
-            top: 0,
+            top: 30,
             right: 0,
             bottom: 0,
             left: 0
