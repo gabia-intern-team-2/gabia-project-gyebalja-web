@@ -34,7 +34,7 @@
                   size="120"
                 >
                   <img
-                    src="this.$store.state.user.profileImg"
+                    :src="userProfileImg"
                   >
                 </v-avatar>
 
@@ -127,6 +127,7 @@ export default {
     userId: {},
     boardId: {},
     commentList: [],
+    userProfileImg: '',
 
     // Flag
     isLikes: true,
@@ -164,6 +165,8 @@ export default {
         vm.responseBoard = await getBoardItem(vm.$route.params.boardId)
         vm.responseBoard = vm.responseBoard.data.response
         vm.commentList = vm.responseBoard.commentList
+        vm.userProfileImg = vm.responseBoard.userProfileImg
+
         vm.isGetData = true
       } catch (error) {
         // Error Page
@@ -238,17 +241,10 @@ export default {
   >>> .ql-align-right {
     text-align: right;
   }
-<<<<<<< HEAD
 #my-v-html
   >>> img {
     max-width: 100%;
   }
-=======
-
-img {
-  max-width: 100%;
-}
->>>>>>> 59b35abf7a580fdd881b5365ef587ebd2775f365
 
 .v-card {
   padding-bottom: 1%;
