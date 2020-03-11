@@ -22,7 +22,7 @@
             id="my-statistics"
             :data="yearlyData.data"
             :options="yearlyData.options"
-            color="info"
+            color="blue"
             type="Line"
           >
             <h4 class="title font-weight-light">연간 교육 건수/시간</h4>
@@ -41,7 +41,7 @@
             id="my-statistics"
             :data="monthlyData.data"
             :options="monthlyData.options"
-            color="info"
+            color="blue"
             type="Line"
           >
             <h4 class="title font-weight-light">월간 교육 건수/시간</h4>
@@ -95,7 +95,7 @@
           lg12
         >
           <material-card
-            color="cyan"
+            color="blue"
             title="교육 게시판"
           >
             <v-data-table
@@ -107,7 +107,7 @@
                 slot-scope="{ header }"
               >
                 <span
-                  class="font-weight-light text-warning text--darken-3"
+                  class="font-weight-light text-info text--darken-3"
                   v-text="header.text"
                 />
               </template>
@@ -134,7 +134,7 @@
           lg12
         >
           <material-card
-            color="cyan"
+            color="blue"
             title="개인 교육 내역"
           >
             <v-data-table
@@ -146,7 +146,7 @@
                 slot-scope="{ header }"
               >
                 <span
-                  class="font-weight-light text-warning text--darken-3"
+                  class="font-weight-light text-info text--darken-3"
                   v-text="header.text"
                 />
               </template>

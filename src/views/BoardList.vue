@@ -20,8 +20,8 @@
           <!-- 카드 -->
           <material-card
             color="green"
-            title="게시판"
-            text="사내 교육 게시판"
+            title="교육 게시판"
+            text="Gabia education bulletin board"
           >
             <!-- 테이블 -->
             <v-data-table
@@ -67,8 +67,8 @@
                 :to="{name:'Board Register'}"
                 class="toolbar-items">
                 <v-btn
-                  class="mx-0 font-weight-light"
-                  color="success"
+                  class="mx-0 font-weight-light white--text"
+                  color="green"
                 >
                   작성하기
                 </v-btn>
@@ -81,7 +81,7 @@
             <v-pagination
               v-model="pagination.page"
               :length="pages"
-              color="info"
+              color="green"
               circle/>
           </div>
         </v-flex>
