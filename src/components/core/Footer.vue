@@ -16,6 +16,7 @@
       >
         <a
           :href="link.Link"
+          target="_blank"
           class="tertiary--text footer-links">{{ link.name }}</a>
       </span>
     </div>
