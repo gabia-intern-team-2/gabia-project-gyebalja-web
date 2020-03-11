@@ -42,7 +42,7 @@
           v-for="(link, i) in links"
           :key="i"
           :to="link.to"
-          :active-class="color"
+          :active-class="link.color"
           avatar
           class="v-list-item"
         >
@@ -52,18 +52,6 @@
           <v-list-tile-title
             v-text="link.text"
           />
-        </v-list-tile>
-        <v-list-tile
-          active-class="success"
-          class="v-list-item v-list__tile--buy"
-          to="/upgrade"
-        >
-          <v-list-tile-action>
-            <v-icon>mdi-package-up</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title class="font-weight-light">
-            Upgrade To PRO
-          </v-list-tile-title>
         </v-list-tile>
       </v-layout>
     </v-img>
@@ -90,22 +78,26 @@ export default {
       {
         to: '/',
         icon: 'mdi-view-dashboard',
-        text: '메인'
+        text: '메인',
+        color: 'blue'
       },
       {
         to: '/boardList',
         icon: 'mdi-clipboard-outline',
-        text: '게시판'
+        text: '게시판',
+        color: 'green'
       },
       {
         to: '/myEducation',
         icon: 'mdi-book-open-page-variant',
-        text: '나의 교육관리'
+        text: '나의 교육관리',
+        color: 'info'
       },
       {
         to: '/userProfile',
         icon: 'mdi-account',
-        text: '내 정보 관리'
+        text: '내 정보 관리',
+        color: 'orange'
       }
     ]
   }),

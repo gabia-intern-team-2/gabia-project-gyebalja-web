@@ -238,10 +238,17 @@ export default {
   >>> .ql-align-right {
     text-align: right;
   }
+<<<<<<< HEAD
 #my-v-html
   >>> img {
     max-width: 100%;
   }
+=======
+
+img {
+  max-width: 100%;
+}
+>>>>>>> 59b35abf7a580fdd881b5365ef587ebd2775f365
 
 .v-card {
   padding-bottom: 1%;
