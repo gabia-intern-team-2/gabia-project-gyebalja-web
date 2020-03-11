@@ -31,10 +31,10 @@
                 <v-avatar
                   slot="offset"
                   class="mx-auto d-block"
-                  size="130"
+                  size="120"
                 >
                   <img
-                    src="https://demos.creative-tim.com/vue-material-dashboard/img/marc.aba54d65.jpg"
+                    src="this.$store.state.user.profileImg"
                   >
                 </v-avatar>
 
@@ -42,7 +42,7 @@
                   <!-- 헤더 -->
                   <h6 class="category text-gray font-weight-thin mb-3"> {{ responseBoard.userPositionName }} / {{ responseBoard.userName }}</h6>
                   <h6 class="category text-gray font-weight-thin mb-3">교육명 - {{ responseBoard.educationTitle }}</h6><br>
-                  <h3 class="card-title font-weight-bold">{{ responseBoard.title }}</h3>
+                  <h2 class="card-title font-weight-bold mb-5">{{ responseBoard.title }}</h2>
 
                   <!-- 본문 -->
                   <div class="text-xs-left">
@@ -53,7 +53,7 @@
                   </div>
 
                   <!-- 버튼 -->
-                  <v-flex>
+                  <v-flex class="mt-5">
                     <v-btn
                       small
                       color="teal"
@@ -82,8 +82,23 @@
                     >삭제</v-btn>
                   </v-flex>
 
+                  <!-- 게시글 정보 -->
                   <br>
-                  <p class="card-description font-weight-light text-xs-right">조회수 {{ responseBoard.views }} &nbsp; 좋아요 {{ responseBoard.likes }} <br><br> 수정일: {{ responseBoard.modifiedDate }}</p>
+                  <p class="card-description font-weight-light text-xs-right mb-5">조회수 {{ responseBoard.views }} &nbsp; 좋아요 {{ responseBoard.likes }} <br><br> 수정일: {{ responseBoard.modifiedDate }}</p>
+
+                  <!-- 버튼 -->
+                  <v-flex
+                    text-xs-center
+                  >
+                    <v-btn
+                      class="mx-1 font-weight-light white--text"
+                      color="green"
+                      @click="back"
+                    >
+                      <v-icon>mdi-arrow-left</v-icon>
+                      목록으로
+                    </v-btn>
+                  </v-flex>
                 </v-card-text>
               </material-card>
             </v-flex>
@@ -184,6 +199,14 @@ export default {
         vm.responseBoard.likes = vm.responseBoard.likes - 1
         await deleteLikesItem(vm.userId, vm.boardId)
       }
+    },
+
+    back () {
+      if (this.$route.name === 'Board Detail') {
+        this.$router.push('/boardList')
+      } else {
+        history.back()
+      }
     }
   }
 }
@@ -215,6 +238,11 @@ export default {
   >>> .ql-align-right {
     text-align: right;
   }
+#my-v-html
+  >>> img {
+    max-width: 100%;
+  }
+
 .v-card {
   padding-bottom: 1%;
   margin-bottom: 3%;
