@@ -157,6 +157,8 @@ export default {
     submit () {
       if (this.$refs.form.validate()) {
         this.createBoard()
+      } else {
+        alert('값을 정확히 입력해주세요.')
       }
     },
 
