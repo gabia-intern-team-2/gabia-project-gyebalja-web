@@ -53,12 +53,14 @@ export default {
       {
         sortable: false,
         text: '시간',
-        value: 'totalHours'
+        value: 'totalHours',
+        align: 'center'
       },
       {
         sortable: false,
         text: '교육유형',
-        value: 'type'
+        value: 'type',
+        align: 'center'
       },
       {
         sortable: false,
@@ -68,7 +70,8 @@ export default {
       {
         sortable: false,
         text: '카테고리',
-        value: 'category'
+        value: 'category',
+        align: 'center'
       }
     ]
   }
