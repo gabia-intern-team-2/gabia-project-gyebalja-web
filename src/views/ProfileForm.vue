@@ -314,7 +314,7 @@ export default {
             deptId: vm.deptId,
             profileImg: ''
           }
-          if (this.$refs.fileInput.files[0] != null) {
+          if (this.$refs.fileInput.files[0] != null && this.isBasic === false) {
             let formData = new FormData()
             formData.append('image', this.$refs.fileInput.files[0])
             let imgUrl = await postUserImgItem(formData)
@@ -323,7 +323,7 @@ export default {
             if (this.isBasic === false) {
               user.profileImg = this.$store.state.user.profileImg
             } else {
-              user.profileImg = this.profileImg
+              user.profileImg = 'http://api.gyeblja.com/images/users/basic.jpg'
             }
           }
           await putUserItem(vm.id, user)
@@ -358,11 +358,12 @@ export default {
       })
       fileReader.readAsDataURL(files[0])
       this.image = files[0]
+      this.isBasic = false
     },
     changeBasic () {
       this.imageUrl = 'http://api.gyeblja.com/images/users/basic.jpg'
-      this.$refs.fileInput.files[0] = null
       this.isBasic = true
+      this.image = ''
     }
   }
 }
