@@ -34,7 +34,7 @@
                   size="120"
                 >
                   <img
-                    src="this.$store.state.user.profileImg"
+                    :src="userProfileImg"
                   >
                 </v-avatar>
 
@@ -127,6 +127,7 @@ export default {
     userId: {},
     boardId: {},
     commentList: [],
+    userProfileImg: '',
 
     // Flag
     isLikes: true,
@@ -164,6 +165,8 @@ export default {
         vm.responseBoard = await getBoardItem(vm.$route.params.boardId)
         vm.responseBoard = vm.responseBoard.data.response
         vm.commentList = vm.responseBoard.commentList
+        vm.userProfileImg = vm.responseBoard.userProfileImg
+
         vm.isGetData = true
       } catch (error) {
         // Error Page
