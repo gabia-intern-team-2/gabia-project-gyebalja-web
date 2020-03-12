@@ -20,17 +20,26 @@ export default {
       {
         sortable: false,
         text: '제목',
-        value: 'country'
+        value: 'country',
+        align: 'left'
       },
       {
         sortable: false,
         text: '조회수',
-        value: 'views'
+        value: 'views',
+        align: 'right'
+      },
+      {
+        sortable: false,
+        text: '생성일',
+        value: 'createdDate',
+        align: 'right'
       },
       {
         sortable: false,
         text: '수정일',
-        value: 'modifiedDate'
+        value: 'modifiedDate',
+        align: 'right'
       }
     ],
     educationHeaders: [

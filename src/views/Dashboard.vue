@@ -26,7 +26,11 @@
             type="Line"
           >
             <h4 class="title font-weight-light">연간 교육 건수/시간</h4>
-            <span class="caption grey--text font-weight-light">Yearly education statistics</span>
+            <span class="caption grey--text font-weight-light">Yearly education statistics</span><br>
+            <p class="category d-inline-flex font-weight-bold">
+              <span class="red--text">Red Line : Total Count</span> &nbsp;&nbsp;
+              <span class="text-xs-right">White Line : Total Time</span>
+            </p>
           </material-chart-card>
         </v-flex>
 
@@ -45,7 +49,11 @@
             type="Line"
           >
             <h4 class="title font-weight-light">월간 교육 건수/시간</h4>
-            <span class="caption grey--text font-weight-light">Monthly education statistics</span>
+            <span class="caption grey--text font-weight-light">Monthly education statistics</span><br>
+            <p class="category d-inline-flex font-weight-bold">
+              <span class="red--text">Red Line : Total Count</span> &nbsp;&nbsp;
+              <span class="text-xs-right">White Line : Total Time</span>
+            </p>
           </material-chart-card>
         </v-flex>
 
