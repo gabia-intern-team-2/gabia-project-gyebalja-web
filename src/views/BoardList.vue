@@ -47,13 +47,24 @@
                 slot="items"
                 slot-scope="{ item }"
               >
-                <td>{{ item.id }}</td>
+                <td
+                  class="my-td-left my-td-small-middle">{{ item.id }}</td>
                 <router-link
                   :to="{name:'Board Detail', params:{boardId:item.id}}">
-                  <td>{{ item.title }}</td>
+                  <td class="my-td-middle">
+                    {{ item.title }}
+                  </td>
                 </router-link>
-                <td>{{ item.views }}</td>
-                <td>{{ item.modifiedDate }}</td>
+                <td class="my-td-right my-td-small">{{ item.views }}</td>
+                <td class="my-td-right my-td-middle">{{ item.createdDate }}</td>
+                <td class="my-td-right my-td-middle">{{ item.modifiedDate }}</td>
+              </template>
+              <template slot="no-data">
+                <p style="text-align:center; height:5%">
+                  <span>
+                    작성된 게시글이 없습니다. 게시글을 추가해보세요!:)
+                  </span>
+                </p>
               </template>
             </v-data-table>
 
@@ -129,5 +140,27 @@ export default {
 <style scoped>
   a {
     color: black;
+  }
+
+  .my-td-left {
+    text-align: left
+  }
+  .my-td-center {
+    text-align: center
+  }
+  .my-td-right {
+    text-align: right
+  }
+  .my-td-small {
+    width: 5%;
+  }
+  .my-td-small-middle {
+    width: 10%;
+  }
+  .my-td-middle {
+    width: 15%;
+  }
+  .my-td-large {
+    width: 30%;
   }
 </style>
