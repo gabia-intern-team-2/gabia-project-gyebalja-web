@@ -94,11 +94,12 @@
                   >
                     <v-card-text>
                       <h6 class="grey--text font-italic">내용(CONTENTS)</h6>
-                      <p
-                        id="my-p"
-                        class="font-weight-thin mb-5 text-xs-left"
-                        v-html="content"/>
-
+                      <div style="white-space:pre-wrap;">
+                        <p
+                          id="my-p"
+                          class="font-weight-thin mb-5 text-xs-left"
+                          v-html="content"/>
+                      </div>
                     </v-card-text>
                   </v-card>
                 </v-flex>

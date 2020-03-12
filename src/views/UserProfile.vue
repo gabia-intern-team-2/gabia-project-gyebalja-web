@@ -62,7 +62,7 @@
                       hover
                     >
                       <v-card-text>
-                        <h6 class="grey--text font-italic"><v-icon color="grey">mdi-email</v-icon>이메일(ID)</h6>
+                        <h6 class="grey--text font-italic text-xs-left"><v-icon color="grey">mdi-email</v-icon>이메일(ID)</h6>
                         <div>{{ this.$store.state.user.email }}</div>
                       </v-card-text>
                     </v-card>
@@ -118,7 +118,7 @@
                     >
                       <v-card-text>
                         <div>
-                          <h6 class="grey--text font-italic"><v-icon color="grey">mdi-phone</v-icon>핸드폰 번호(Phone Number)</h6>
+                          <h6 class="grey--text font-italic text-xs-left"><v-icon color="grey">mdi-phone</v-icon>핸드폰 번호(Phone Number)</h6>
                           {{ this.$store.state.user.phone }}
                         </div>
                       </v-card-text>
@@ -137,7 +137,7 @@
                       hover
                     >
                       <v-card-text>
-                        <h6 class="grey--text font-italic"><v-icon color="grey">mdi-phone-classic</v-icon>내선 번호(Tel.)</h6>
+                        <h6 class="grey--text font-italic text-xs-left"><v-icon color="grey">mdi-phone-classic</v-icon>내선 번호(Tel.)</h6>
                         <div>
                           {{ this.$store.state.user.tel }}
                         </div>
