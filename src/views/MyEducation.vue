@@ -112,7 +112,7 @@
           >
             <h4 class="title font-weight-light">{{ currentYear }}년 나의 월별 교육 추이</h4>
             <p class="category d-inline-flex font-weight-bold">
-              <span class="red--text">Red Line : Total Count</span><span class="blue--text">||</span><span class="text-xs-right">White Line : Total Time</span>
+              <span class="red--text">Red Line : Total Count</span><span class="blue--text">&nbsp;&nbsp;</span><span class="text-xs-right">White Line : Total Time</span>
             </p>
 
             <template slot="actions">
@@ -246,7 +246,7 @@
                         md6>
                         <v-select
                           v-model="editedItem.type"
-                          :items="edutypeList"
+                          :items="this.$store.state.state.edutypeList"
                           :rules="[v => !!v || '필수 입력사항입니다']"
                           label="교육유형"
                           class="purple-input"
@@ -423,7 +423,6 @@ export default {
       items: [],
       hashTagString: '',
       categoryList: [],
-      edutypeList: ['ONLINE', 'OFFLINE'],
       editedIndex: -1,
       editedItem: {
         title: '',
