@@ -106,7 +106,7 @@
                   >
                     <v-select
                       v-model="type"
-                      :items="edutypeList"
+                      :items="this.$store.state.state.edutypeList"
                       :rules="[v => !!v || '교육 유형은 필수 입력사항입니다']"
                       label="교육유형"
                       hint=""
@@ -267,7 +267,6 @@ export default {
       startDate: false,
       endDate: false,
       categoryList: [],
-      edutypeList: ['ONLINE', 'OFFLINE'],
       isGetData: false
     }
   },

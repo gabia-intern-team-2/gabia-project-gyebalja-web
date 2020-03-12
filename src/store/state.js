@@ -11,6 +11,7 @@ export default {
     educations: [],
     departments: [],
     user: [],
+
     boardHeaders: [
       {
         sortable: false,
@@ -73,6 +74,29 @@ export default {
         value: 'category',
         align: 'center'
       }
-    ]
+    ],
+
+    positionList: [
+      {
+        positionId: 1,
+        positionName: '사장'
+      },
+      {
+        positionId: 2,
+        positionName: '부사장'
+      },
+      {
+        positionId: 3,
+        positionName: '팀장'
+      },
+      {
+        positionId: 4,
+        positionName: '팀원'
+      }
+    ],
+
+    genderList: ['MALE', 'FEMALE'],
+
+    edutypeList: ['ONLINE', 'OFFLINE']
   }
 }

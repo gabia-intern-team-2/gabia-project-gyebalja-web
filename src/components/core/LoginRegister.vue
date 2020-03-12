@@ -94,7 +94,7 @@
                     lg4
                   >
                     <v-select
-                      :items="genderList"
+                      :items="this.$store.state.state.genderList"
                       :rules="[v => !!v || '성별은 필수 입력사항입니다']"
                       v-model="gender"
                       label="성별"
@@ -130,7 +130,7 @@
                     lg4
                   >
                     <v-select
-                      :items="positionList"
+                      :items="this.$store.state.state.positionList"
                       :rules="[v => !!v || '직책은 필수 입력사항입니다']"
                       v-model="positionId"
                       item-text="positionName"
@@ -220,21 +220,6 @@ export default {
       positionName: null,
       deptId: null,
       departmentList: [],
-      positionList: [
-        {
-          positionId: 1,
-          positionName: '사장'
-        },
-        {
-          positionId: 2,
-          positionName: '부사장'
-        },
-        {
-          positionId: 3,
-          positionName: '임직원'
-        }
-      ],
-      genderList: ['MALE', 'FEMALE'],
       image: null,
       imageUrl: ''
     }
@@ -268,7 +253,8 @@ export default {
             phone: this.phone,
             tel: this.tel,
             positionId: this.positionId,
-            positionName: this.positionList[this.positionId - 1].positionName,
+            // positionName: this.positionList[this.positionId - 1].positionName,
+            positionName: this.$store.state.state.positionList[this.positionId - 1].positionName,
             deptId: this.deptId,
             profileImg: ''
           }
