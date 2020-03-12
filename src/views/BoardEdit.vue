@@ -78,6 +78,13 @@
                     >
                       수정하기
                     </v-btn>
+                    <v-btn
+                      class="mx-1 font-weight-light"
+                      color="warning"
+                      @click="back"
+                    >
+                      뒤로가기
+                    </v-btn>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -179,7 +186,13 @@ export default {
     submit () {
       if (this.$refs.form.validate()) {
         this.updateBoard()
+      } else {
+        alert('값을 정확히 입력해주세요.')
       }
+    },
+
+    back () {
+      history.back()
     },
 
     handleImageAdded (file, Editor, cursorLocation, resetUploader) {

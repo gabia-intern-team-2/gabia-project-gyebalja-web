@@ -19,7 +19,7 @@
         >
           <!-- 카드 -->
           <material-card
-            color="purple"
+            color="orange"
             title="내 정보 수정"
             text="* 보라색 필드는 필수입력 사항입니다."
           >
@@ -150,11 +150,12 @@
                   </v-flex>
                   <!-- 프로필 사진 -->
                   <v-flex
-                    xs12
-                    md12
+                    xs6
+                    text-xs-left
                   >
                     <v-btn
-                      color="success"
+                      color="orange"
+                      class="white--text"
                       raised
                       @click="onPickFile"
                     >프로필 사진 등록
@@ -169,6 +170,18 @@
                       accept="image/*"
                       @change="onFilePicked"
                     >
+                  </v-flex>
+                  <v-flex
+                    xs6
+                    text-xs-right
+                  >
+                    <v-btn
+                      color="red"
+                      class="white--text mx-2"
+                      raised
+                      @click="changeBasic"
+                    >기본 이미지로 변경
+                    </v-btn>
                   </v-flex>
                   <v-flex
                     xs12
@@ -225,16 +238,16 @@ export default {
         v => !v || /^\d{2,3}-\d{3,4}-\d{4}$/.test(v) || 'XXX-XXXX-XXXX 형식을 맞춰주세요!'
       ],
       imgRules: [
-        v => !v || v.size < 2000000 || '사진 용량은 2MB이하만 가능합니다.'
+        v => !v || v.size < 20000000 || '사진 용량은 2MB이하만 가능합니다.'
       ],
       gabiaUserNo: null,
       id: null,
       email: null,
       name: null,
-      engName: null,
+      engName: '',
       gender: null,
-      phone: null,
-      tel: null,
+      phone: '',
+      tel: '',
       positionId: null,
       positionName: null,
       deptId: null,
@@ -258,6 +271,7 @@ export default {
       genderList: ['MALE', 'FEMALE'],
       image: '',
       imageUrl: '',
+      isBasic: false,
       isGetData: false
     }
   },
@@ -300,13 +314,17 @@ export default {
             deptId: vm.deptId,
             profileImg: ''
           }
-          if (this.$refs.fileInput.files[0] != null) {
+          if (this.$refs.fileInput.files[0] != null && this.isBasic === false) {
             let formData = new FormData()
             formData.append('image', this.$refs.fileInput.files[0])
             let imgUrl = await postUserImgItem(formData)
             user.profileImg = imgUrl.data
           } else {
-            user.profileImg = this.$store.state.user.profileImg
+            if (this.isBasic === false) {
+              user.profileImg = this.$store.state.user.profileImg
+            } else {
+              user.profileImg = 'http://api.gyeblja.com/images/users/basic.jpg'
+            }
           }
           await putUserItem(vm.id, user)
           alert('수정이 완료 되었습니다.')
@@ -340,6 +358,12 @@ export default {
       })
       fileReader.readAsDataURL(files[0])
       this.image = files[0]
+      this.isBasic = false
+    },
+    changeBasic () {
+      this.imageUrl = 'http://api.gyeblja.com/images/users/basic.jpg'
+      this.isBasic = true
+      this.image = ''
     }
   }
 }
