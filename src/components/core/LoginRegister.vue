@@ -21,7 +21,7 @@
         >
           <!-- 카드 -->
           <material-card
-            color="green"
+            color="blue"
             title="로그인 - 최초 사용자"
             text="* 보라색 필드는 필수입력 사항입니다."
           >
