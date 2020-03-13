@@ -131,6 +131,13 @@
                 <td>{{ item.views }}</td>
                 <td>{{ item.modifiedDate }}</td>
               </template>
+              <template slot="no-data">
+                <p style="text-align:center; height:5%">
+                  <span>
+                    작성된 게시글이 없습니다. 게시글을 추가해보세요!
+                  </span>
+                </p>
+              </template>
             </v-data-table>
           </material-card>
         </v-flex>
@@ -172,6 +179,13 @@
                 <td>{{ item.type }}</td>
                 <td>{{ item.place }}</td>
                 <td>{{ item.category.name }}</td>
+              </template>
+              <template slot="no-data">
+                <p style="text-align:center; height:5%">
+                  <span>
+                    작성된 교육이 없습니다. 교육을 추가해보세요!
+                  </span>
+                </p>
               </template>
             </v-data-table>
           </material-card>
