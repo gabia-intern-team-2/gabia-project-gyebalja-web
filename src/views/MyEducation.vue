@@ -25,16 +25,18 @@
             :value="rank +' / '+ teamMembers"
             :icon="rank"
             color="orange"
-            title="부서 내 나의 순위"
+            title="Rank"
             height="134px"
+            sub-text="부서 내 나의 순위"
           />
           <!-- 통계 2 - 주력 카테고리 -->
           <material-stats-card
             :value="mainCategory"
             color="purple"
             icon="mdi-finance"
-            title="주력 카테고리"
+            title="Category"
             height="134px"
+            sub-text="주력 카테고리"
           />
         </v-flex>
         <!-- 통계 4 - 나의 태그 Top 3 -->
@@ -53,16 +55,6 @@
           >
             <h4 class="title font-weight-light">나의 태그 Top 3</h4>
             <p class="category d-inline-flex font-weight-light"> <span class="green--text">최고 관심 : {{ mainTag }}</span>&nbsp;</p>
-
-            <template slot="actions">
-              <v-icon
-                class="mr-2"
-                small
-              >
-                mdi-clock-outline
-              </v-icon>
-              <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
-            </template>
           </material-chart-card>
         </v-flex>
         <!-- 통계 3 - 나 vs 가비아 -->
@@ -83,16 +75,6 @@
           >
             <h4 class="title font-weight-light">{{ currentYear }}년 나 vs 가비아 평균</h4>
             <p class="category d-inline-flex font-weight-light">사내 인원별 교육시간 평균</p>
-
-            <template slot="actions">
-              <v-icon
-                class="mr-2"
-                small
-              >
-                mdi-clock-outline
-              </v-icon>
-              <span class="caption grey--text font-weight-light">updated 10 minutes ago</span>
-            </template>
           </material-chart-card>
         </v-flex>
         <!-- 통계 5 - 월별 교육 추이 -->
@@ -114,16 +96,6 @@
             <p class="category d-inline-flex font-weight-bold">
               <span class="red--text">Red Line : Total Count</span><span class="blue--text">&nbsp;&nbsp;</span><span class="text-xs-right">White Line : Total Time</span>
             </p>
-
-            <template slot="actions">
-              <v-icon
-                class="mr-2"
-                small
-              >
-                mdi-clock-outline
-              </v-icon>
-              <span class="caption grey--text font-weight-light">updated 4 minutes ago</span>
-            </template>
           </material-chart-card>
         </v-flex>
         <!-- 유저 프로필 요약 -->
@@ -443,7 +415,7 @@ export default {
       },
       hoursData: {
         data: {
-          labels: ['나', '가비아 평균'],
+          labels: ['나', '사내 평균'],
           series: [
             []
           ]
