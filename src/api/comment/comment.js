@@ -9,6 +9,11 @@ function postCommentItem (comment) {
   return axios.post(`${config.baseUrl}comments`, comment)
 }
 
+// 조회 - 댓글 (전체)
+function getCommentList (boardId) {
+  return axios.get(`${config.baseUrl}boards/${boardId}/comments`)
+}
+
 // 수정 - 댓글 (한 개)
 function putCommentItem (commentId, comment) {
   return axios.put(`${config.baseUrl}comments/${commentId}`, comment)
@@ -21,6 +26,7 @@ function deleteCommentItem (commentId) {
 
 export {
   postCommentItem,
+  getCommentList,
   putCommentItem,
   deleteCommentItem
 }
