@@ -49,6 +49,7 @@
           v-if="isChangeComment && (comment.id == isChangeCommentId)"
           text-xs-right>
           <v-textarea
+            id = "commentForm"
             v-model="modifiedCommentContent"
             auto-grow
             solo
@@ -93,14 +94,10 @@
 </template>
 
 <script>
-import { postCommentItem, putCommentItem, deleteCommentItem } from '../../api/comment/comment.js'
+import { postCommentItem, getCommentList, putCommentItem, deleteCommentItem } from '../../api/comment/comment.js'
 
 export default {
   props: {
-    comments: {
-      type: Array,
-      default: null
-    },
     userId: {
       type: Number,
       default: null
@@ -113,7 +110,8 @@ export default {
 
   data: () => ({
     // Comment
-    commentList: [],
+    comments: [],
+    commentsTemp: [],
     commentContent: null,
     modifiedCommentContent: null,
 
@@ -122,7 +120,25 @@ export default {
     isChangeCommentId: null
   }),
 
+  async created () {
+    this.initialize()
+  },
+
   methods: {
+    async initialize () {
+      const vm = this
+
+      // Read Comments
+      try {
+        vm.comments = await getCommentList(vm.boardId)
+        vm.comments = vm.comments.data.response
+      } catch (error) {
+        // Error Page
+        console.log(error)
+        vm.$router.push({ name: 'Board List' })
+      }
+    },
+
     async createComment () {
       const vm = this
       const comment = {
@@ -133,7 +149,8 @@ export default {
 
       try {
         await postCommentItem(comment)
-        vm.$router.go()
+        vm.commentsTemp = await getCommentList(vm.boardId)
+        vm.comments = vm.commentsTemp.data.response
       } catch (error) {
       // Error Page
         console.log(error)
@@ -151,7 +168,9 @@ export default {
 
       try {
         await putCommentItem(commentId, comment)
-        vm.$router.go()
+        vm.commentsTemp = await getCommentList(vm.boardId)
+        vm.comments = vm.commentsTemp.data.response
+        vm.changeComment(comment, false)
       } catch (error) {
         vm.$router.push({ name: 'Board List' })
       }
@@ -159,9 +178,11 @@ export default {
 
     async deleteComment (commentId) {
       const vm = this
+      if (!confirm('정말 삭제하시겠습니까?')) return
       try {
-        confirm('정말 삭제하시겠습니까?') && await deleteCommentItem(commentId)
-        vm.$router.go()
+        await deleteCommentItem(commentId)
+        vm.commentsTemp = await getCommentList(vm.boardId)
+        vm.comments = vm.commentsTemp.data.response
       } catch (error) {
         console.log(error)
         vm.$router.push({ name: 'Board List' })

@@ -106,7 +106,6 @@
 
           <!-- 댓글 -->
           <material-comment
-            :comments="commentList"
             :user-id="userId"
             :board-id="boardId.toString()"/>
         </div>
@@ -126,7 +125,6 @@ export default {
     responseBoard: {},
     userId: {},
     boardId: {},
-    commentList: [],
     userProfileImg: '',
 
     // Flag
@@ -164,7 +162,6 @@ export default {
       try {
         vm.responseBoard = await getBoardItem(vm.$route.params.boardId)
         vm.responseBoard = vm.responseBoard.data.response
-        vm.commentList = vm.responseBoard.commentList
         vm.userProfileImg = vm.responseBoard.userProfileImg
 
         vm.isGetData = true
