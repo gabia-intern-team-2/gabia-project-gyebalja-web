@@ -496,28 +496,8 @@ export default {
     try {
       this.imgUrl = this.$store.state.user.profileImg
       let response = await getMyEducationList(vm.$store.state.user.id) // 교육 리스트 요청
-      let response2 = await getStatisticsEducation(vm.$store.state.user.id) // 통계 리스트 요청
       this.items = response.data.response
-      // 월별 교육 통계
-      this.monthlyData.data.labels = response2.data.response.monthlyData.months
-      this.monthlyData.data.series[0] = response2.data.response.monthlyData.userEducationTimes
-      this.monthlyData.data.series[1] = response2.data.response.monthlyData.userEducationCounts
-      this.monthlyData.options.high = Math.max(...response2.data.response.monthlyData.userEducationTimes) + 15
-      // 나 vs 회사 통계
-      this.hoursData.data.series[0].push(response2.data.response.hoursData.individualHour)
-      this.hoursData.data.series[0].push(response2.data.response.hoursData.averageCompHour)
-      this.hoursData.options.high = Math.max(response2.data.response.hoursData.individualHour, response2.data.response.hoursData.averageCompHour) + 10
-      // 등수 데이터
-      this.rank = response2.data.response.rankData.rank
-      this.teamMembers = response2.data.response.rankData.teamMemberNumber
-      // 주력 카테고리 데이터
-      this.mainCategory = response2.data.response.categoryData.categoryName
-      // 태그 Top 3 데이터
-      this.tagData.data.labels = response2.data.response.tagData.tagNames
-      this.tagData.data.series[0] = response2.data.response.tagData.totalCount
-      this.mainTag = response2.data.response.tagData.tagNames[0]
-
-      this.currentYear = response2.data.response.monthlyData.year
+      vm.renewStatistics()
       this.isGetData = true
     } catch (error) {
       console.log(error)
@@ -533,9 +513,12 @@ export default {
     },
     // 간편 삭제 메서드
     removeEducation (item) {
+      const vm = this
       const index = this.items.indexOf(item)
       confirm('정말 삭제하시겠습니까?') && this.items.splice(index, 1) && deleteMyEducationItem(item.id)
-        .then(response => console.log(response))
+        .then(response => {
+          vm.renewStatistics()
+        })
         .catch(error => console.log(error))
     },
     // 간편 수정 메서드
@@ -589,10 +572,41 @@ export default {
             await putMyEducationItem(educationRes.data.response.id, editedEducation)
             alert('수정되었습니다!')
             vm.cancle()
+            vm.renewStatistics()
+            this.isGetData = true
           } catch (error) {
             console.log(error)
           }
         }
+      }
+    },
+    async renewStatistics () {
+      try {
+        let response = await getStatisticsEducation(this.$store.state.user.id) // 통계 리스트 요청
+        // 월별 교육 통계
+        this.monthlyData.data.labels = response.data.response.monthlyData.months
+        this.monthlyData.data.series[0] = response.data.response.monthlyData.userEducationTimes
+        this.monthlyData.data.series[1] = response.data.response.monthlyData.userEducationCounts
+        this.monthlyData.options.high = Math.max(...response.data.response.monthlyData.userEducationTimes) + 15
+        // 나 vs 회사 통계
+        this.hoursData.data.series[0].pop()
+        this.hoursData.data.series[0].pop()
+        this.hoursData.data.series[0].push(response.data.response.hoursData.individualHour)
+        this.hoursData.data.series[0].push(response.data.response.hoursData.averageCompHour)
+        this.hoursData.options.high = Math.max(response.data.response.hoursData.individualHour, response.data.response.hoursData.averageCompHour) + 10
+        // 등수 데이터
+        this.rank = response.data.response.rankData.rank
+        this.teamMembers = response.data.response.rankData.teamMemberNumber
+        // 주력 카테고리 데이터
+        this.mainCategory = response.data.response.categoryData.categoryName
+        // 태그 Top 3 데이터
+        this.tagData.data.labels = response.data.response.tagData.tagNames
+        this.tagData.data.series[0] = response.data.response.tagData.totalCount
+        this.mainTag = response.data.response.tagData.tagNames[0]
+
+        this.currentYear = response.data.response.monthlyData.year
+      } catch (error) {
+        this.$router.push('/errorPage')
       }
     }
   }

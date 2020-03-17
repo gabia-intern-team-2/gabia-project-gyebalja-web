@@ -66,7 +66,7 @@
         <router-link
           v-ripple
           class="toolbar-items"
-          to="/"
+          to=""
         >
           <span @click="logout">
             <v-icon color="tertiary">mdi-logout</v-icon>
