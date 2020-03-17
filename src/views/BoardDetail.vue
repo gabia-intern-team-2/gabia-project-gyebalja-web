@@ -174,8 +174,9 @@ export default {
 
     async deleteBoard () {
       const vm = this
+      if (!confirm('정말 삭제하시겠습니까?')) return
       try {
-        confirm('정말 삭제하시겠습니까?') && await deleteBoardItem(vm.boardId)
+        await deleteBoardItem(vm.boardId)
       } catch (error) {
         // Error page
         console.log(error)
