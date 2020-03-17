@@ -264,7 +264,7 @@ export default {
             let imgUrl = await postUserImgItem(formData)
             user.profileImg = imgUrl.data
           } else {
-            user.profileImg = 'http://api.gyeblja.com/images/users/basic.jpg'
+            user.profileImg = 'http://10.12.204.76/images/users/basic.jpg'
           }
           let response = await postUserItem(user)
           alert('등록이 완료 되었습니다. 환영합니다!')
