@@ -129,8 +129,9 @@ export default {
     },
     // 로그아웃 메서드
     async logout () {
+      if (!confirm('로그아웃 하시겠습니까?')) return
       try {
-        confirm('로그아웃 하시겠습니까?') && await logout()
+        await logout()
         bus.$emit('logout-success')
       } catch (error) {
         console.log(error)
