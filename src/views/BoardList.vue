@@ -51,9 +51,7 @@
                   class="my-td-left my-td-small-middle">{{ item.id }}</td>
                 <router-link
                   :to="{name:'Board Detail', params:{boardId:item.id}}">
-                  <td class="my-td-middle">
-                    {{ item.title }}
-                  </td>
+                  <td>{{ item.title }}</td>
                 </router-link>
                 <td class="my-td-right my-td-small">{{ item.views }}</td>
                 <td class="my-td-right my-td-middle">{{ item.createdDate }}</td>

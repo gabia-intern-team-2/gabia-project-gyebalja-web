@@ -128,8 +128,9 @@
                   :to="{name:'Board Detail', params:{boardId:item.id}}">
                   <td>{{ item.title }}</td>
                 </router-link>
-                <td>{{ item.views }}</td>
-                <td>{{ item.modifiedDate }}</td>
+                <td class="my-td-right my-td-small">{{ item.views }}</td>
+                <td class="my-td-right my-td-middle">{{ item.createdDate }}</td>
+                <td class="my-td-right my-td-middle">{{ item.modifiedDate }}</td>
               </template>
               <template slot="no-data">
                 <p style="text-align:center; height:5%">
@@ -175,10 +176,10 @@
                 </router-link>
                 <td>{{ item.startDate }}</td>
                 <td>{{ item.endDate }}</td>
-                <td>{{ item.totalHours }}hr</td>
-                <td>{{ item.type }}</td>
+                <td class="my-td-center">{{ item.totalHours }}hr</td>
+                <td class="my-td-center">{{ item.type }}</td>
                 <td>{{ item.place }}</td>
-                <td>{{ item.category.name }}</td>
+                <td class="my-td-center">{{ item.category.name }}</td>
               </template>
               <template slot="no-data">
                 <p style="text-align:center; height:5%">
@@ -367,7 +368,27 @@ export default {
 a {
   color: black;
 }
-
+.my-td-left {
+  text-align: left
+}
+.my-td-center {
+  text-align: center
+}
+.my-td-right {
+  text-align: right
+}
+.my-td-small {
+  width: 5%;
+}
+.my-td-small-middle {
+  width: 10%;
+}
+.my-td-middle {
+  width: 15%;
+}
+.my-td-large {
+  width: 30%;
+}
 #my-statistics
   >>> .empty {
   text-align: center;
