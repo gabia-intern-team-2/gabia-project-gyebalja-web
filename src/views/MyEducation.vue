@@ -15,10 +15,10 @@
         wrap
       >
         <v-flex
+          :class = "breakpoint_lg_2"
           xs12
           md12
           sm12
-          lg2
         >
           <!-- 통계 1 - 부서 내 나의 순위 -->
           <material-stats-card
@@ -41,10 +41,10 @@
         </v-flex>
         <!-- 통계 3 - 나의 태그 Top 3 -->
         <v-flex
+          :class = "breakpoint_lg_2"
           xs12
           md12
           sm12
-          lg2
         >
           <material-chart-card
             id="my-statistics"
@@ -59,10 +59,10 @@
         </v-flex>
         <!-- 통계 4 - 나 vs 가비아 -->
         <v-flex
+          :class = "breakpoint_lg_2"
           xs12
           md12
           sm12
-          lg2
         >
           <material-chart-card
             id="my-statistics"
@@ -79,10 +79,10 @@
         </v-flex>
         <!-- 통계 5 - 월별 교육 추이 -->
         <v-flex
+          :class = "breakpoint_lg_4"
           sm12
           xs12
           md12
-          lg4
         >
           <material-chart-card
             id="my-statistics"
@@ -100,10 +100,10 @@
         </v-flex>
         <!-- 유저 프로필 요약 -->
         <v-flex
+          :class = "breakpoint_lg_2"
           sm12
           xs12
           md12
-          lg2
         >
           <material-card
             class="v-card-profile"
@@ -487,6 +487,12 @@ export default {
   computed: {
     pages () {
       return Math.ceil(this.items.length / 5)
+    },
+    breakpoint_lg_2 () {
+      return this.$vuetify.breakpoint.width < 1350 ? 'lg12' : 'lg2'
+    },
+    breakpoint_lg_4 () {
+      return this.$vuetify.breakpoint.width < 1350 ? 'lg12' : 'lg4'
     }
   },
   // 최초 실행 라이프사이클 훅
