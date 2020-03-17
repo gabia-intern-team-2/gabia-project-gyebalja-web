@@ -8,6 +8,6 @@
 /** HTTP Request & Response 관련 기본 설정 */
 
 export const config = {
-  baseUrl: 'http://10.12.204.76:8080/api/v1/',
-  hostUrl: 'http://10.12.204.76:8080/'
+  baseUrl: 'http://211.53.209.130:8080/api/v1/',
+  hostUrl: 'http://211.53.209.130:8080/'
 }
