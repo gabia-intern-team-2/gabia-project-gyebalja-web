@@ -141,6 +141,10 @@ export default {
 
     async createComment () {
       const vm = this
+      if (vm.commentContent === null || vm.commentContent === '') {
+        alert('댓글 내용은 공백이 될 수 없습니다.')
+        return
+      }
       const comment = {
         content: vm.commentContent,
         userId: vm.userId,
@@ -151,6 +155,7 @@ export default {
         await postCommentItem(comment)
         vm.commentsTemp = await getCommentList(vm.boardId)
         vm.comments = vm.commentsTemp.data.response
+        vm.commentContent = null
       } catch (error) {
       // Error Page
         console.log(error)
@@ -160,6 +165,10 @@ export default {
 
     async updateComment (commentId) {
       const vm = this
+      if (vm.modifiedCommentContent === null || vm.modifiedCommentContent === '') {
+        alert('댓글 내용은 공백이 될 수 없습니다.')
+        return
+      }
       const comment = {
         content: vm.modifiedCommentContent,
         userId: vm.userId,
@@ -171,6 +180,7 @@ export default {
         vm.commentsTemp = await getCommentList(vm.boardId)
         vm.comments = vm.commentsTemp.data.response
         vm.changeComment(comment, false)
+        vm.modifiedCommentContent = null
       } catch (error) {
         vm.$router.push({ name: 'Board List' })
       }
