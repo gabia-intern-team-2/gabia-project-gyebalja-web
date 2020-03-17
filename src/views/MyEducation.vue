@@ -517,7 +517,6 @@ export default {
       const index = this.items.indexOf(item)
       confirm('정말 삭제하시겠습니까?') && this.items.splice(index, 1) && deleteMyEducationItem(item.id)
         .then(response => {
-          console.log(response)
           vm.renewStatistics()
         })
         .catch(error => console.log(error))
@@ -582,29 +581,33 @@ export default {
       }
     },
     async renewStatistics () {
-      let response = await getStatisticsEducation(this.$store.state.user.id) // 통계 리스트 요청
-      // 월별 교육 통계
-      this.monthlyData.data.labels = response.data.response.monthlyData.months
-      this.monthlyData.data.series[0] = response.data.response.monthlyData.userEducationTimes
-      this.monthlyData.data.series[1] = response.data.response.monthlyData.userEducationCounts
-      this.monthlyData.options.high = Math.max(...response.data.response.monthlyData.userEducationTimes) + 15
-      // 나 vs 회사 통계
-      this.hoursData.data.series[0].pop()
-      this.hoursData.data.series[0].pop()
-      this.hoursData.data.series[0].push(response.data.response.hoursData.individualHour)
-      this.hoursData.data.series[0].push(response.data.response.hoursData.averageCompHour)
-      this.hoursData.options.high = Math.max(response.data.response.hoursData.individualHour, response.data.response.hoursData.averageCompHour) + 10
-      // 등수 데이터
-      this.rank = response.data.response.rankData.rank
-      this.teamMembers = response.data.response.rankData.teamMemberNumber
-      // 주력 카테고리 데이터
-      this.mainCategory = response.data.response.categoryData.categoryName
-      // 태그 Top 3 데이터
-      this.tagData.data.labels = response.data.response.tagData.tagNames
-      this.tagData.data.series[0] = response.data.response.tagData.totalCount
-      this.mainTag = response.data.response.tagData.tagNames[0]
+      try {
+        let response = await getStatisticsEducation(this.$store.state.user.id) // 통계 리스트 요청
+        // 월별 교육 통계
+        this.monthlyData.data.labels = response.data.response.monthlyData.months
+        this.monthlyData.data.series[0] = response.data.response.monthlyData.userEducationTimes
+        this.monthlyData.data.series[1] = response.data.response.monthlyData.userEducationCounts
+        this.monthlyData.options.high = Math.max(...response.data.response.monthlyData.userEducationTimes) + 15
+        // 나 vs 회사 통계
+        this.hoursData.data.series[0].pop()
+        this.hoursData.data.series[0].pop()
+        this.hoursData.data.series[0].push(response.data.response.hoursData.individualHour)
+        this.hoursData.data.series[0].push(response.data.response.hoursData.averageCompHour)
+        this.hoursData.options.high = Math.max(response.data.response.hoursData.individualHour, response.data.response.hoursData.averageCompHour) + 10
+        // 등수 데이터
+        this.rank = response.data.response.rankData.rank
+        this.teamMembers = response.data.response.rankData.teamMemberNumber
+        // 주력 카테고리 데이터
+        this.mainCategory = response.data.response.categoryData.categoryName
+        // 태그 Top 3 데이터
+        this.tagData.data.labels = response.data.response.tagData.tagNames
+        this.tagData.data.series[0] = response.data.response.tagData.totalCount
+        this.mainTag = response.data.response.tagData.tagNames[0]
 
-      this.currentYear = response.data.response.monthlyData.year
+        this.currentYear = response.data.response.monthlyData.year
+      } catch (error) {
+        this.$router.push('/errorPage')
+      }
     }
   }
 }
