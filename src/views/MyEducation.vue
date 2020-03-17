@@ -489,10 +489,10 @@ export default {
       return Math.ceil(this.items.length / 5)
     },
     breakpoint_lg_2 () {
-      return this.$vuetify.breakpoint.width < 1350 ? 'lg12' : 'lg2'
+      return this.$vuetify.breakpoint.width < 1450 ? 'lg12' : 'lg2'
     },
     breakpoint_lg_4 () {
-      return this.$vuetify.breakpoint.width < 1350 ? 'lg12' : 'lg4'
+      return this.$vuetify.breakpoint.width < 1450 ? 'lg12' : 'lg4'
     }
   },
   // 최초 실행 라이프사이클 훅
