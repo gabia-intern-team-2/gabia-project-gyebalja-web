@@ -84,6 +84,46 @@ export default {
         align: 'center'
       }
     ],
+    rankingHeaders: [
+      {
+        sortable: false,
+        text: '순위',
+        value: Number
+      },
+      {
+        sortable: false,
+        text: '이름',
+        value: 'country'
+      },
+      {
+        sortable: false,
+        text: '닉네임',
+        value: 'views'
+      },
+      {
+        sortable: false,
+        text: '직책',
+        value: 'createdDate'
+      },
+      {
+        sortable: false,
+        text: '팀',
+        value: 'modifiedDate',
+        align: 'center'
+      },
+      {
+        sortable: false,
+        text: '총 교육시간',
+        value: 'modifiedDate',
+        align: 'center'
+      },
+      {
+        sortable: false,
+        text: '총 교육건수',
+        value: 'modifiedDate',
+        align: 'center'
+      }
+    ],
 
     positionList: [
       {
