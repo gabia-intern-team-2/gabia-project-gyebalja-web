@@ -19,11 +19,11 @@
           <!-- 카드 -->
           <material-card
             color="purple"
-            title="이 달의 교육 랭킹"
+            title="올해의 교육 랭킹"
             text="Gabia education ranking"
           >
             <div
-              v-if="this.$store.state.user.positionId === '4'"
+              v-if="this.$store.state.user.positionId <= isPresidentIndex"
               class="text-xs-center">
               <div
                 v-for="department in this.$store.state.departments"
@@ -38,17 +38,17 @@
               </div>
             </div>
             <br>
+
+            <!-- 랭킹 TOP 3 -->
             <v-layout wrap>
-              <!-- 랭킹 TOP 3 -->
               <v-flex
-                v-for="(user, i) in users"
+                v-for="(user, i) in usersTop3"
                 :key="i"
                 sm12
                 xs12
                 md12
                 lg4
               >
-
                 <material-card
                   color="purple"
                   class="v-card-profile"
@@ -61,8 +61,7 @@
                       color="white"
                       size="40"
                       class="mb-1">
-                      <v-img :src="imageUrl + (i+1) + '.png'"/>
-                      <!-- <span class="black--text">{{ i + 1 }}위</span> -->
+                      <v-img :src="require(`../images/ranking${i+1}.png`)"/>
                     </v-avatar>
                     <v-avatar
                       class="mx-auto d-block mb-4"
@@ -115,13 +114,27 @@
                     slot="items"
                     slot-scope="{ item }"
                   >
-                    <td>{{ item.id }}</td>
-                    <td>{{ item.name }}</td>
-                    <td class="my-td-left">{{ item.engName }}</td>
-                    <td>{{ item.positionName }}</td>
-                    <td class="my-td-center">{{ item.department.name }}</td>
-                    <td class="my-td-center">{{ item.id }}시간</td>
-                    <td class="my-td-center">{{ item.id }}건</td>
+                    <td>{{ item.rank }}</td>
+                    <td>{{ item.user.name }}</td>
+                    <td class="my-td-left">
+                      <span v-if="item.user.engName.length != 0">
+                        {{ item.user.engName }}
+                      </span>
+                      <span v-else>
+                        -
+                      </span>
+                    </td>
+                    <td>{{ item.user.positionName }}</td>
+                    <td class="my-td-center">{{ item.user.department.name }}</td>
+                    <td class="my-td-center">{{ item.totalHour }}시간</td>
+                    <td class="my-td-center">{{ item.totalCount }}건</td>
+                  </template>
+                  <template slot="no-data">
+                    <p style="text-align:center; height:5%">
+                      <span>
+                        해당 부서에 등록된 사용자가 없습니다.
+                      </span>
+                    </p>
                   </template>
                 </v-data-table>
               </material-card>
@@ -141,56 +154,60 @@ export default {
   data () {
     return {
       // User
-      users: [
-        this.$store.state.user,
-        this.$store.state.user,
-        this.$store.state.user
-      ],
+      users: [],
+      usersTop3: [],
       usersTemp: [],
 
-      // Departments
-      departments: [],
-
-      // Image
-      imageUrl: 'ranking',
-
       // Flag
+      isPresidentIndex: '4',
       isGetData: false
     }
   },
 
   computed: {
-    generator () {
-      console.log('hi')
-      let mycolor = '#' + (Math.random() * 0xFFFFFF << 0).toString(16)
-      console.log(mycolor)
-      return mycolor
-    }
   },
 
   async created () {
     bus.$emit('start:spinner')
-    await this.$store.dispatch('FETCH_DEPARTMENTS')
-    console.log(this.$store.state.departments)
-    await this.$store.dispatch('FETCH_USER')
-    await this.initialize()
-    this.isGetData = true
+    try {
+      await this.$store.dispatch('FETCH_DEPARTMENTS')
+      await this.$store.dispatch('FETCH_USER')
+      await this.initialize()
+      this.isGetData = true
+    } catch (error) {
+      console.log(error)
+      this.$router.push({ name: 'Error Page' })
+    }
     bus.$emit('end:spinner')
   },
 
   methods: {
     async initialize () {
-      // 1. API 호출
+      const vm = this
+      let defaultDepartmentId = '231'
+      let departmentId = vm.$store.state.user.department.name === '가비아' ? defaultDepartmentId : vm.$store.state.user.department.id
 
-      // 2. users에 데이터 담기
+      vm.usersTemp = await getDepartmentRanking(departmentId)
+      vm.users = vm.usersTemp.data.response
+      vm.renewRankingTop3(vm.users)
     },
 
     async renewDepartmentRanking (departmentId, departmentName) {
-      console.log(departmentId)
       if (departmentName === '가비아') return
+
       const vm = this
       vm.usersTemp = await getDepartmentRanking(departmentId)
       vm.users = vm.usersTemp.data.response
+      vm.renewRankingTop3(vm.users)
+    },
+
+    renewRankingTop3 (users) {
+      const thirdUserIndex = '2'
+      this.usersTop3 = []
+      for (let i in users) {
+        this.usersTop3.push(users[i].user)
+        if (i === thirdUserIndex) break
+      }
     }
   }
 }
