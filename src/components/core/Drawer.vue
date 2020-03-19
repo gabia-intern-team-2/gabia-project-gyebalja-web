@@ -72,6 +72,7 @@ export default {
       default: false
     }
   },
+
   data: () => ({
     logo: 'favicon.ico',
     links: [
@@ -94,6 +95,12 @@ export default {
         color: 'info'
       },
       {
+        to: '/departmentManagement',
+        icon: 'mdi-application',
+        text: '부서 관리',
+        color: 'purple'
+      },
+      {
         to: '/userProfile',
         icon: 'mdi-account',
         text: '내 정보 관리',
@@ -101,6 +108,7 @@ export default {
       }
     ]
   }),
+
   computed: {
     ...mapState('app', ['image', 'color']),
     inputValue: {
