@@ -23,7 +23,7 @@
             text="Gabia education ranking"
           >
             <div
-              v-if="this.$store.state.user.positionId <= isPresidentIndex"
+              v-if="this.$store.state.user.positionId <= isAccessibleMenu"
               class="text-xs-center">
               <div
                 v-for="department in this.$store.state.departments"
@@ -159,7 +159,7 @@ export default {
       usersTemp: [],
 
       // Flag
-      isPresidentIndex: '4',
+      isAccessibleMenu: '4',
       isGetData: false
     }
   },
