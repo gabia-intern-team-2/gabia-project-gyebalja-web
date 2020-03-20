@@ -59,6 +59,13 @@
         <router-link
           v-ripple
           class="toolbar-items"
+          to="/departmentManagement"
+        >
+          <v-icon color="tertiary">mdi-finance</v-icon>
+        </router-link>
+        <router-link
+          v-ripple
+          class="toolbar-items"
           to="/userProfile"
         >
           <v-icon color="tertiary">mdi-account</v-icon>
