@@ -164,9 +164,6 @@ export default {
     }
   },
 
-  computed: {
-  },
-
   async created () {
     bus.$emit('start:spinner')
     try {
