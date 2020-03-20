@@ -96,7 +96,7 @@ export default {
       },
       {
         to: '/departmentManagement',
-        icon: 'mdi-application',
+        icon: 'mdi-finance',
         text: '부서별 랭킹',
         color: 'purple'
       },
