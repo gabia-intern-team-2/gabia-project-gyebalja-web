@@ -59,11 +59,9 @@
         <router-link
           v-ripple
           class="toolbar-items"
-          to=""
+          to="/departmentManagement"
         >
-          <span @click="logout">
-            <v-icon color="tertiary">mdi-finance</v-icon>
-          </span>
+          <v-icon color="tertiary">mdi-finance</v-icon>
         </router-link>
         <router-link
           v-ripple
