@@ -59,18 +59,18 @@
         <router-link
           v-ripple
           class="toolbar-items"
-          to="/userProfile"
-        >
-          <v-icon color="tertiary">mdi-account</v-icon>
-        </router-link>
-        <router-link
-          v-ripple
-          class="toolbar-items"
           to=""
         >
           <span @click="logout">
             <v-icon color="tertiary">mdi-finance</v-icon>
           </span>
+        </router-link>
+        <router-link
+          v-ripple
+          class="toolbar-items"
+          to="/userProfile"
+        >
+          <v-icon color="tertiary">mdi-account</v-icon>
         </router-link>
         <router-link
           v-ripple
