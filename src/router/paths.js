@@ -67,6 +67,11 @@ export default [
     view: 'EducationDetail'
   },
   {
+    path: '/departmentManagement',
+    name: 'Department Management',
+    view: 'DepartmentManagement'
+  },
+  {
     path: '/errorPage',
     name: 'Error Page',
     view: 'ErrorPage'

@@ -59,6 +59,13 @@
         <router-link
           v-ripple
           class="toolbar-items"
+          to="/departmentManagement"
+        >
+          <v-icon color="tertiary">mdi-finance</v-icon>
+        </router-link>
+        <router-link
+          v-ripple
+          class="toolbar-items"
           to="/userProfile"
         >
           <v-icon color="tertiary">mdi-account</v-icon>
@@ -66,7 +73,7 @@
         <router-link
           v-ripple
           class="toolbar-items"
-          to="/"
+          to=""
         >
           <span @click="logout">
             <v-icon color="tertiary">mdi-logout</v-icon>
@@ -129,8 +136,9 @@ export default {
     },
     // 로그아웃 메서드
     async logout () {
+      if (!confirm('로그아웃 하시겠습니까?')) return
       try {
-        confirm('로그아웃 하시겠습니까?') && await logout()
+        await logout()
         bus.$emit('logout-success')
       } catch (error) {
         console.log(error)

@@ -308,7 +308,7 @@ export default {
             if (this.isBasic === false) {
               user.profileImg = this.$store.state.user.profileImg
             } else {
-              user.profileImg = 'http://api.gyeblja.com/images/users/basic.jpg'
+              user.profileImg = 'http://211.53.209.130/images/users/basic.jpg'
             }
           }
           await putUserItem(vm.id, user)
@@ -346,7 +346,7 @@ export default {
       this.isBasic = false
     },
     changeBasic () {
-      this.imageUrl = 'http://api.gyeblja.com/images/users/basic.jpg'
+      this.imageUrl = 'http://211.53.209.130/images/users/basic.jpg'
       this.isBasic = true
       this.image = ''
     }
